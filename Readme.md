@@ -53,21 +53,18 @@ First make sure that the Wacom driver is not loaded by running this command in T
     
 Now download the patched driver here:
 
-https://github.com/thenickdude/wacom-driver-fix/releases
+https://github.com/thenickdude/wacom-driver-fix/releases/download/5.3.7-6-patch/PenTabletDriver-5.3.7-6-patched.zip
 
-Unzip it, then in Finder, click "Go -> Go to Folder" (or press Command + Shift + G), 
-then paste this path in the pop-up window, and click Ok:
+Unzip it by double clicking it, and you'll get a file called "PenTabletDriver". In Finder, click "Go -> Go to Folder" 
+(or press Command + Shift + G), then paste this path in the pop-up window, and click Ok:
 
     /Library/Application Support/Tablet/PenTabletDriver.app/Contents/MacOS
 
-You should see a file already in there called "PenTabletDriver", move it out of the directory and keep it in a safe place
-(enter your password when prompted to confirm). Now move the new PenTabletDriver file in there to replace it.
+You should see a file already in there called "PenTabletDriver". Move the new PenTabletDriver file from the zip file
+in there to replace it, confirm that you want to overwrite it, then enter your login password to confirm.
 
 Back in the terminal, run:
 
-    # Enter your login password when prompted:
-    sudo chmod 755 /Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver
-    
     launchctl load /Library/LaunchAgents/com.wacom.pentablet.plist
 
 Now your tablet driver should be operational and you should be able to use the Wacom preference pane in System 
