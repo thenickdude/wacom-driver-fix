@@ -44,7 +44,23 @@ If you don't see a message like that then this bug isn't the reason for your tab
 
 ## Install the fix
 
-Make sure you already have the Wacom 5.3.7-6 driver installed, because this fix only replaces one of the files
+You can either have everything installed for you automatically, or install the fixed files yourself manually, pick 
+one of these options:
+
+### Automatic method
+
+Download the installer here and double click it to run it, this will install my fixed version of Wacom's 5.3.7-6 driver:
+
+https://github.com/thenickdude/wacom-driver-fix/releases/download/5.3.7-6-patch-2/Install-Wacom-Tablet-5.3.7-6-patched.pkg
+
+If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
+"Open" instead.
+
+After installing, if the Wacom settings pane in System Preferences still doesn't function, restart your computer.
+
+### Manual method
+
+Make sure you already have the Wacom 5.3.7-6 driver installed, because the manual method only replaces one of the files
 and doesn't install the complete driver itself.
 
 First make sure that the Wacom driver is not loaded by running this command in Terminal:
@@ -53,7 +69,7 @@ First make sure that the Wacom driver is not loaded by running this command in T
     
 Now download the patched driver here:
 
-https://github.com/thenickdude/wacom-driver-fix/releases/download/5.3.7-6-patch/PenTabletDriver-5.3.7-6-patched.zip
+https://github.com/thenickdude/wacom-driver-fix/releases/download/5.3.7-6-patch-2/wacom-5.3.7-6-macOS-patched.zip
 
 Unzip it by double clicking it, and you'll get a file called "PenTabletDriver". In Finder, click "Go -> Go to Folder" 
 (or press Command + Shift + G), then paste this path in the pop-up window, and click Ok:
@@ -72,6 +88,19 @@ Preferences.
 
 If your tablet still isn't working, double check that in System Preferences -> Security & Privacy -> Accessibility, 
 PenTabletDriver is ticked.
+
+## Touch support
+
+Currently there is still a bug in Wacom's touch driver which causes it to crash as soon as a
+multi-touch operation is begun. I hope to fix this too soon.
+
+## Support me
+
+If you enjoyed having your tablet back in action, please consider sending me a tip!
+
+[![Donate button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url) 
+
+This will help pay for my yearly Apple Developer registration fee.
 
 ## Technical details of the bug
 
@@ -129,3 +158,5 @@ This kills the driver.
 
 The patch is a single-byte change which replaces the call to `_objc_release()` in `PathFromURL` to a call to `_objc_retain()`.
 This prevents the path from being freed before it is used, which cures the segfault.
+
+The ConsumerTouchDriver also contains this same bug, and the patch is the same there.

@@ -1,1 +1,4 @@
 drivers/*.patched
+drivers/*.original
+build/
+package/
