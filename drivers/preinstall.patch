@@ -1,0 +1,20 @@
+24c24
+< 	
+---
+> 
+36c36,41
+< 		
+---
+> 
+> 		if($process =~ m/^\s*(\d+)(\s*)(ConsumerTouchDriver\n)/)
+> 		{
+> 			push @driverPIDs, $1;
+> 		}
+> 
+147c152,155
+< 	
+---
+> 
+> 	print "Unload LaunchAgent\n";
+> 	`./unloadagent`;
+> 

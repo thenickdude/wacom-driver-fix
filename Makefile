@@ -3,9 +3,30 @@ PACKAGE_SIGNING_IDENTITY=Developer ID Installer: Nicholas Sherlock (8J3T27D935)
 
 NOTARIZATION_USERNAME=n.sherlock@gmail.com
 
-PATCHED_DRIVERS=drivers/PenTabletDriver-5.3.7-6.patched drivers/ConsumerTouchDriver-5.3.7-6.patched
+PATCHED_DRIVERS= \
+	drivers/PenTabletDriver-5.3.7-6.patched \
+	drivers/ConsumerTouchDriver-5.3.7-6.patched \
+	drivers/preinstall.patched \
+	drivers/postinstall.patched
 
-.DUMMY: release unpack unbless notarize clean
+EXTRACTED_DRIVERS= \
+	drivers/PenTabletDriver-5.3.7-6.original \
+	drivers/ConsumerTouchDriver-5.3.7-6.original \
+	drivers/preinstall.original \
+	drivers/postinstall.original
+
+SIGN_ME= \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app \
+	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework/Versions/A/WacomMultiTouch \
+	package/content.pkg/Payload/Library/PrivilegedHelperTools/com.wacom.TabletHelper.app/Contents/MacOS/com.wacom.TabletHelper \
+	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Library/LaunchServices/com.wacom.RemoveTabletHelper \
+	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/SystemLoginItemTool \
+	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app \
+	package/content.pkg/Scripts/renumtablets
+
+.DUMMY: all release unpack unbless notarize clean
 
 all : wacom-5.3.7-6-macOS-patched.zip Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg
 
@@ -30,15 +51,23 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : drivers/Install\ Wacom\ Ta
 	# Add patched drivers
 	cp drivers/PenTabletDriver-5.3.7-6.patched package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver
 	cp drivers/ConsumerTouchDriver-5.3.7-6.patched package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app/Contents/MacOS/ConsumerTouchDriver
+	cp drivers/preinstall.patched package/content.pkg/Scripts/preinstall
+	cp drivers/postinstall.patched package/content.pkg/Scripts/postinstall
+	cp drivers/unloadagent drivers/loadagent package/content.pkg/Scripts/
 
-	# Remove bad code signature on TabletDriver (the sibling packages were never signed in the first place)
-	codesign --remove-signature package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app
+ifdef CODE_SIGNING_IDENTITY
+	# Resign drivers and enable Hardened Runtime to meet notarization requirements
+	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME)
+endif
 
 	# Recreate BOM
 	mkbom package/content.pkg/Payload package/content.pkg/Bom
 
 	# Repack payload
-	( cd package/content.pkg/Payload && find . | cpio -o --format odc --owner 0:80 | gzip -c ) > package/content.pkg/Payload.gz
+	( \
+		( cd package/content.pkg/Payload && find . ! -path "./Library/Extensions*" | cpio -o --format odc --owner 0:80 ) ; \
+		( cd package/content.pkg/Payload && find ./Library/Extensions              | cpio -o --format odc --owner 0:0 ) ; \
+	) | gzip -c > package/content.pkg/Payload.gz
 	rm -rf package/content.pkg/Payload
 	mv package/content.pkg/Payload.gz package/content.pkg/Payload
 
@@ -53,12 +82,14 @@ endif
 build/ :
 	mkdir build
 
-# Extract original drivers from the Wacom installer as needed
-drivers/PenTabletDriver-5.3.7-6.original drivers/ConsumerTouchDriver-5.3.7-6.original : drivers/Install\ Wacom\ Tablet-5.3.7-6-original.pkg
+# Extract original files from the Wacom installer as needed
+$(EXTRACTED_DRIVERS) : drivers/Install\ Wacom\ Tablet-5.3.7-6-original.pkg
 	rm -rf package
 	pkgutil --expand-full drivers/Install\ Wacom\ Tablet-5.3.7-6-original.pkg package
 	cp package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver drivers/PenTabletDriver-5.3.7-6.original
 	cp package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app/Contents/MacOS/ConsumerTouchDriver drivers/ConsumerTouchDriver-5.3.7-6.original
+	cp package/content.pkg/Scripts/preinstall drivers/preinstall.original
+	cp package/content.pkg/Scripts/postinstall drivers/postinstall.original
 
 %.patched : %.original %.patch
 	cp $*.original $*.patched
@@ -87,4 +118,6 @@ unbless:
 	xattr -w com.apple.quarantine "0181;5e33ca0a;Chrome;AEDC174C-8684-476E-9E4C-764D063A714C" Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg
 
 clean :
-	rm -f wacom-5.3.7-6-macOS-patched.zip Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg Install\ Wacom\ Tablet-5.3.7-6-patched.pkg build/* $(PATCHED_DRIVERS)
+	rm -f wacom-5.3.7-6-macOS-patched.zip Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg \
+		Install\ Wacom\ Tablet-5.3.7-6-patched.pkg build/* $(PATCHED_DRIVERS) $(EXTRACTED_DRIVERS)
+	rm -rf package
