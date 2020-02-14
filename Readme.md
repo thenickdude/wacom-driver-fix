@@ -18,13 +18,14 @@ This is a problem because the 5.3.7-6 driver is the last driver that supported t
 - CTH-461 - Bamboo Fun Pen and Touch / Bamboo Craft / Bamboo Fun Special Edition
 - CTH-470 - Bamboo Capture / Bamboo Pen & Touch / Bamboo Create
 - CTH-661 - Bamboo Fun / Bamboo Art Master (2009) / Bamboo Fun Pen and Touch
+- CTH-670 - Bamboo Create
 - CTL-460, CTL-660 - Bamboo Pen 
 - CTL-470 - Bamboo Connect / Bamboo Pen
 - MTE-450 - Bamboo
 
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
 
-I've tested this with CTL-460 (Bamboo Pen) and CTH-470 (Wacom Bamboo Capture Pen and Touch Tablet) on Catalina 10.15.3. 
+I've tested this with CTL-460 (Bamboo Pen) and CTH-470 (Bamboo Capture Pen and Touch Tablet) on Catalina 10.15.3. 
 
 ## Does this bug apply to me?
 
@@ -60,8 +61,8 @@ After installing, follow the "post-install instructions" section (further down t
 
 ### Manual method
 
-Make sure you already have the Wacom 5.3.7-6 driver installed, because the manual method only replaces two of the files
-and doesn't install the complete driver itself.
+Make sure you already have the [Wacom 5.3.7-6 driver](http://cdn.wacom.com/u/productsupport/drivers/mac/consumer/pentablet_5.3.7-6.dmg) 
+installed, because the manual method only replaces two of the files and doesn't install the complete driver itself.
 
 First make sure that the Wacom driver is not loaded by running this command in Terminal (paste it in, then press enter to
 run it):
@@ -176,7 +177,7 @@ CFString * MacPaths::GetBundleResourcePathOfType(CFString *resourceName, CFStrin
             CFRelease(url); /* path goes bye-bye here! */
         }
     }
-    return path;
+    return path; /* Returning an object that has already been free'd! */
 }
 ```
 
@@ -197,21 +198,21 @@ void CMacHIDGestureEventOSX1010::PostGesture(EIOHIDEventType gestureType_I, int3
 {
   __CFDataOSX1010 *eventStructure;
   
-  if (gestureType_I == 0x3d) {
-    this->eventPhase = 1;
+  if (gestureType_I == 61 /* kCGHIDEventTypeGestureStarted */) {
+    this->eventPhase = 1 /* kCGSGesturePhaseBegan */;
   } else {
-    this->eventPhase = 4;
+    this->eventPhase = 4 /* kCGSGesturePhaseEnded */;
     (**(code **)(*(long *)this + 0x18))(0,this,(uint32_t) eventDirAmount);
   }
 
   eventStructure = (__CFDataOSX1010 *) _CGEventCreate(0); // Dubious
 
-  _CGEventSetType(eventStructure, 0x1d);
+  _CGEventSetType(eventStructure, 29 /* kCGSEventGesture */);
 
   eventStructure->eventSubType = gestureType_I;    // Relies on the exact memory layout of CGEvent (!)
   eventStructure->eventDirAmount = eventDirAmount; // Ditto
 
-  _CGEventPost(0,eventStructure);
+  _CGEventPost(0, eventStructure);
   _CFRelease(eventStructure);
 }
 ```
@@ -230,7 +231,7 @@ see what the IDs should have been for those fields. It appears that the `eventSu
 and the `eventDirAmount` can be written by ID 115. But these field IDs are nowhere to be found [in Apple's documentation](https://developer.apple.com/documentation/coregraphics/cgeventfield?language=objc),
 which explains why Wacom couldn't use them!
 
-I did some Googling and discovered that these fields are undocumented because they're part of Apple's private API. [This WebKit patch](https://bug-161675-attachments.webkit.org/attachment.cgi?id=305812) 
+I did some Googling and discovered that these fields are undocumented because they're part of Apple's private API. [This WebKit header](https://github.com/WebKit/webkit/blob/89c28d471fae35f1788a0f857067896a10af8974/Tools/TestRunnerShared/spi/CoreGraphicsTestSPI.h) 
 reveals their names:
 
     kCGEventGestureHIDType = 110
@@ -254,18 +255,18 @@ void CMacHIDGestureEventOSX1010::PostGesture(EIOHIDEventType eventSubType, float
 
   eventStructure = (__CFDataOSX1010 *)_CGEventCreate(0);
   
-  _CGEventSetType(eventStructure, 0x1d);
+  _CGEventSetType(eventStructure, 29 /* kCGSEventGesture */);
   
   eventStructure->eventSubType = eventSubType;                            // !
   eventStructure->eventDirAmount = reinterpret_cast<int32_t&>(dirAmount); // !
   eventStructure->eventState = this->eventPhase;                          // !
   
-  if (this->eventPhase == 1) {
-    this->eventPhase = 2;
+  if (this->eventPhase == 1 /* kCGSGesturePhaseBegan */) {
+    this->eventPhase = 2 /* kCGSGesturePhaseChanged */;
   }
 
   _CGEventSetLocation(eventStructure, GetMouseLocationInScreenCoordinates());
-  _CGEventPost(0,eventStructure);
+  _CGEventPost(0, eventStructure);
   _CFRelease(eventStructure);
 }
 ```

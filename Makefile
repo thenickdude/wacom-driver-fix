@@ -32,12 +32,15 @@ all : wacom-5.3.7-6-macOS-patched.zip Install\ Wacom\ Tablet-5.3.7-6-patched-uns
 
 release : wacom-5.3.7-6-macOS-patched.zip Install\ Wacom\ Tablet-5.3.7-6-patched.pkg
 
-wacom-5.3.7-6-macOS-patched.zip : $(PATCHED_DRIVERS) build/
+wacom-5.3.7-6-macOS-patched.zip : $(PATCHED_DRIVERS) build/ build/Readme.html
 	rm -f $@
 	cp drivers/PenTabletDriver-5.3.7-6.patched build/PenTabletDriver
 	cp drivers/ConsumerTouchDriver-5.3.7-6.patched build/ConsumerTouchDriver
-	cp Readme.md build/
-	cd build && zip ../$@ PenTabletDriver ConsumerTouchDriver Readme.md
+	cd build && zip ../$@ PenTabletDriver ConsumerTouchDriver Readme.html
+
+# Render documentation markdown using marked: https://www.npmjs.com/package/marked
+build/Readme.html : Readme.md build/
+	( cat drivers/readme-prologue.html; marked --gfm < $<; cat drivers/readme-epilogue.html ) > $@
 
 # Create the installer package by modifying Wacom's original
 Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : drivers/Install\ Wacom\ Tablet-5.3.7-6-original.pkg $(PATCHED_DRIVERS) drivers/Welcome.rtf
