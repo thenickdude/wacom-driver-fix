@@ -21,6 +21,7 @@ This is a problem because the 5.3.7-6 driver is the last driver that supported t
 - CTH-670 - Bamboo Create
 - CTL-460, CTL-660 - Bamboo Pen 
 - CTL-470 - Bamboo Connect / Bamboo Pen
+- CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
