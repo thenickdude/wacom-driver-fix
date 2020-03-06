@@ -1,14 +1,16 @@
-# Wacom 5.x macOS driver fix
+# Wacom Bamboo and Intuos 3 macOS driver fix
 
-**Wacom's 5.3.7-6 macOS driver has a bug in it** that causes it to completely fail to start
-on macOS 10.15 Catalina (and likely other versions of macOS). This doesn't apply to the Windows driver, or to the
-new 6.x series of drivers.
+Wacom's macOS drivers for Bamboo and Intuos 3 tablets have bugs in them that cause them to completely fail to start
+on macOS 10.15 Catalina (and likely other versions of macOS). This doesn't apply to the Windows driver, or to the drivers
+for their newer tablets.
 
-When you try to open the Wacom preference pane, you'll get an error message saying
+When you try to open the Wacom preference pane with a Bamboo tablet, you'll get an error message saying
 "Waiting for synchronization", then finally "There is a problem with your tablet driver.
-Please reboot your system. If the problem persists reinstall or update the driver".
+Please reboot your system. If the problem persists reinstall or update the driver". For an Intuos 3 tablet, 
+the preference pane will open, but clicking anything will cause it to crash with the message "There was an error in Wacom
+Tablet preferences."
 
-This is a problem because the 5.3.7-6 driver is the last driver that supported these tablets:
+The affected Bamboo driver (v5.3.7-6) supported these tablets:
 
 - CTE-450, CTE-650 - Bamboo Fun / Bamboo Art Master (2007)
 - CTE-460 - Bamboo One Pen
@@ -24,25 +26,13 @@ This is a problem because the 5.3.7-6 driver is the last driver that supported t
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+And the affected Intuos driver (v6.3.15-3) supported these tablets:
+
+- PTZ-430, PTZ-630, PTZ-630SE, PTZ-930 - Intuos 3
+
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
 
 I've tested this with CTL-460 (Bamboo Pen) and CTH-470 (Bamboo Capture Pen and Touch Tablet) on Catalina 10.15.3. 
-
-## Does this bug apply to me?
-
-If you are using macOS and have Wacom driver version 5.3.7-6 installed then this bug may be 
-affecting you. [You can look up your tablet here](https://www.wacom.com/en-us/support/product-support/drivers) to see 
-which driver version is recommended for your tablet.
-
-To check if your system is affected, run this command in the terminal:
-
-    /Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver
-    
-If it gives a message about a "segmentation fault" and finishes immediately, this bug is affecting you. For example:
-
-    70602 segmentation fault
-
-If you don't see a message like that then this bug isn't the reason for your tablet not working, sorry!
 
 ## Install the fix
 
@@ -51,9 +41,11 @@ one of these options:
 
 ### Automatic method
 
-Download the installer here and double click it to run it, this will install my fixed version of Wacom's 5.3.7-6 driver:
+Download the correct installer for your tablet here and double click it to run it, this will install my fixed version of
+Wacom's driver:
 
-https://github.com/thenickdude/wacom-driver-fix/releases/download/5.3.7-6-patch-3/Install-Wacom-Tablet-5.3.7-6-patched.pkg
+- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Download patched v6.3.15-13 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.
@@ -62,19 +54,26 @@ After installing, follow the "post-install instructions" section (further down t
 
 ### Manual method
 
-Make sure you already have the [Wacom 5.3.7-6 driver](http://cdn.wacom.com/u/productsupport/drivers/mac/consumer/pentablet_5.3.7-6.dmg) 
-installed, because the manual method only replaces two of the files and doesn't install the complete driver itself.
+Make sure you already have the correct Wacom driver installed ([Wacom 5.3.7-6 for Bamboo tablets](http://cdn.wacom.com/u/productsupport/drivers/mac/consumer/pentablet_5.3.7-6.dmg)
+or [Wacom 6.3.15-3 for Intuos 3 tablets](http://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.15-3.dmg)), 
+because the manual method only replaces a couple of the driver's files and doesn't install the complete driver itself.
+
+Now download my patch for your tablet here:
+
+- [Manual patch 5.3.7-6 for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/wacom-5.3.7-6-macOS-patched.zip)
+- [Manual patch 6.3.15-3 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/wacom-6.3.15-3-macOS-patched.zip)
+
+Unzip it by double clicking it, then follow the installation instructions that match your tablet:
+
+#### Bamboo tablets
 
 First make sure that the Wacom driver is not loaded by running this command in Terminal (paste it in, then press enter to
 run it):
 
     launchctl unload /Library/LaunchAgents/com.wacom.pentablet.plist
-    
-Now download the patched driver here:
 
-https://github.com/thenickdude/wacom-driver-fix/releases/download/5.3.7-6-patch-3/wacom-5.3.7-6-macOS-patched.zip
-
-Unzip it by double clicking it, and you'll get a file called "PenTabletDriver" and "ConsumerTouchDriver". 
+The unpacked zip file you downloaded will give you files called "PenTabletDriver" and "ConsumerTouchDriver".
+ 
 In Finder, click "Go -> Go to Folder" (or press Command + Shift + G), then paste this path in the pop-up window, 
 and click Ok:
 
@@ -95,33 +94,58 @@ there, enter your password to confirm the replacement.
 
     launchctl load /Library/LaunchAgents/com.wacom.pentablet.plist
 
-After installing, follow the next "post-install instructions" section to set the permissions properly.
+After installing, follow the "post-install instructions" section to set the permissions properly.
+
+#### Intuos 3 tablets
+
+The unpacked zip you downloaded will give you a file called "WacomDriver".
+ 
+In Finder, click "Go -> Go to Folder" (or press Command + Shift + G), then paste this path in the pop-up window, 
+and click Ok:
+
+     /Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS
+
+You should see a file already in there called "WacomDriver". Move the new WacomDriver file from the zip file
+in there to replace it, confirm that you want to overwrite it, and enter your login password to confirm.
+
+Now open System Preferences and try using the Wacom Tablet preference pane, it should be working now.
+
+If you are still having issues with your tablet, follow the next "post-install instructions" section.
 
 ## Post-install instructions
 
 Touch your pen tip to your tablet, and it should prompt you to open up the Accessibility page of your system "Security & Privacy" 
 settings to grant the tablet permissions. 
 
-On the Accessibility page, click the padlock to unlock the page, then find and tick the `PenTabletDriver` entry in the 
-list. Do the same on the Input Monitoring page.
+On the Accessibility page, click the padlock to unlock the page, then find and tick any `PenTabletDriver`, `WacomTabletDriver` 
+`TabletDriver` or `WacomTabletSpringboard` entries you see in the list. Do the same on the Input Monitoring page.
 
 If your tablet supports touch, touch the tablet with your finger, it should again prompt you to grant permissions. 
-On the Accessibility page, tick the `ConsumerTouchDriver` entry. 
+On the Accessibility page, tick the `ConsumerTouchDriver` or `WacomTouchDriver` entry. 
+
+For Intuos 3 tablets, the driver might only appear on the Input Monitoring page, and you may need to reboot a second time
+for it to appear on the Accessibility page too.
 
 If your Wacom preference pane, pen support, or touch support is not yet working, you'll need to clear out all those
 permissions and try again:
 
-On the Accessibility page of Security & Privacy, Find `PenTabletDriver` in the list, select it, and click the minus 
-button to remove it, do the same with `ConsumerTouchDriver` if it's there. Go to the Input Monitoring page and do the 
-same there.
+On the Accessibility page of Security & Privacy, Find `PenTabletDriver`, `WacomTabletDriver`, `TabletDriver`, 
+`ConsumerTouchDriver`, `WacomTabletSpringboard`, and/or `WacomTouchDriver` in the list, select them, and click the minus
+button to remove them. Go to the Input Monitoring page and do the same there.
 
-Now either reboot your computer, or run these two commands in the Terminal, to reload the tablet driver:
+Now either reboot your computer, or run these two commands in the Terminal, to reload the tablet driver. For Bamboo tablets:
 
     launchctl unload /Library/LaunchAgents/com.wacom.pentablet.plist
 
     launchctl load /Library/LaunchAgents/com.wacom.pentablet.plist
+    
+For Intuos 3 tablets:
 
-Now begin the instructions in this section again.
+    launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist
+
+    launchctl load /Library/LaunchAgents/com.wacom.wacomtablet.plist
+
+This should restore the prompts to ask you to add permissions, so now begin the instructions in this section again.
 
 ## Support me
 
@@ -133,6 +157,8 @@ This will help pay for my yearly Apple Developer registration fee.
 
 ## Technical details of the bugs
 
+### Bamboo driver
+
 PenTabletDriver launches two sub-drivers to do the work for it, ConsumerTouchDriver and TabletDriver. To find those drivers 
 within its Resources folder it eventually calls this function to extract a path from a URL:
 
@@ -143,44 +169,20 @@ CFString * MacPaths::PathFromURL(CFURL *url)
 
     path = _objc_retainAutoreleasedReturnValue(url->path());
 
-    _objc_release(path); /* Whoops, now the path has only one owner, the url! */
+    _objc_release(path); /* Whoops, path is destroyed here! */
 
-    return path;
+    return path; /* Now returning a free'd path */
 }
 ```
 
 Forgive me for paraphrasing the original Objective C code as C++, I don't speak objc!
 
-When the path is returned by CFURL by the call to `url->path()`, its reference count is 1 because the url object retains ownership
-of it internally.
+When CFURL creates the path, its reference count starts out at 1. It queues the reference count to be decremented later 
+by calling `autorelease()` on it, then returns it to Wacom's driver. This call to `autorelease` pairs up with Wacom's 
+`retainAutoreleasedReturnValue()` call, and so and leaves the path's reference count untouched, at 1.
 
-Then another reference is added by `_objc_retainAutoreleasedReturnValue`, bringing its reference count to 2.
-
-But now the Wacom driver explicitly calls `_objc_release()` on the path. This means that the `url` object is now the only
-owner of the path, so if the `url` object is released, it will destroy the path along with it! And that's exactly what 
-the caller of this function does next: 
-
-```cpp
-CFString * MacPaths::GetBundleResourcePathOfType(CFString *resourceName, CFString *resourceType)
-{
-    CFString *mainBundle;
-    CFURL *url;
-    CFString *path = nullptr;
-    
-    if ((resourceName != nullptr) && (resourceType != nullptr)) {
-        mainBundle = CFBundle::GetMainBundle();
-        
-        url = CFBundle::CopyResourceURL(mainBundle, resourceName, resourceType, 0);
-        
-        path = MacPaths::PathFromURL(url);
-        
-        if (url != nullptr) {
-            CFRelease(url); /* path goes bye-bye here! */
-        }
-    }
-    return path; /* Returning an object that has already been free'd! */
-}
-```
+But now the Wacom driver calls `_objc_release()` on the path. This decrements its reference count to 0, and
+the path is immediately freed! 
 
 This freed path is used while launching the sub-driver, which can trigger a segfault in `ProcessUtils::LaunchApplicationWithBundleID()`. 
 This kills the driver.
@@ -280,3 +282,46 @@ _CGEventSetIntegerValueField(eventStructure, 110 /* kCGEventGestureHIDType */,  
 _CGEventSetIntegerValueField(eventStructure, 115 /* kCGEventGestureSwipeValue */, reinterpret_cast<int32_t&>(dirAmount));
 _CGEventSetIntegerValueField(eventStructure, 132 /* kCGEventGesturePhase */,      this->eventPhase);
 ```
+
+### Intuos 3 driver
+
+The Intuos 3 driver has a bug in its preference pane that causes it to crash as soon as an item is clicked on.
+
+One of the main features of the preference pane's UI are the lists of icons representing the tablets, tools and 
+applications you can configure. That icon list control uses a function like this to dispatch events (such as clicks) to
+its children:
+
+```cpp
+void WTCCPLIconList::action:(ID event, SEL param_2, ID param_3) {
+  int selectedIndex;
+  ID target;
+  ID action;
+  
+  target = _objc_retainAutoreleasedReturnValue(event->target());
+  action = event->action();
+  selectedIndex = event->selectedIndex();
+
+  event->scrollIndexToVisible(selectedIndex);
+
+  if ((target != 0) && (action != 0)) {
+    code* handler = target->methodForSelector(action);
+
+    Object *result = handler(target, action, event);
+                    
+    result = _objc_retainAutoreleasedReturnValue(result); // (!)
+    _objc_release(result);                                // (!)
+  }
+
+  event->updateButtonStates();
+
+  _objc_release(target);
+}
+```
+
+The problem with this code is that it requires the event's `handler()` function to return an object, which it then uselessly
+retains() and releases(). But one of the handler functions that will be called is `OEventDispatcher_Professional::listClickAction()`, 
+and that function is a `void` function (with no well-defined return value)! 
+
+So `action:()` ends up calling `retain()` and `release()` on a garbage pointer, which causes a segfault.
+
+The patch here is easy - that useless pair of `retain()` and `release()` calls is deleted.

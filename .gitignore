@@ -1,4 +1,5 @@
-drivers/*.patched
-drivers/*.original
+src/*/*.patched
+src/*/*.original
+src/6.3.17-5/Wacom Desktop Center.app
 build/
 package/
