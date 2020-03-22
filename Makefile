@@ -11,7 +11,8 @@ PATCHED_DRIVERS_5_3_7_6= \
 
 PATCHED_DRIVERS_6_3_15_3= \
 	src/6.3.15-3/WacomTablet.patched \
-	src/6.3.15-3/postinstall.patched
+	src/6.3.15-3/postinstall.patched \
+	src/6.3.15-3/WacomTabletDriver.patched
 
 PATCHED_DRIVERS=$(PATCHED_DRIVERS_5_3_7_6) $(PATCHED_DRIVERS_6_3_15_3)
 
@@ -23,7 +24,8 @@ EXTRACTED_DRIVERS_5_3_7_6= \
 
 EXTRACTED_DRIVERS_6_3_15_3= \
 	src/6.3.15-3/WacomTablet.original \
-	src/6.3.15-3/postinstall.original
+	src/6.3.15-3/postinstall.original \
+	src/6.3.15-3/WacomTabletDriver.original
 
 EXTRACTED_DRIVERS_6_3_17_5= \
 	src/6.3.17-5/Wacom\ Desktop\ Center.app
@@ -88,7 +90,8 @@ wacom-5.3.7-6-macOS-patched.zip : $(PATCHED_DRIVERS_5_3_7_6) build/ build/Readme
 wacom-6.3.15-3-macOS-patched.zip : $(PATCHED_DRIVERS_6_3_15_3) build/ build/Readme.html
 	rm -f $@
 	cp src/6.3.15-3/WacomTablet.patched build/WacomTablet
-	cd build && zip ../$@ WacomTablet Readme.html
+	cp src/6.3.15-3/WacomTabletDriver.patched build/WacomTabletDriver
+	cd build && zip ../$@ WacomTablet WacomTabletDriver Readme.html
 
 # Render documentation markdown using marked: https://www.npmjs.com/package/marked
 build/Readme.html : Readme.md build/ src/readme-prologue.html src/readme-epilogue.html
@@ -164,6 +167,9 @@ Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wac
 	ln -s "Versions/Current/Resources"     package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Desktop\ Center.app/Contents/Frameworks/WacomCloudSDK.framework/Resources
 	ln -s "Versions/Current/WacomCloudSDK" package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Desktop\ Center.app/Contents/Frameworks/WacomCloudSDK.framework/WacomCloudSDK
 
+	# Add patched driver
+	cp src/6.3.15-3/WacomTabletDriver.patched package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/MacOS/WacomTabletDriver
+
 	# WacomTabletDriver loads WacomMultiTouch.framework using @rpath, which isn't allowed by the hardened runtime.
 	# Change it to use an absolute path instead
 	install_name_tool -change \
@@ -225,6 +231,7 @@ $(EXTRACTED_DRIVERS_6_3_15_3) : src/6.3.15-3/Install\ Wacom\ Tablet-6.3.15-3-ori
 
 	cp package/content.pkg/Scripts/postinstall src/6.3.15-3/postinstall.original
 	cp package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet src/6.3.15-3/WacomTablet.original
+	cp package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/MacOS/WacomTabletDriver src/6.3.15-3/WacomTabletDriver.original
 
 $(EXTRACTED_DRIVERS_6_3_17_5) : src/6.3.17-5/Install\ Wacom\ Tablet-6.3.17-5-original.pkg
 	$(call unpack_package,"$<")

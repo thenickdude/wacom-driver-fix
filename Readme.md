@@ -28,7 +28,7 @@ The affected Bamboo driver (v5.3.7-6) supported these tablets:
 
 And the affected Intuos driver (v6.3.15-3) supported these tablets:
 
-- PTZ-430, PTZ-630, PTZ-630SE, PTZ-930 - Intuos 3
+- PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
 
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
 
@@ -44,8 +44,8 @@ one of these options:
 Download the correct installer for your tablet here and double click it to run it, this will install my fixed version of
 Wacom's driver:
 
-- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Download patched v6.3.15-13 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Download patched v6.3.15-13 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.
@@ -60,8 +60,8 @@ because the manual method only replaces a couple of the driver's files and doesn
 
 Now download my patch for your tablet here:
 
-- [Manual patch 5.3.7-6 for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/wacom-5.3.7-6-macOS-patched.zip)
-- [Manual patch 6.3.15-3 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-4/wacom-6.3.15-3-macOS-patched.zip)
+- [Manual patch 5.3.7-6 for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/wacom-5.3.7-6-macOS-patched.zip)
+- [Manual patch 6.3.15-3 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/wacom-6.3.15-3-macOS-patched.zip)
 
 Unzip it by double clicking it, then follow the installation instructions that match your tablet:
 
@@ -98,7 +98,7 @@ After installing, follow the "post-install instructions" section to set the perm
 
 #### Intuos 3 tablets
 
-The unpacked zip you downloaded will give you a file called "WacomDriver".
+The unpacked zip you downloaded will give you files called "WacomDriver" and "WacomTabletDriver".
  
 In Finder, click "Go -> Go to Folder" (or press Command + Shift + G), then paste this path in the pop-up window, 
 and click Ok:
@@ -107,6 +107,19 @@ and click Ok:
 
 You should see a file already in there called "WacomDriver". Move the new WacomDriver file from the zip file
 in there to replace it, confirm that you want to overwrite it, and enter your login password to confirm.
+
+In Finder, click "Go -> Go to Folder" (or press Command + Shift + G), then paste this path in the pop-up window, 
+and click Ok:
+
+     /Library/Application Support/Tablet/WacomTabletDriver.app/Contents/MacOS
+
+Move the new WacomTabletDriver file from the zip file in there to replace the existing one.
+
+Now either restart your computer, or run these two command using the terminal, to reload the tablet driver:
+
+    launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist
+
+    launchctl load /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
 Now open System Preferences and try using the Wacom Tablet preference pane, it should be working now.
 
@@ -325,3 +338,71 @@ and that function is a `void` function (with no well-defined return value)!
 So `action:()` ends up calling `retain()` and `release()` on a garbage pointer, which causes a segfault.
 
 The patch here is easy - that useless pair of `retain()` and `release()` calls is deleted.
+
+There's another problem with this driver. If, while trying to get your tablet to work, you accidentally install the 
+latest Wacom driver (that doesn't support Intuos 3), it writes a newer-format preference file that the old Intuos 3
+driver will crash when trying to read. And this situation doesn't resolve itself, the user has to manually use the Wacom
+Utility to delete the tablet preferences in order to fix it. 
+
+This is odd because the preference file includes a version number which is designed to avoid this very situation. The
+old driver uses version 5, and the latest driver uses version 6:
+
+```xml
+<ImportFileVersion type="integer">6</ImportFileVersion>
+```
+
+And the driver code explicitly checks for this version number and should abort when it is too new:
+
+```cpp
+CTabletDriver::ReadSettings(basic_string settingsFilename, ...) 
+{    
+    basic_string settingsFileContent;
+    CSettingsMap settingsMap;
+
+    ...
+
+    ReadFromXMLFile(settingsMap, settingsFilename, settingsFileContent);
+
+    SettingsMigration *migration = SettingsMigration::MigratePen(settingsMap);
+
+    if (migration != nullptr) {
+        int fileVersion = settingsMap.IntegerForKeyWithDefault("ImportFileVersion", -1)
+
+        if (fileVersion < 1) {
+            // Report error
+        } else if (fileVersion <= this->supportedVersion) {
+            // Accept the loaded settings
+        } else {
+            // Report error: Settings are too new   
+        }
+    }
+
+    ...
+}
+```
+
+But the driver never aborts, instead it crashes while attempting to load the preferences. So what's going wrong here? 
+The secret lies inside the `MigratePen()` function. This function is designed to upgrade older settings files to the 
+current version, but unfortunately in the process it unconditionally overwrites the `ImportFileVersion` with the 
+current version (5)! This leaves `CTabletDriver::ReadSettings()` unable to detect that the settings are too new to be 
+parsed.
+
+To solve this I beefed up the invalid version detection code from `MigratePen()`:
+
+```cpp
+if (settingsVersion < 1) {
+    // Report invalid settings version and return NULL
+} 
+```
+
+To make it:
+
+```cpp
+if (settingsVersion < 1 || settingsVersion > 5) {
+    // Report invalid settings version and return NULL
+} 
+```
+
+So now if the preferences are too new, `MigratePen()` won't attempt to upgrade them, and `ReadSettings()` will cleanly skip 
+loading the preferences. This causes the preferences to remain at their defaults, and if the user edits the settings using 
+the preference pane, the settings should be cleanly overwritten.
