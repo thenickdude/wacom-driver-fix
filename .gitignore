@@ -1,5 +1,7 @@
 src/*/*.patched
 src/*/*.original
+src/*/*.dmg
+src/*/*.pkg
 src/6.3.17-5/Wacom Desktop Center.app
 build/
 package/
