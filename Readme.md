@@ -1,12 +1,12 @@
-# Wacom Bamboo and Intuos 3 macOS driver fix
+# Wacom Bamboo, Intuos 3 and Cintiq 1st gen macOS driver fix
 
-Wacom's macOS drivers for Bamboo and Intuos 3 tablets have bugs in them that cause them to completely fail to start
+Wacom's macOS drivers for Bamboo, Intuos 3 and Cintiq 1st gen tablets have bugs in them that cause them to completely fail to start
 on macOS 10.15 Catalina (and likely other versions of macOS). This doesn't apply to the Windows driver, or to the drivers
 for their newer tablets.
 
 When you try to open the Wacom preference pane with a Bamboo tablet, you'll get an error message saying
 "Waiting for synchronization", then finally "There is a problem with your tablet driver.
-Please reboot your system. If the problem persists reinstall or update the driver". For an Intuos 3 tablet, 
+Please reboot your system. If the problem persists reinstall or update the driver". For an Intuos 3 or Cintiq 1st gen tablet, 
 the preference pane will open, but clicking anything will cause it to crash with the message "There was an error in Wacom
 Tablet preferences."
 
@@ -26,13 +26,13 @@ The affected Bamboo driver (v5.3.7-6) supported these tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
-And the affected Intuos driver (v6.3.15-3) supported these tablets:
+And the affected Intuos and Cintiq driver (v6.3.15-3) supported these tablets:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
+- DTZ-2100 - Cintiq 21UX 1st Gen.
+- DTZ-2000 - Cintiq 20WSX
 
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
-
-I've tested this with CTL-460 (Bamboo Pen) and CTH-470 (Bamboo Capture Pen and Touch Tablet) on Catalina 10.15.3. 
 
 ## Install the fix
 
@@ -45,7 +45,7 @@ Download the correct installer for your tablet here and double click it to run i
 Wacom's driver:
 
 - [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Download patched v6.3.15-13 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Download patched v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.
@@ -55,13 +55,13 @@ After installing, follow the "post-install instructions" section (further down t
 ### Manual method
 
 Make sure you already have the correct Wacom driver installed ([Wacom 5.3.7-6 for Bamboo tablets](http://cdn.wacom.com/u/productsupport/drivers/mac/consumer/pentablet_5.3.7-6.dmg)
-or [Wacom 6.3.15-3 for Intuos 3 tablets](http://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.15-3.dmg)), 
+or [Wacom 6.3.15-3 for Intuos 3 and Cintiq tablets](http://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.15-3.dmg)), 
 because the manual method only replaces a couple of the driver's files and doesn't install the complete driver itself.
 
 Now download my patch for your tablet here:
 
 - [Manual patch 5.3.7-6 for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/wacom-5.3.7-6-macOS-patched.zip)
-- [Manual patch 6.3.15-3 for Intuos 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/wacom-6.3.15-3-macOS-patched.zip)
+- [Manual patch 6.3.15-3 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/wacom-6.3.15-3-macOS-patched.zip)
 
 Unzip it by double clicking it, then follow the installation instructions that match your tablet:
 
@@ -96,7 +96,7 @@ there, enter your password to confirm the replacement.
 
 After installing, follow the "post-install instructions" section to set the permissions properly.
 
-#### Intuos 3 tablets
+#### Intuos 3 and Cintiq 1st gen tablets
 
 The unpacked zip you downloaded will give you files called "WacomDriver" and "WacomTabletDriver".
  
@@ -127,8 +127,8 @@ If you are still having issues with your tablet, follow the next "post-install i
 
 ## Post-install instructions
 
-Touch your pen tip to your tablet, and it should prompt you to open up the Accessibility page of your system "Security & Privacy" 
-settings to grant the tablet permissions. 
+Touch your pen tip to your tablet, and it should prompt you visit System Preferences > Security & Privacy > Privacy Tab
+to grant the tablet permissions. 
 
 On the Accessibility page, click the padlock to unlock the page, then find and tick any `PenTabletDriver`, `WacomTabletDriver` 
 `TabletDriver` or `WacomTabletSpringboard` entries you see in the list. Do the same on the Input Monitoring page.
@@ -136,15 +136,16 @@ On the Accessibility page, click the padlock to unlock the page, then find and t
 If your tablet supports touch, touch the tablet with your finger, it should again prompt you to grant permissions. 
 On the Accessibility page, tick the `ConsumerTouchDriver` or `WacomTouchDriver` entry. 
 
-For Intuos 3 tablets, the driver might only appear on the Input Monitoring page, and you may need to reboot a second time
+For Intuos 3 and Cintiq tablets, the driver might only appear on the Input Monitoring page, and you may need to reboot a second time
 for it to appear on the Accessibility page too.
 
-If your Wacom preference pane, pen support, or touch support is not yet working, you'll need to clear out all those
-permissions and try again:
+**If your Wacom preference pane, pen support, or touch support is not yet working, or the entries never appeared in the
+list for you,** you likely had permissions left over from the previous tablet driver, and these stale entries all need to 
+be removed like so:
 
-On the Accessibility page of Security & Privacy, Find `PenTabletDriver`, `WacomTabletDriver`, `TabletDriver`, 
-`ConsumerTouchDriver`, `WacomTabletSpringboard`, and/or `WacomTouchDriver` in the list, select them, and click the minus
-button to remove them. Go to the Input Monitoring page and do the same there.
+On the "Accessibility" page of Security & Privacy, Find anything related to Wacom in the list (e.g. `PenTabletDriver`, 
+`WacomTabletDriver`, `TabletDriver`,  `ConsumerTouchDriver`, `WacomTabletSpringboard`, `WacomTouchDriver`), select them,
+and click the minus button to remove them. Go to the "Input Monitoring page" and do the same there.
 
 Now either reboot your computer, or run these two commands in the Terminal, to reload the tablet driver. For Bamboo tablets:
 
@@ -152,7 +153,7 @@ Now either reboot your computer, or run these two commands in the Terminal, to r
 
     launchctl load /Library/LaunchAgents/com.wacom.pentablet.plist
     
-For Intuos 3 tablets:
+For Intuos 3 and Cintiq tablets:
 
     launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
@@ -166,7 +167,7 @@ If you enjoyed having your tablet back in action, please consider sending me a t
 
 [![Donate button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url) 
 
-This will help pay for my yearly Apple Developer registration fee.
+This will help fund me and further development of these fixed drivers.
 
 ## Technical details of the bugs
 
@@ -296,9 +297,9 @@ _CGEventSetIntegerValueField(eventStructure, 115 /* kCGEventGestureSwipeValue */
 _CGEventSetIntegerValueField(eventStructure, 132 /* kCGEventGesturePhase */,      this->eventPhase);
 ```
 
-### Intuos 3 driver
+### Intuos 3 and Cintiq driver
 
-The Intuos 3 driver has a bug in its preference pane that causes it to crash as soon as an item is clicked on.
+The Intuos 3 and Cintiq driver has a bug in its preference pane that causes it to crash as soon as an item is clicked on.
 
 One of the main features of the preference pane's UI are the lists of icons representing the tablets, tools and 
 applications you can configure. That icon list control uses a function like this to dispatch events (such as clicks) to
