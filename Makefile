@@ -1,3 +1,4 @@
+# Delete these two lines in order to build a fully unsigned installer:
 CODE_SIGNING_IDENTITY=Developer ID Application: Nicholas Sherlock (8J3T27D935)
 PACKAGE_SIGNING_IDENTITY=Developer ID Installer: Nicholas Sherlock (8J3T27D935)
 
@@ -115,6 +116,8 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
 	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME_5)
+else
+	codesign --remove-signature $(SIGN_ME_5)
 endif
 
 	# Recreate BOM
@@ -186,6 +189,8 @@ Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wac
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
 	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME_6)
+else
+	codesign --remove-signature $(SIGN_ME_6)
 endif
 
 	# Recreate BOM
@@ -226,9 +231,12 @@ src/6.3.15-3/pentablet_6.3.15-3.dmg :
 	curl -o $@ "https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.15-3.dmg"
 	[ $$(md5 $@ | awk '{ print $$4 }') = "b16906fea82d7375b3e8edee973663f5" ] || (rm $@; false) # Verify download is undamaged
 
-src/6.3.17-5/pentablet_6.3.17-5.dmg :
+src/6.3.17-5/pentablet_6.3.17-5.dmg : src/6.3.17-5/
 	curl -o $@ "https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.17-5.dmg"
 	[ $$(md5 $@ | awk '{ print $$4 }') = "42dafc4250df4649f1a122578425bbad" ] || (rm $@; false) # Verify download is undamaged
+
+src/6.3.17-5/ :
+	mkdir src/6.3.17-5
 
 src/5.3.7-6/Install\ Wacom\ Tablet.pkg : src/5.3.7-6/pentablet_5.3.7-6.dmg
 	hdiutil attach -quiet -nobrowse -mountpoint src/5.3.7-6/dmg "$<"
