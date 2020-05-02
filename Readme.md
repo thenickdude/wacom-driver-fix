@@ -34,6 +34,8 @@ And the affected Intuos and Cintiq driver (v6.3.15-3) supported these tablets:
 
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
 
+[🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)
+
 ## Install the fix
 
 You can either have everything installed for you automatically, or install the fixed files yourself manually, pick 
