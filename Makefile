@@ -86,17 +86,22 @@ wacom-5.3.7-6-macOS-patched.zip : $(PATCHED_DRIVERS_5_3_7_6) build/ build/Readme
 	rm -f $@
 	cp src/5.3.7-6/PenTabletDriver.patched build/PenTabletDriver
 	cp src/5.3.7-6/ConsumerTouchDriver.patched build/ConsumerTouchDriver
-	cd build && zip ../$@ PenTabletDriver ConsumerTouchDriver Readme.html
+	cd build && zip --must-match ../$@ PenTabletDriver ConsumerTouchDriver Readme.html
 
 wacom-6.3.15-3-macOS-patched.zip : $(PATCHED_DRIVERS_6_3_15_3) build/ build/Readme.html
 	rm -f $@
 	cp src/6.3.15-3/WacomTablet.patched build/WacomTablet
 	cp src/6.3.15-3/WacomTabletDriver.patched build/WacomTabletDriver
-	cd build && zip ../$@ WacomTablet WacomTabletDriver Readme.html
+	cd build && zip --must-match ../$@ WacomTablet WacomTabletDriver Readme.html
 
-# Render documentation markdown using marked: https://www.npmjs.com/package/marked
-build/Readme.html : Readme.md build/ src/readme-prologue.html src/readme-epilogue.html
-	( cat src/readme-prologue.html; marked --gfm < $<; cat src/readme-epilogue.html ) > $@
+build/Readme.html : Readme-manual-installation.md build/ src/readme-prologue.html src/readme-epilogue.html
+	# Rendering documentation markdown using marked: https://www.npmjs.com/package/marked
+	# Removes the section which tells the user to unpack the zip, since they've done that already
+	( \
+		cat src/readme-prologue.html; \
+		perl -0777 -pe 's/Make sure you already.*then follow the/To install the fix for your Wacom driver, follow the/igs' $< | marked --gfm; \
+ 		cat src/readme-epilogue.html \
+	) > $@
 
 # Create the installer package by modifying Wacom's original
 Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom\ Tablet.pkg $(PATCHED_DRIVERS_5_3_7_6) src/5.3.7-6/Welcome.rtf
@@ -231,7 +236,7 @@ src/6.3.15-3/pentablet_6.3.15-3.dmg :
 	curl -o $@ "https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.15-3.dmg"
 	[ $$(md5 $@ | awk '{ print $$4 }') = "b16906fea82d7375b3e8edee973663f5" ] || (rm $@; false) # Verify download is undamaged
 
-src/6.3.17-5/pentablet_6.3.17-5.dmg : src/6.3.17-5/
+src/6.3.17-5/pentablet_6.3.17-5.dmg :
 	curl -o $@ "https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.17-5.dmg"
 	[ $$(md5 $@ | awk '{ print $$4 }') = "42dafc4250df4649f1a122578425bbad" ] || (rm $@; false) # Verify download is undamaged
 
@@ -248,7 +253,7 @@ src/6.3.15-3/Install\ Wacom\ Tablet.pkg : src/6.3.15-3/pentablet_6.3.15-3.dmg
 	cp "src/6.3.15-3/dmg/Install Wacom Tablet.pkg" "$@"
 	hdiutil detach -force src/6.3.15-3/dmg
 
-src/6.3.17-5/Install\ Wacom\ Tablet.pkg : src/6.3.17-5/pentablet_6.3.17-5.dmg
+src/6.3.17-5/Install\ Wacom\ Tablet.pkg : src/6.3.17-5/ src/6.3.17-5/pentablet_6.3.17-5.dmg
 	hdiutil attach -quiet -nobrowse -mountpoint src/6.3.17-5/dmg "$<"
 	cp "src/6.3.17-5/dmg/Install Wacom Tablet.pkg" "$@"
 	hdiutil detach -force src/6.3.17-5/dmg

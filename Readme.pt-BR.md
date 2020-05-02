@@ -44,7 +44,7 @@ Depois, remova as permissões de driver desatualizadas:
 - Faça o mesmo na guia "Monitoramento de entrada" 
 - Reinicie o computador
 
-![Remover permissões desatualizadas](screenshots/pt-BR/security-and-privacy-delete.jpg)] 
+![Remover permissões desatualizadas](screenshots/pt-BR/security-and-privacy-delete.jpg)
 
 Segundo, adicione as novas permissões de driver:
 
@@ -54,7 +54,7 @@ Segundo, adicione as novas permissões de driver:
 - Na lista exibida, verifique se qualquer componente da lista Wacom tem uma marca de seleção.
 - Faça o mesmo na guia "Monitoramento de entrada" 
 
-![marca de seleçã](screenshots/pt-BR/security-and-privacy-tick.jpg)] 
+![marca de seleçã](screenshots/pt-BR/security-and-privacy-tick.jpg)
 
 O mesa digitalizadora deve estar funcionando corretamente agora!
 
