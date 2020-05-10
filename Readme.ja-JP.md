@@ -25,7 +25,9 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 - DTZ-2100 - Cintiq 21UX 1st Gen.
 - DTZ-2000 - Cintiq 20WSX
 
-[🇳🇿 English installation instructions](Readme.md)
+[🇳🇿 English instructions](Readme.md)   
+[🇦🇺 Simplified English instructions](Readme.en-simple.md)   
+[🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)  
 
 ## 修正ドライバーインストール方法
 

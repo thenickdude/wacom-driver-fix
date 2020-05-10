@@ -25,7 +25,9 @@ O driver Intuos e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 - DTZ-2100 - Cintiq 21UX 1st Gen.
 - DTZ-2000 - Cintiq 20WSX
 
-[🇳🇿 English installation instructions](Readme.md)
+[🇳🇿 English instructions](Readme.md)   
+[🇦🇺 Simplified English instructions](Readme.en-simple.md)   
+[🇯🇵 日本語で表示](Readme.ja-JP.md)
 
 ## Instalação do driver
 
