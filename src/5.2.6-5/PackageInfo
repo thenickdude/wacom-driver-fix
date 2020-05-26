@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pkg-info overwrite-permissions="true" relocatable="false" identifier="com.wacom.PenTabletInstaller" postinstall-action="none" version="0" format-version="2" generator-version="InstallCmds-609 (16B2327e)" auth="root">
+    <payload numberOfFiles="900" installKBytes="50941"/>
+
+	<bundle CFBundleShortVersionString="WacomTabletPlugin 2.1.0.1" CFBundleVersion="2.1.0.1" id="com.WacomTabletPluginLib.WacomTabletPlugin" path="Library/Internet Plug-Ins/WacomTabletPlugin.plugin"/>
+	<bundle CFBundleShortVersionString="Pen Tablet 5.2.6-5" CFBundleVersion="5.2.6" id="com.wacom.kext.pentablet" path="Library/Extensions/Pen Tablet.kext"/>
+	<bundle CFBundleShortVersionString="PenTablet v5.2.6-5" CFBundleVersion="5.2.6f5" id="com.wacom.PenTabletSettingsPrefPane" path="Library/PreferencePanes/PenTablet.prefpane"/>
+	<bundle CFBundleShortVersionString="Wacom Tablet 5.2.6-5" CFBundleVersion="5.2.6f5" id="com.wacom.pentablet" path="Library/Application Support/Tablet/PenTabletDriver.app"/>
+	<bundle CFBundleShortVersionString="v5.2.6-5" CFBundleVersion="5.2.6f5" id="com.wacom.RemovePenTablet" path="Applications/Pen Tablet.localized/Pen Tablet Utility.app"/>
+	<bundle CFBundleShortVersionString="1.0" CFBundleVersion="1" id="com.wacom.WacomMultiTouch" path="Library/Frameworks/WacomMultiTouch.framework"/>
+
+    <bundle-version/>
+    <upgrade-bundle>
+        <bundle id="com.wacom.WacomMultiTouch"/>
+        <bundle id="com.wacom.kext.pentablet"/>
+        <bundle id="com.wacom.RemovePenTablet"/>
+        <bundle id="com.WacomTabletPluginLib.WacomTabletPlugin"/>
+        <bundle id="com.wacom.pentablet"/>
+        <bundle id="com.wacom.PenTabletSettingsPrefPane"/>
+    </upgrade-bundle>
+    <update-bundle/>
+    <atomic-update-bundle/>
+    <strict-identifier/>
+    <relocate/>
+    <scripts>
+        <preinstall file="./preflight"/>
+        <postinstall file="./postflight"/>
+    </scripts>
+</pkg-info>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Please look at the URL
+ https://developer.apple.com/library/mac/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Introduction.html#//apple_ref/doc/uid/TP40005370-CH1-SW1
+ to see documentation on how to use this file.
+ Also take a peek at
+ http://www.shanekirk.com/2013/10/creating-flat-packages-in-osx/
+ -->
+<installer-gui-script minSpecVersion="2">
+    <title>Wacom</title>
+    <background file="background" mime-type="image/png"/>
+    <pkg-ref id="com.wacom.PenTabletInstaller">
+        <bundle-version>
+            <bundle CFBundleShortVersionString="WacomTabletPlugin 2.1.0.1" CFBundleVersion="2.1.0.1" id="com.WacomTabletPluginLib.WacomTabletPlugin" path="Library/Internet Plug-Ins/WacomTabletPlugin.plugin"/>
+            <bundle CFBundleShortVersionString="Pen Tablet 5.2.6-5" CFBundleVersion="5.2.6" id="com.wacom.kext.pentablet" path="Library/Extensions/Pen Tablet.kext"/>
+            <bundle CFBundleShortVersionString="PenTablet v5.2.6-5" CFBundleVersion="5.2.6f5" id="com.wacom.PenTabletSettingsPrefPane" path="Library/PreferencePanes/PenTablet.prefpane"/>
+            <bundle CFBundleShortVersionString="Wacom Tablet 5.2.6-5" CFBundleVersion="5.2.6f5" id="com.wacom.pentablet" path="Library/Application Support/Tablet/PenTabletDriver.app"/>
+            <bundle CFBundleShortVersionString="v5.2.6-5" CFBundleVersion="5.2.6f5" id="com.wacom.RemovePenTablet" path="Applications/Pen Tablet.localized/Pen Tablet Utility.app"/>
+            <bundle CFBundleShortVersionString="1.0" CFBundleVersion="1" id="com.wacom.WacomMultiTouch" path="Library/Frameworks/WacomMultiTouch.framework"/>
+        </bundle-version>
+    </pkg-ref>
+    <options customize="never" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="10.9.0"/>
+        </allowed-os-versions>
+    </volume-check>
+    <license file="License" mime-type="text/richtext"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.wacom.PenTabletInstaller"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="com.wacom.PenTabletInstaller" visible="false">
+        <pkg-ref id="com.wacom.PenTabletInstaller"/>
+    </choice>
+    <pkg-ref id="com.wacom.PenTabletInstaller" version="0" onConclusion="none" installKBytes="50941">#content.pkg</pkg-ref>
+    <welcome file="Welcome.rtf" mime-type="text/richtext"/>
+</installer-gui-script>

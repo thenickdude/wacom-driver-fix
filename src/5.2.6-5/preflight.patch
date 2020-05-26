@@ -1,0 +1,9 @@
+147c147,150
+< 	
+---
+> 
+> 	print "Unload LaunchAgent\n";
+> 	`./unloadagent`;
+> 
+158d160
+< 	`"$preflight_location/SystemLoginItemTool" -d "$old_tablet_driver" -p`;

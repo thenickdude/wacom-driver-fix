@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Attempt to load Wacom LaunchAgent for all running users
+# By https://github.com/MagerValp/Scripted-Mac-Package-Creation/blob/master/scripts/postinstall
+for pid_uid in $(/bin/ps -axo pid,uid,args | /usr/bin/grep -i "[l]oginwindow.app" | /usr/bin/awk '{print $1 "," $2}'); do
+	pid=$(echo $pid_uid | /usr/bin/cut -d, -f1)
+	uid=$(echo $pid_uid | /usr/bin/cut -d, -f2)
+
+	/bin/launchctl bootstrap gui/$uid /Library/LaunchAgents/com.wacom.pentablet.plist
+done
