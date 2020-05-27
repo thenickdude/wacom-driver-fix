@@ -38,7 +38,7 @@ there, enter your password to confirm the replacement.
 
 **We're done installing patches**, so back in the terminal, run:
 
-    launchctl load /Library/LaunchAgents/com.wacom.pentablet.plist
+    launchctl load -w /Library/LaunchAgents/com.wacom.pentablet.plist
 
 After installing, follow the "post-install instructions" section to set the permissions properly.
 
@@ -65,7 +65,7 @@ Now either restart your computer, or run these two command using the terminal, t
 
     launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
-    launchctl load /Library/LaunchAgents/com.wacom.wacomtablet.plist
+    launchctl load -w /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
 Now open System Preferences and try using the Wacom Tablet preference pane, it should be working now.
 
@@ -97,13 +97,13 @@ Now either reboot your computer, or run these two commands in the Terminal, to r
 
     launchctl unload /Library/LaunchAgents/com.wacom.pentablet.plist
 
-    launchctl load /Library/LaunchAgents/com.wacom.pentablet.plist
+    launchctl load -w /Library/LaunchAgents/com.wacom.pentablet.plist
     
 For Intuos 3 and Cintiq tablets:
 
     launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
-    launchctl load /Library/LaunchAgents/com.wacom.wacomtablet.plist
+    launchctl load -w /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
 This should restore the prompts to ask you to add permissions, so now begin the instructions in this section again.
 
