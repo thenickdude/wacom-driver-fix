@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Please look at the URL
+ https://developer.apple.com/library/mac/documentation/DeveloperTools/Reference/DistributionDefinitionRef/Chapters/Introduction.html#//apple_ref/doc/uid/TP40005370-CH1-SW1
+ to see documentation on how to use this file.
+ Also take a peek at
+ http://www.shanekirk.com/2013/10/creating-flat-packages-in-osx/
+ -->
+<installer-gui-script minSpecVersion="2">
+    <title>Wacom</title>
+    <background file="background" mime-type="image/png"/>
+    <pkg-ref id="com.wacom.installwacomtablet">
+        <bundle-version>
+            <bundle CFBundleShortVersionString="1.1.1-1" CFBundleVersion="1.1.1f1" id="com.wacom.safaritabletplugin" path="Library/Internet Plug-Ins/WacomSafari.plugin"/>
+            <bundle CFBundleShortVersionString="1.1.1-1" CFBundleVersion="1.1.1f1" id="com.wacom.tabletplugin" path="Library/Internet Plug-Ins/WacomNetscape.plugin"/>
+            <bundle CFBundleShortVersionString="Wacom Tablet 6.1.6-4" CFBundleVersion="6.1.6" id="com.wacom.kext.wacomtablet" path="Library/Extensions/Wacom Tablet.kext"/>
+            <bundle CFBundleShortVersionString="Wacom v6.1.6-4" CFBundleVersion="6.1.6f4" id="com.wacom.settingsPrefPane" path="Library/PreferencePanes/WacomTablet.prefpane"/>
+            <bundle CFBundleShortVersionString="Wacom Tablet 6.1.6-4" CFBundleVersion="6.1.6f4" id="com.wacom.Wacom_TabletDriver" path="Library/Application Support/Tablet/WacomTabletDriver.app"/>
+            <bundle CFBundleShortVersionString="v6.1.6-4" CFBundleVersion="6.1.6f4" id="com.wacom.RemoveWacomTablet" path="Applications/Wacom Tablet.localized/Wacom Tablet Utility.app"/>
+        </bundle-version>
+    </pkg-ref>
+    <options customize="never" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="10.9.0"/>
+        </allowed-os-versions>
+    </volume-check>
+    <license file="License" mime-type="text/richtext"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.wacom.installwacomtablet"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="com.wacom.installwacomtablet" visible="false">
+        <pkg-ref id="com.wacom.installwacomtablet"/>
+    </choice>
+    <pkg-ref id="com.wacom.installwacomtablet" version="0" onConclusion="none" installKBytes="50941">#content.pkg</pkg-ref>
+    <welcome file="Welcome.rtf" mime-type="text/richtext"/>
+</installer-gui-script>

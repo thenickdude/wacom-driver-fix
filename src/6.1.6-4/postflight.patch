@@ -1,0 +1,54 @@
+161,171c161,188
+< 	
+< 	my $bundle 						= NSBundle->bundleWithPath_($gInstaller_dir);
+< 	my $nslocaleArray 			= $bundle->localizations();
+< 	my $nspreferredlocaleArray	= NSBundle->preferredLocalizationsFromArray_forPreferences_($nslocaleArray, 0);
+< 	my $locale 						= $nspreferredlocaleArray->objectAtIndex_(0);
+< 
+< 	print " - Language: " . $locale->UTF8String() . " ";
+< 	
+< 	my $dictPath = $gInstaller_dir . "Contents/Resources/" 
+< 								. $locale->UTF8String() . ".lproj/$manifest_name.strings";
+< 	my $dict = NSDictionary->dictionaryWithContentsOfFile_($dictPath);
+---
+> 
+> 	my $preferredLanguages = bless NSLocale->preferredLanguages, "NSArray";
+> 	my $langId = undef;
+> 	my $langString = "English";
+> 
+> 	if($preferredLanguages->count > 0)
+> 	{
+> 		#If you run in silent mode it will use output the language of the root user.
+> 		#If you run in window mode, it will have the logged in users language.
+> 		$langId = $preferredLanguages->objectAtIndex_(0);
+> 		print "lang id = " . $langId->UTF8String() . "\n";
+> 	}
+> 
+> 	if(defined $langId and exists $gLangMap{$langId->UTF8String()})
+> 	{
+> 		$langString = $gLangMap{$langId->UTF8String()};
+> 		print " - Language: " . $langString . "\n";
+> 	}
+> 
+> 	print " - Language: " . $langString . "\n";
+> 
+> 	my $dictPath = "support/"	. $langString . ".lproj/$manifest_name.strings";
+> 
+> 
+> 	my $dict = bless NSMutableDictionary->alloc, "NSDictionary";
+> 
+> 	$dict = bless $dict->initWithContentsOfFile_($dictPath), "NSDictionary";
+> 
+678,683d694
+< 	# prepare to launch the driver
+< 	setupDriverToAutoLaunch($gTablet_driver);
+< 	
+< 	# before we launch the driver, we need try and replug the tablet
+< 	reenumerateTablets();
+< 	
+686,687c697,698
+< 	`/usr/bin/open -a "$gTablet_driver"`;
+< 	
+---
+> 	`./loadagent`;
+> 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pkg-info overwrite-permissions="true" relocatable="false" identifier="com.wacom.installwacomtablet" postinstall-action="none" version="0" format-version="2" generator-version="InstallCmds-609 (16B2327e)" auth="root">
+    <payload numberOfFiles="900" installKBytes="50941"/>
+
+	<bundle CFBundleShortVersionString="1.1.1-1" CFBundleVersion="1.1.1f1" id="com.wacom.safaritabletplugin" path="Library/Internet Plug-Ins/WacomSafari.plugin"/>
+	<bundle CFBundleShortVersionString="1.1.1-1" CFBundleVersion="1.1.1f1" id="com.wacom.tabletplugin" path="Library/Internet Plug-Ins/WacomNetscape.plugin"/>
+	<bundle CFBundleShortVersionString="Wacom Tablet 6.1.6-4" CFBundleVersion="6.1.6" id="com.wacom.kext.wacomtablet" path="Library/Extensions/Wacom Tablet.kext"/>
+	<bundle CFBundleShortVersionString="Wacom v6.1.6-4" CFBundleVersion="6.1.6f4" id="com.wacom.settingsPrefPane" path="Library/PreferencePanes/WacomTablet.prefpane"/>
+	<bundle CFBundleShortVersionString="Wacom Tablet 6.1.6-4" CFBundleVersion="6.1.6f4" id="com.wacom.Wacom_TabletDriver" path="Library/Application Support/Tablet/WacomTabletDriver.app"/>
+	<bundle CFBundleShortVersionString="v6.1.6-4" CFBundleVersion="6.1.6f4" id="com.wacom.RemoveWacomTablet" path="Applications/Wacom Tablet.localized/Wacom Tablet Utility.app"/>
+
+    <bundle-version/>
+    <upgrade-bundle>
+        <bundle id="com.wacom.safaritabletplugin"/>
+        <bundle id="com.wacom.tabletplugin"/>
+        <bundle id="com.wacom.kext.wacomtablet"/>
+        <bundle id="com.wacom.settingsPrefPane"/>
+        <bundle id="com.wacom.RemoveWacomTablet"/>
+    </upgrade-bundle>
+    <update-bundle/>
+    <atomic-update-bundle/>
+    <strict-identifier/>
+    <relocate/>
+    <scripts>
+        <preinstall file="./preflight"/>
+        <postinstall file="./postflight"/>
+    </scripts>
+</pkg-info>

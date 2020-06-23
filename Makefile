@@ -14,12 +14,16 @@ PATCHED_DRIVERS_5_3_7_6= \
 	src/5.3.7-6/preinstall.patched \
 	src/5.3.7-6/postinstall.patched
 
+PATCHED_DRIVERS_6_1_6_4= \
+	src/6.1.6-4/postflight.patched \
+	src/6.1.6-4/preflight.patched
+
 PATCHED_DRIVERS_6_3_15_3= \
 	src/6.3.15-3/WacomTablet.patched \
 	src/6.3.15-3/postinstall.patched \
 	src/6.3.15-3/WacomTabletDriver.patched
 
-PATCHED_DRIVERS=$(PATCHED_DRIVERS_5_2_6_5) $(PATCHED_DRIVERS_5_3_7_6) $(PATCHED_DRIVERS_6_3_15_3)
+PATCHED_DRIVERS=$(PATCHED_DRIVERS_5_2_6_5) $(PATCHED_DRIVERS_5_3_7_6) $(PATCHED_DRIVERS_6_1_6_4) $(PATCHED_DRIVERS_6_3_15_3)
 
 EXTRACTED_DRIVERS_5_2_6_5= \
 	src/5.2.6-5/postflight.original \
@@ -35,6 +39,10 @@ EXTRACTED_DRIVERS_5_3_7_6= \
 	src/5.3.7-6/postinstall.original \
 	src/5.3.7-6/renumtablets
 
+EXTRACTED_DRIVERS_6_1_6_4= \
+	src/6.1.6-4/postflight.original \
+	src/6.1.6-4/preflight.original
+
 EXTRACTED_DRIVERS_6_3_15_3= \
 	src/6.3.15-3/WacomTablet.original \
 	src/6.3.15-3/postinstall.original \
@@ -43,8 +51,9 @@ EXTRACTED_DRIVERS_6_3_15_3= \
 EXTRACTED_DRIVERS_6_3_17_5= \
 	src/6.3.17-5/Wacom\ Desktop\ Center.app
 
-EXTRACTED_DRIVERS=$(EXTRACTED_DRIVERS_5_2_6_5) $(EXTRACTED_DRIVERS_5_3_0_3) $(EXTRACTED_DRIVERS_5_3_7_6) $(EXTRACTED_DRIVERS_6_3_15_3) $(EXTRACTED_DRIVERS_6_3_17_5)
+EXTRACTED_DRIVERS=$(EXTRACTED_DRIVERS_5_2_6_5) $(EXTRACTED_DRIVERS_5_3_0_3) $(EXTRACTED_DRIVERS_5_3_7_6) $(EXTRACTED_DRIVERS_6_1_6_4) $(EXTRACTED_DRIVERS_6_3_15_3) $(EXTRACTED_DRIVERS_6_3_17_5)
 
+# Graphire3
 SIGN_ME_5_2_6_5= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app \
@@ -59,6 +68,7 @@ SIGN_ME_5_2_6_5= \
 	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app \
 	package/content.pkg/Scripts/renumtablets
 
+# Bamboo
 SIGN_ME_5_3_7_6= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app \
@@ -70,7 +80,21 @@ SIGN_ME_5_3_7_6= \
 	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app \
 	package/content.pkg/Scripts/renumtablets
 
-SIGN_ME_6= \
+# Graphire 2
+SIGN_ME_6_1_6_4= \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/TabletDriver.app \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app \
+	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/MacOS/WacomTabletDriver \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app \
+	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomNetscape.plugin \
+	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomSafari.plugin \
+	package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Tablet\ Utility.app/Contents/Resources/SystemLoginItemTool \
+	package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Tablet\ Utility.app
+
+# Intuos 3 / Cintiq 1st gen
+SIGN_ME_6_3_15_3= \
 	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/TabletDriver.app/Contents/MacOS/TabletDriver \
@@ -98,17 +122,21 @@ define unpack_package
 	[ -d package/content.pkg/Payload/Library/LaunchDaemons ] && chmod u+x package/content.pkg/Payload/Library/LaunchDaemons || true
 endef
 
-.PHONY: all release unpack-5 unpack-6 unbless-5 unbless-6 notarize-5 notarize-6 clean
+.PHONY: all release unpack-bamboo unpack-intuos unbless-bamboo unbless-intuos notarize-bamboo notarize-graphire2 notarize-graphire3 clean
 
 all : \
-	src/5.3.0-3/ src/6.3.17-5/ \
+	src/5.3.0-3/ src/6.3.17-5/ src/6.1.6-4/ \
 	wacom-5.3.7-6-macOS-patched.zip  Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg \
-	wacom-6.3.15-3-macOS-patched.zip Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg
+	wacom-6.3.15-3-macOS-patched.zip Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg \
+	Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg \
+	Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg
 
 release : \
 	src/5.3.0-3/ src/6.3.17-5/ \
 	wacom-5.3.7-6-macOS-patched.zip Install\ Wacom\ Tablet-5.3.7-6-patched.pkg \
-	wacom-6.3.15-3-macOS-patched.zip Install\ Wacom\ Tablet-6.3.15-3-patched.pkg
+	wacom-6.3.15-3-macOS-patched.zip Install\ Wacom\ Tablet-6.3.15-3-patched.pkg \
+	Install\ Wacom\ Tablet-5.2.6-5-patched.pkg \
+	Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
 
 wacom-5.3.7-6-macOS-patched.zip : $(PATCHED_DRIVERS_5_3_7_6) build/ build/Readme.html
 	rm -f $@
@@ -133,6 +161,7 @@ build/Readme.html : Readme-manual-installation.md build/ src/readme-prologue.htm
 
 # Create the installer package by modifying Wacom's original
 
+# For Graphire3
 Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/5.2.6-5/preflight.patched src/5.2.6-5/postflight.patched src/5.3.7-6/renumtablets
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
@@ -147,8 +176,8 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 	rm package/Resources/{InstallationCheck,renumtablets,SystemLoginItemTool}
 	cp src/5.3.7-6/renumtablets package/content.pkg/Scripts/
 
-	# Move scripts into new style directory
-	mv package/Resources/{preflight,postflight} package/content.pkg/Scripts/
+	# Remove install scripts from old style directory
+	rm package/Resources/{preflight,postflight}
 
 	# Install patched postinstall script: Don't call old multitouch install method, use new language manifest loader code from 5.3.7-6, new agent loader
 	cp src/5.2.6-5/postflight.patched package/content.pkg/Scripts/postflight
@@ -205,6 +234,74 @@ Install\ Wacom\ Tablet-5.2.6-5-patched.pkg : Install\ Wacom\ Tablet-5.2.6-5-patc
 	productsign --sign "$(PACKAGE_SIGNING_IDENTITY)" Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg Install\ Wacom\ Tablet-5.2.6-5-patched.pkg
 endif
 
+# For Graphire 2
+Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution $(PATCHED_DRIVERS_6_1_6_4)
+	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
+	rm -rf package
+	mkdir package
+	mkdir package/content.pkg
+	mkdir package/content.pkg/Payload
+	mkdir package/content.pkg/Scripts
+
+	cp -a -L src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Resources package/
+
+	# Remove obsolete 32-bit installer binaries
+	rm package/Resources/{InstallationCheck,renumtablets,SystemLoginItemTool}
+
+	# Remove install scripts from old style directory
+	rm package/Resources/{preflight,postflight}
+
+	# Install patched postinstall script: Use new language manifest loader code from 5.3.7-6, new agent loader
+	cp src/6.1.6-4/postflight.patched package/content.pkg/Scripts/postflight
+	# New agent unloader
+	cp src/6.1.6-4/preflight.patched  package/content.pkg/Scripts/preflight
+
+	# Add metadata files that weren't present in the old package style
+	cp src/6.1.6-4/PackageInfo package/content.pkg
+	cp src/6.1.6-4/Distribution package/
+
+	# Add Welcome screen
+	find package/Resources -type d -depth 1 -exec cp src/6.1.6-4/Welcome.rtf {}/ \;
+
+	# Unpack payload
+	cd package/content.pkg/Payload && tar --no-same-owner -xf ../../../src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Archive.pax.gz
+
+	# Remove extended attribute files that didn't unpack properly (prevents codesigning if left there)
+	find package/content.pkg/Payload -type f -name "._*" -delete
+
+	# Remove old PowerPC-only TabletDriverCFPlugin.bundle
+	rm -rf package/content.pkg/Payload/System/Library/Extensions/TabletDriverCFPlugin.bundle
+
+	# Don't install files into the /System partition (not allowed in Catalina)
+	mv package/content.pkg/Payload/System/Library/Extensions package/content.pkg/Payload/Library/
+	rm -r package/content.pkg/Payload/System
+
+	# Make duplicate copy of localisation strings to the location that the patched postflight script expects (documentation installation)
+	cp -a -L package/Resources package/content.pkg/Scripts/support
+
+ifdef CODE_SIGNING_IDENTITY
+	# Resign drivers and enable Hardened Runtime to meet notarization requirements
+	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME_6_1_6_4)
+else
+	codesign --remove-signature $(SIGN_ME_6_1_6_4)
+endif
+
+	# Recreate BOM
+	mkbom package/content.pkg/Payload package/content.pkg/Bom
+
+	# Repack payload
+	( cd package/content.pkg/Payload && find . | cpio -o --format odc --owner 0:80 ) | gzip -c > package/content.pkg/Payload.gz
+	rm -rf package/content.pkg/Payload
+	mv package/content.pkg/Payload.gz package/content.pkg/Payload
+
+	# Repack installer
+	pkgutil --flatten package "$@"
+
+ifdef PACKAGE_SIGNING_IDENTITY
+Install\ Wacom\ Tablet-6.1.6-4-patched.pkg : Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg
+	productsign --sign "$(PACKAGE_SIGNING_IDENTITY)" Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
+endif
+
 Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom\ Tablet.pkg $(PATCHED_DRIVERS_5_3_7_6) src/5.3.7-6/Welcome.rtf
 	$(call unpack_package,"src/5.3.7-6/Install Wacom Tablet.pkg")
 
@@ -245,6 +342,7 @@ Install\ Wacom\ Tablet-5.3.7-6-patched.pkg : Install\ Wacom\ Tablet-5.3.7-6-patc
 	productsign --sign "$(PACKAGE_SIGNING_IDENTITY)" Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg Install\ Wacom\ Tablet-5.3.7-6-patched.pkg
 endif
 
+# Intuos 3 / Cintiq 1st gen
 Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wacom\ Tablet.pkg $(PATCHED_DRIVERS_6_3_15_3) src/6.3.15-3/Welcome.rtf src/6.3.15-3/postinstall.patched src/6.3.17-5/Wacom\ Desktop\ Center.app
 	$(call unpack_package,"src/6.3.15-3/Install Wacom Tablet.pkg")
 
@@ -294,9 +392,9 @@ Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wac
 
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
-	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME_6)
+	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME_6_3_15_3)
 else
-	codesign --remove-signature $(SIGN_ME_6)
+	codesign --remove-signature $(SIGN_ME_6_3_15_3)
 endif
 
 	# Recreate BOM
@@ -329,6 +427,11 @@ build/ :
 
 # Download, mount and unpack original Wacom installers:
 
+# Graphire 2
+src/6.1.6-4/WacomTablet_6.1.6-4.dmg :
+	curl -o $@ "https://cdn.wacom.com/U/Drivers/Mac/pro/WacomTablet_6.1.6-4.dmg"
+	[ $$(md5 $@ | awk '{ print $$4 }') = "e5bfa6c266edbb028064534aa6a50086" ] || (rm $@; false) # Verify download is undamaged
+
 # Graphire 3
 src/5.2.6-5/PenTablet_5.2.6-5.dmg :
 	curl -o $@ "https://cdn.wacom.com/U/productsupport/Drivers/Mac/Consumer/PenTablet_5.2.6-5.dmg"
@@ -354,9 +457,10 @@ src/6.3.17-5/pentablet_6.3.17-5.dmg :
 	curl -o $@ "https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.17-5.dmg"
 	[ $$(md5 $@ | awk '{ print $$4 }') = "42dafc4250df4649f1a122578425bbad" ] || (rm $@; false) # Verify download is undamaged
 
-src/6.3.17-5/ src/5.3.0-3/ :
+src/6.3.17-5/ src/5.3.0-3/ src/6.1.6-4/ :
 	mkdir $@
 
+# Graphire 3
 src/5.2.6-5/Install\ Bamboo.pkg : src/5.2.6-5/PenTablet_5.2.6-5.dmg
 	hdiutil attach -quiet -nobrowse -mountpoint src/5.2.6-5/dmg "$<"
 	rm -rf "$@"
@@ -369,6 +473,7 @@ src/5.2.6-5/Install\ Bamboo.pkg : src/5.2.6-5/PenTablet_5.2.6-5.dmg
 	hdiutil detach -force src/5.2.6-5/dmg
 	touch "$@"
 
+# Files to add to Graphire 3
 src/5.3.0-3/Install\ Bamboo.pkg : src/5.3.0-3/PenTablet_5.3.0-3.dmg
 	hdiutil attach -quiet -nobrowse -mountpoint src/5.3.0-3/dmg "$<"
 	rm -rf "$@"
@@ -379,16 +484,32 @@ src/5.3.0-3/Install\ Bamboo.pkg : src/5.3.0-3/PenTablet_5.3.0-3.dmg
 	hdiutil detach -force src/5.3.0-3/dmg
 	touch "$@"
 
+# Bamboo
 src/5.3.7-6/Install\ Wacom\ Tablet.pkg : src/5.3.7-6/pentablet_5.3.7-6.dmg
 	hdiutil attach -quiet -nobrowse -mountpoint src/5.3.7-6/dmg "$<"
 	cp "src/5.3.7-6/dmg/Install Wacom Tablet.pkg" "$@"
 	hdiutil detach -force src/5.3.7-6/dmg
 
+# Graphire 2
+src/6.1.6-4/Install\ Wacom\ Tablet.pkg : src/6.1.6-4/WacomTablet_6.1.6-4.dmg
+	hdiutil attach -quiet -nobrowse -mountpoint src/6.1.6-4/dmg "$<"
+	rm -rf "$@"
+	cp -a "src/6.1.6-4/dmg/Install Wacom Tablet.pkg" "$@"
+	# The permissions on the package files are super awkward, make those more permissive for us:
+	find "src/6.1.6-4/Install Wacom Tablet.pkg" -type d -exec chmod 0755 {} \;
+	find "src/6.1.6-4/Install Wacom Tablet.pkg" -type f -exec chmod u+rw {} \;
+	# Also copy the directories from outside the package because we need them for getting licence files
+	cp -R src/6.1.6-4/dmg/{ChineseS,ChineseT,Dutch,English,French,German,Italian,Japanese,Korean,Polish,Portuguese,Russian,Spanish} src/6.1.6-4/
+	hdiutil detach -force src/6.1.6-4/dmg
+	touch "$@"
+
+# Intuos 3 / Cintiq 1st gen
 src/6.3.15-3/Install\ Wacom\ Tablet.pkg : src/6.3.15-3/pentablet_6.3.15-3.dmg
 	hdiutil attach -quiet -nobrowse -mountpoint src/6.3.15-3/dmg "$<"
 	cp "src/6.3.15-3/dmg/Install Wacom Tablet.pkg" "$@"
 	hdiutil detach -force src/6.3.15-3/dmg
 
+# Just for a signable version of Wacom Desktop Center
 src/6.3.17-5/Install\ Wacom\ Tablet.pkg : src/6.3.17-5/pentablet_6.3.17-5.dmg
 	hdiutil attach -quiet -nobrowse -mountpoint src/6.3.17-5/dmg "$<"
 	cp "src/6.3.17-5/dmg/Install Wacom Tablet.pkg" "$@"
@@ -398,6 +519,7 @@ src/6.3.17-5/Install\ Wacom\ Tablet.pkg : src/6.3.17-5/pentablet_6.3.17-5.dmg
 
 $(EXTRACTED_DRIVERS_5_2_6_5) : src/5.2.6-5/Install\ Bamboo.pkg
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/postflight src/5.2.6-5/postflight.original
+	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/preflight src/5.2.6-5/preflight.original
 
 $(EXTRACTED_DRIVERS_5_3_7_6) : src/5.3.7-6/Install\ Wacom\ Tablet.pkg
 	$(call unpack_package,"$<")
@@ -407,6 +529,10 @@ $(EXTRACTED_DRIVERS_5_3_7_6) : src/5.3.7-6/Install\ Wacom\ Tablet.pkg
 	cp package/content.pkg/Scripts/preinstall   src/5.3.7-6/preinstall.original
 	cp package/content.pkg/Scripts/postinstall  src/5.3.7-6/postinstall.original
 	cp package/content.pkg/Scripts/renumtablets src/5.3.7-6/renumtablets
+
+$(EXTRACTED_DRIVERS_6_1_6_4) : src/6.1.6-4/Install\ Wacom\ Tablet.pkg
+	cp src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Resources/postflight src/6.1.6-4/postflight.original
+	cp src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Resources/preflight  src/6.1.6-4/preflight.original
 
 $(EXTRACTED_DRIVERS_6_3_15_3) : src/6.3.15-3/Install\ Wacom\ Tablet.pkg
 	$(call unpack_package,"$<")
@@ -426,7 +552,16 @@ $(EXTRACTED_DRIVERS_6_3_17_5) : src/6.3.17-5/Install\ Wacom\ Tablet.pkg
 
 # Utility commands:
 
-notarize-graphire: Install\ Wacom\ Tablet-5.2.6-5-patched.pkg
+notarize-graphire2: Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
+	xcrun altool \
+		 --notarize-app \
+		 --primary-bundle-id "com.wacom.wacomtablet" \
+		 --username "$(NOTARIZATION_USERNAME)" \
+		 --password "@keychain:AC_PASSWORD" \
+		 --file "$<"
+	cp "$<" "Install Wacom Tablet-6.1.6-4-patched-notarized.pkg"
+
+notarize-graphire3: Install\ Wacom\ Tablet-5.2.6-5-patched.pkg
 	xcrun altool \
 		 --notarize-app \
 		 --primary-bundle-id "com.wacom.pentablet" \
@@ -453,7 +588,11 @@ notarize-intuos: Install\ Wacom\ Tablet-6.3.15-3-patched.pkg
 		 --file "$<"
 	cp "$<" "Install Wacom Tablet-6.3.15-3-patched-notarized.pkg"
 
-staple-graphire:
+staple-graphire2:
+	xcrun stapler staple "Install Wacom Tablet-6.1.6-4-patched.pkg"
+	cp "Install Wacom Tablet-6.1.6-4-patched.pkg" "Install Wacom Tablet-6.1.6-4-patched-stapled.pkg"
+
+staple-graphire3:
 	xcrun stapler staple "Install Wacom Tablet-5.2.6-5-patched.pkg"
 	cp "Install Wacom Tablet-5.2.6-5-patched.pkg" "Install Wacom Tablet-5.2.6-5-patched-stapled.pkg"
 
@@ -465,7 +604,7 @@ staple-intuos:
 	xcrun stapler staple "Install Wacom Tablet-6.3.15-3-patched.pkg"
 	cp "Install Wacom Tablet-6.3.15-3-patched.pkg" "Install Wacom Tablet-6.3.15-3-patched-stapled.pkg"
 
-unpack-graphire : src/5.2.6-5/Install\ Bamboo.pkg
+unpack-graphire3 : src/5.2.6-5/Install\ Bamboo.pkg
 	mkdir -p src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive
 	cd src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive && tar --no-same-owner -xf ../Archive.pax.gz
 
@@ -482,7 +621,7 @@ unbless-intuos:
 	xattr -w com.apple.quarantine "0181;5e33ca0a;Chrome;AEDC174C-8684-476E-9E4C-764D063A714C" Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg
 
 clean :
-	rm -rf src/6.3.17-5/Wacom\ Desktop\ Center.app src/5.3.0-3/Install\ Bamboo.pkg
+	rm -rf src/6.3.17-5/Wacom\ Desktop\ Center.app src/5.3.0-3/Install\ Bamboo.pkg src/6.1.6-4/Install\ Wacom\ Tablet.pkg
 	rm -f \
 		wacom-5.3.7-6-macOS-patched.zip  Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg  Install\ Wacom\ Tablet-5.3.7-6-patched.pkg \
 		wacom-6.3.15-3-macOS-patched.zip Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg Install\ Wacom\ Tablet-6.3.15-3-patched.pkg \
