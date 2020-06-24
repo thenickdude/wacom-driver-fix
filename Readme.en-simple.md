@@ -28,7 +28,8 @@ My fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 
 [🇳🇿 English instructions](Readme.md)   
 [🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)  
-[🇯🇵 日本語で表示](Readme.ja-JP.md)
+[🇯🇵 日本語で表示](Readme.ja-JP.md)   
+[🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
 
 ## Install the fixed driver
 

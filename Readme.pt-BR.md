@@ -27,7 +27,8 @@ O driver Intuos e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 
 [🇳🇿 English instructions](Readme.md)   
 [🇦🇺 Simplified English instructions](Readme.en-simple.md)   
-[🇯🇵 日本語で表示](Readme.ja-JP.md)
+[🇯🇵 日本語で表示](Readme.ja-JP.md)   
+[🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
 
 ## Instalação do driver
 

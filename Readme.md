@@ -36,7 +36,8 @@ Thankfully I was able to track down the issues and I have patched the drivers to
 
 [🇦🇺 Simplified English instructions](Readme.en-simple.md)   
 [🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)  
-[🇯🇵 日本語で表示](Readme.ja-JP.md)
+[🇯🇵 日本語で表示](Readme.ja-JP.md)   
+[🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
 
 ## Install the fix
 
