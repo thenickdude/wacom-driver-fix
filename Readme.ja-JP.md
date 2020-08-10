@@ -1,6 +1,6 @@
-# WACOM Bamboo, Intuos 3, Cintiq第１世代タブレットmacOS 10.15修正ドライバー
+# WACOM Bamboo, Graphire 4, Intuos 3, Cintiq第１世代タブレットmacOS 10.15修正ドライバー
 
-WACOM Bamboo, Intuos 3及びCintiq第１世代タブレットがmacOS 10.15 Catalinaでは[バグがある](https://github.com/thenickdude/wacom-driver-fix/blob/master/Readme.md#technical-details-of-the-bugs)為、
+WACOM Bamboo, Graphire 4, Intuos 3及びCintiq第１世代タブレットがmacOS 10.15 Catalinaでは[バグがある](https://github.com/thenickdude/wacom-driver-fix/blob/master/Readme.md#technical-details-of-the-bugs)為、
 近日起動しなくなりました。もしお困りの方は、下記修正ドライバーの作成により再度起動できる様になりましたので是非ご使用ください。
 
 Bamboo修正ドライバー (v5.3.7-6) 対応デバイス：
@@ -19,6 +19,10 @@ Bamboo修正ドライバー (v5.3.7-6) 対応デバイス：
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+Graphire 4修正ドライバー (v5.3.0-3) 対応デバイス：
+
+- CTE-440, CTE-640 - Graphire 4
+
 Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
@@ -34,14 +38,15 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 
 1) お持ちのタブレットに適用する修正ドライバーを下記からダウンロードし、インストールしてください。
 
-- [Bamboo修正ドライバー (v5.3.7-6)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Intuos/Cintiq修正ドライバー (v6.3.15-13)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Graphire 4修正ドライバー (v5.3.0-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Bamboo修正ドライバー (v5.3.7-6)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Intuos/Cintiq修正ドライバー (v6.3.15-13)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 2) 古いドライバーの制限を消去してください。
 
 - アップルメニュー から「システム環境設定」→「セキュリティとプライバシー」を選択。
 - 「プライバシー」のタブから「アクセシビリティ」を選択し、変更スタート。(左下にある鍵アイコンをクリックする必要、及び、パスワードをご使用の方はユーザー名とパスワードを入力する必要あり)
-- リストから現在許可されているWACOMのアイテム (PenTabletDriver, ConsumerTouchDriverなど)を\[-]ボタンをクリックし、諸々消去。
+- リストから現在許可されているWACOMのアイテム (PenTabletDriver, ConsumerTouchDriver, WacomTabletSpringboardなど)を\[-]ボタンをクリックし、諸々消去。
 - 同じく「入力監視」でも上記をリピート。
 - 設定を保存し、パソコンを再起動。
 
@@ -55,7 +60,7 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 
 - 同じくアップルメニューから「システム環境設定」→「セキュリティとプライバシー」を選択。
 - 「プライバシー」のタブから「アクセシビリティ」を選択し、変更スタート。(左下にある鍵アイコンをクリックする必要、及び、パスワードをご使用の方はユーザー名とパスワードを入力する必要あり)
-- 新しく再起動後追加されたWACOMのアイテム (PenTabletDriver, ConsumerTouchDriverなど) がチェックされているか確認。
+- 新しく再起動後追加されたWACOMのアイテム (PenTabletDriver, ConsumerTouchDriver, WacomTabletSpringboardなど) がチェックされているか確認。
 - 同じく「入力監視」でも上記を確認。
 - 設定を保存。
 

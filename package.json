@@ -1,0 +1,15 @@
+{
+  "name": "wacom-driver-fix",
+  "version": "1.0.0",
+  "description": "Fixed macOS drivers for obsolete Wacom tablets",
+  "main": "index.js",
+  "author": "Nicholas Sherlock",
+  "license": "WTFPL",
+  "dependencies": {
+    "marked": "^1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thenickdude/wacom-driver-fix.git"
+  }
+}

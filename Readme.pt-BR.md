@@ -1,4 +1,4 @@
-# Corrigido o driver Wacom Bamboo, Intuos 3 e Cintiq 1st gen para o macOS Catalina
+# Corrigido o driver Wacom Bamboo, Graphire 4, Intuos 3 e Cintiq 1st gen para o macOS Catalina
 
 Os drivers da Wacom para seus mesa digitalizadora mais antigos não funcionam no macOS Catalina.
 Eu criei uma versão fixa dos drivers para resolver o problema!
@@ -19,6 +19,10 @@ O driver Bamboo fixo (v5.3.7-6) suporta estes tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+O driver Graphire 4 fixo (v5.3.0-3) suporta estes tablets:
+
+- CTE-440, CTE-640 - Graphire 4
+
 O driver Intuos e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
@@ -34,8 +38,9 @@ O driver Intuos e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 
 Faça o download o instalador correto:
 
-- [Driver v5.3.7-6 para Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Driver v6.3.15-13 para Intuos 3 e Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Driver v5.3.0-3 para Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Driver v5.3.7-6 para Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Driver v6.3.15-13 para Intuos 3 e Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Execute o instalador para instalar o driver.
 
@@ -43,7 +48,7 @@ Depois, remova as permissões de driver desatualizadas:
 
 - Vá para o menu Apple, abra Preferências do Sistema e selecione Segurança & Privacidade
 - Vá para a guia Privacidade, selecione Acessibilidade e clique no cadeado na parte inferior das preferências para fazer alterações. Você será solicitado a inserir suas credenciais.
-- Selecione qualquer item da Wacom (PenTabletDriver, ConsumerTouchDriver, etc) e clique no sinal "-" abaixo da lista para removê-los.
+- Selecione qualquer item da Wacom (PenTabletDriver, ConsumerTouchDriver, WacomTabletSpringboard, etc) e clique no sinal "-" abaixo da lista para removê-los.
 - Faça o mesmo na guia "Monitoramento de entrada" 
 - Reinicie o computador
 

@@ -1,6 +1,6 @@
-# Fixed drivers for Wacom Bamboo, Intuos 3 and Cintiq 1st gen tablets on macOS 10.15 Catalina
+# Fixed drivers for Wacom Bamboo, Graphire 4, Intuos 3 and Cintiq 1st gen tablets on macOS 10.15 Catalina
 
-Wacom's drivers for Bamboo, Intuos 3 and Cintiq 1st gen tablets have bugs in them that
+Wacom's drivers for Bamboo, Graphire 4, Intuos 3 and Cintiq 1st gen tablets have bugs in them that
 make them no longer work on macOS 10.15 Catalina, and Wacom is no longer updating these drivers. 
 Luckily I was able to fix the bugs and get the drivers working again!
 
@@ -20,6 +20,10 @@ My fixed Bamboo driver (v5.3.7-6) supports these tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+My fixed Graphire 4 driver (v5.3.0-3) supports these tablets:
+
+- CTE-440, CTE-640 - Graphire 4
+
 My fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
@@ -35,8 +39,9 @@ My fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 
 First, download the correct driver for your tablet:
 
-- [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Fixed driver v6.3.15-13 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Fixed driver v5.3.0-3 for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Fixed driver v6.3.15-13 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Run the installer to install the driver.
 
@@ -44,7 +49,7 @@ Now we need to remove the permissions that were leftover from the old driver:
 
 - Click the Apple menu, then System Preferences, Security and Privacy
 - On the Privacy tab, select Accessibility and click the lock in the bottom left to make changes. You'll be asked to enter your login credentials.
-- Select any Wacom items in the list (PenTabletDriver, ConsumerTouchDriver, etc) and click the "-" button to remove them.
+- Select any Wacom items in the list (PenTabletDriver, ConsumerTouchDriver, WacomTabletSpringboard, etc) and click the "-" button to remove them.
 - Do the same on the "Input Monitoring" page 
 - Restart the computer
 
@@ -55,7 +60,7 @@ Now we can add permissions for the new fixed driver:
 - Touch the pen tip to the tablet once
 - Click the Apple menu, then System Preferences, Security and Privacy
 - On the Privacy tab, select Accessibility and click the lock in the bottom left to make changes. You'll be asked to enter your login credentials.
-- Make sure any Wacom items in the list (PenTabletDriver, ConsumerTouchDriver, etc) are ticked
+- Make sure any Wacom items in the list (PenTabletDriver, ConsumerTouchDriver, WacomTabletSpringboard, etc) are ticked
 - Do the same on the "Input Monitoring" page 
 
 ![Add new permissions](screenshots/en-AU/security-and-privacy-tick.jpg)

@@ -1,16 +1,18 @@
-# Wacom Bamboo, Intuos 3 and Cintiq 1st gen macOS driver fix
+# Wacom Bamboo, Graphire 4, Intuos 3, and Cintiq 1st gen macOS driver fix
 
-Wacom's macOS drivers for Bamboo, Intuos 3 and Cintiq 1st gen tablets have bugs in them that cause them to completely fail to start
-on macOS 10.15 Catalina (and likely other versions of macOS). This doesn't apply to the Windows driver, or to the drivers
-for their newer tablets.
+Wacom's macOS drivers for Bamboo, Graphire 4, Intuos 3 and Cintiq 1st gen tablets have bugs in them that cause them to
+completely fail to start on macOS 10.15 Catalina (and likely other versions of macOS). This doesn't apply to the Windows 
+driver, or to the drivers for their newer tablets.
 
 When you try to open the Wacom preference pane with a Bamboo tablet, you'll get an error message saying
 "Waiting for synchronization", then finally "There is a problem with your tablet driver.
 Please reboot your system. If the problem persists reinstall or update the driver". For an Intuos 3 or Cintiq 1st gen tablet, 
 the preference pane will open, but clicking anything will cause it to crash with the message "There was an error in Wacom
-Tablet preferences."
+Tablet preferences." For Graphire 4, the driver's installer couldn't even run on Catalina.
 
-The affected Bamboo driver (v5.3.7-6) supported these tablets:
+Thankfully I was able to track down the issues and I have patched the drivers to fix them!
+
+My fixed Bamboo driver (v5.3.7-6) supports these tablets:
 
 - CTE-450, CTE-650 - Bamboo Fun / Bamboo Art Master (2007)
 - CTE-460 - Bamboo One Pen
@@ -26,13 +28,15 @@ The affected Bamboo driver (v5.3.7-6) supported these tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
-And the affected Intuos and Cintiq driver (v6.3.15-3) supported these tablets:
+My fixed Graphire 4 driver (v5.3.0-3) supports these tablets:
+
+- CTE-440, CTE-640 - Graphire 4
+
+And my fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
 - DTZ-2100 - Cintiq 21UX 1st Gen.
 - DTZ-2000 - Cintiq 20WSX
-
-Thankfully I was able to track down the issues and I have patched the drivers to fix them!
 
 [🇦🇺 Simplified English instructions](Readme.en-simple.md)   
 [🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)  
@@ -44,8 +48,9 @@ Thankfully I was able to track down the issues and I have patched the drivers to
 Download the correct installer for your tablet here and double click it to run it, this will install my fixed version of
 Wacom's driver:
 
-- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Download patched v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Download patched v5.3.0-3 installer for Graphire 4 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Download patched v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.
@@ -76,7 +81,8 @@ On the "Accessibility" page of Security & Privacy, Find anything related to Waco
 `WacomTabletDriver`, `TabletDriver`,  `ConsumerTouchDriver`, `WacomTabletSpringboard`, `WacomTouchDriver`), select them,
 and click the minus button to remove them. Go to the "Input Monitoring page" and do the same there.
 
-Now either reboot your computer, or run these two commands in the Terminal, to reload the tablet driver. For Bamboo tablets:
+Now either reboot your computer, or run these two commands in the Terminal, to reload the tablet driver. 
+For Bamboo and Graphire 4 tablets:
 
     launchctl unload /Library/LaunchAgents/com.wacom.pentablet.plist
 
@@ -336,3 +342,79 @@ if (settingsVersion < 1 || settingsVersion > 5) {
 So now if the preferences are too new, `MigratePen()` won't attempt to upgrade them, and `ReadSettings()` will cleanly skip 
 loading the preferences. This causes the preferences to remain at their defaults, and if the user edits the settings using 
 the preference pane, the settings should be cleanly overwritten.
+
+### Graphire 4 driver
+
+The installer for the Graphire 4 is an old format that Catalina no longer supports, so I had to completely rebuild it.
+
+Graphire 4's preference pane incorrectly relied on private symbols from the macOS standard library that are no longer 
+present in Catalina, so it could no longer start.
+
+For example, Wacom's NSNibWakingOverride::awakeFromNib() function is called during GUI deserialization, and adds the 
+loaded GUI control to a map so it can be accessed by its tag later:
+
+```cpp
+void NSNibWakingOverride::awakeFromNib(NSControl *this) {
+  OMasterDictionaryPtr->addObject:withTag:(this, this->_tag));
+}
+```
+
+But this relies on reading [NSControl._tag](https://developer.apple.com/documentation/appkit/nscontrol), which is a 
+private field. In macOS 10.9 that worked because NSControl was defined like this:
+
+```objc
+@interface NSControl : NSView
+{
+    /*All instance variables are private*/
+    NSInteger	_tag;
+    id		_cell;
+    struct __conFlags {
+        ...
+    } _conFlags;
+}
+```
+
+But in macOS 10.10, NSControl was refactored to move the _tag field into a new _aux field, making it inaccessible:
+
+```objc
+@interface NSControl : NSView
+{
+    /*All instance variables are private*/
+    NSControlAuxiliary *_aux;
+    id		_cell;
+    struct __conFlags {
+        ...
+    } _conFlags;
+}
+
+@property NSInteger tag;
+```
+
+I patched awakeFromNib to make it properly call the public accessor function for this field:
+
+```cpp
+void NSNibWakingOverride::awakeFromNib(NSControl *this) {
+  OMasterDictionaryPtr->addObject:withTag:(this, this->tag()));
+}
+```
+
+In Wacom's OPopupOutlineView::reloadData() function, the private [NSTableView._dataSource field](https://developer.apple.com/documentation/appkit/nstableview)
+is incorrectly read directly:
+
+```cpp
+void OPopupOutlineView::reloadData(OPopupOutlineView *this) {
+  this->_dataSource.willReloadDataForOutlineView(this);
+  
+  ...
+}
+```
+
+So I patched this to use the public accessor instead:
+
+```cpp
+void OPopupOutlineView::reloadData(OPopupOutlineView *this) {
+  this->dataSource()->willReloadDataForOutlineView(this);
+  
+  ...
+}
+```

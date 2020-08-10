@@ -1,0 +1,3 @@
+[submodule "tools/fix_LC_VERSION_MIN_MACOSX"]
+	path = tools/fix_LC_VERSION_MIN_MACOSX
+	url = https://github.com/asmaloney/fix_LC_VERSION_MIN_MACOSX.git
