@@ -1,6 +1,6 @@
-# WACOM Bamboo, Graphire 4, Intuos 3, Cintiq第１世代タブレットmacOS 10.15修正ドライバー
+# WACOM Bamboo, Graphire 3+4, Intuos 3, Cintiq第１世代タブレットmacOS 10.15修正ドライバー
 
-WACOM Bamboo, Graphire 4, Intuos 3及びCintiq第１世代タブレットがmacOS 10.15 Catalinaでは[バグがある](https://github.com/thenickdude/wacom-driver-fix/blob/master/Readme.md#technical-details-of-the-bugs)為、
+WACOM Bamboo, Graphire 3+4, Intuos 3及びCintiq第１世代タブレットがmacOS 10.15 Catalinaでは[バグがある](https://github.com/thenickdude/wacom-driver-fix/blob/master/Readme.md#technical-details-of-the-bugs)為、
 近日起動しなくなりました。もしお困りの方は、下記修正ドライバーの作成により再度起動できる様になりましたので是非ご使用ください。
 
 Bamboo修正ドライバー (v5.3.7-6) 対応デバイス：
@@ -18,6 +18,10 @@ Bamboo修正ドライバー (v5.3.7-6) 対応デバイス：
 - CTL-470 - Bamboo Connect / Bamboo Pen
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
+
+Graphire 3修正ドライバー (v5.2.6-5) 対応デバイス：
+
+- CTE-430, CTE-630 - Graphire 3
 
 Graphire 4修正ドライバー (v5.3.0-3) 対応デバイス：
 
@@ -38,6 +42,7 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 
 1) お持ちのタブレットに適用する修正ドライバーを下記からダウンロードし、インストールしてください。
 
+- [Graphire 3修正ドライバー (v5.2.6-5)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Graphire 4修正ドライバー (v5.3.0-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Bamboo修正ドライバー (v5.3.7-6)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
 - [Intuos/Cintiq修正ドライバー (v6.3.15-13)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)

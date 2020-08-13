@@ -1,6 +1,6 @@
-# Wacom Bamboo, Graphire 4, Intuos 3, and Cintiq 1st gen macOS driver fix
+# Wacom Bamboo, Graphire 3 & 4, Intuos 3, and Cintiq 1st gen macOS driver fix
 
-Wacom's macOS drivers for Bamboo, Graphire 4, Intuos 3 and Cintiq 1st gen tablets have bugs in them that cause them to
+Wacom's macOS drivers for Bamboo, Graphire 3 & 4, Intuos 3 and Cintiq 1st gen tablets have bugs in them that cause them to
 completely fail to start on macOS 10.15 Catalina (and likely other versions of macOS). This doesn't apply to the Windows 
 driver, or to the drivers for their newer tablets.
 
@@ -8,7 +8,7 @@ When you try to open the Wacom preference pane with a Bamboo tablet, you'll get 
 "Waiting for synchronization", then finally "There is a problem with your tablet driver.
 Please reboot your system. If the problem persists reinstall or update the driver". For an Intuos 3 or Cintiq 1st gen tablet, 
 the preference pane will open, but clicking anything will cause it to crash with the message "There was an error in Wacom
-Tablet preferences." For Graphire 4, the driver's installer couldn't even run on Catalina.
+Tablet preferences." For Graphire 3 & 4, the driver's installer couldn't even run on Catalina.
 
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
 
@@ -28,9 +28,14 @@ My fixed Bamboo driver (v5.3.7-6) supports these tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+My fixed Graphire 3 driver (v5.2.6-5) supports these tablets:
+
+- CTE-430, CTE-630 - Graphire 3
+
 My fixed Graphire 4 driver (v5.3.0-3) supports these tablets:
 
 - CTE-440, CTE-640 - Graphire 4
+- CTE-630BT - Graphire 3 Wireless (untested, let me know if this works!)
 
 And my fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 
@@ -48,6 +53,7 @@ And my fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 Download the correct installer for your tablet here and double click it to run it, this will install my fixed version of
 Wacom's driver:
 
+- [Download patched v5.2.6-5 installer for Graphire 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Download patched v5.3.0-3 installer for Graphire 4 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
 - [Download patched v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
@@ -82,7 +88,7 @@ On the "Accessibility" page of Security & Privacy, Find anything related to Waco
 and click the minus button to remove them. Go to the "Input Monitoring page" and do the same there.
 
 Now either reboot your computer, or run these two commands in the Terminal, to reload the tablet driver. 
-For Bamboo and Graphire 4 tablets:
+For Bamboo and Graphire 3 & 4 tablets:
 
     launchctl unload /Library/LaunchAgents/com.wacom.pentablet.plist
 
@@ -343,11 +349,12 @@ So now if the preferences are too new, `MigratePen()` won't attempt to upgrade t
 loading the preferences. This causes the preferences to remain at their defaults, and if the user edits the settings using 
 the preference pane, the settings should be cleanly overwritten.
 
-### Graphire 4 driver
+### Graphire 3 & 4 drivers
 
-The installer for the Graphire 4 is an old format that Catalina no longer supports, so I had to completely rebuild it.
+The installers for the Graphire 3 and 4 are an old format that Catalina no longer supports, so I had to completely 
+rebuild them.
 
-Graphire 4's preference pane incorrectly relied on private symbols from the macOS standard library that are no longer 
+Graphire's preference pane incorrectly relied on private symbols from the macOS standard library that are no longer 
 present in Catalina, so it could no longer start.
 
 For example, Wacom's NSNibWakingOverride::awakeFromNib() function is called during GUI deserialization, and adds the 

@@ -1,6 +1,6 @@
-# Fixed drivers for Wacom Bamboo, Graphire 4, Intuos 3 and Cintiq 1st gen tablets on macOS 10.15 Catalina
+# Fixed drivers for Wacom Bamboo, Graphire 3 & 4, Intuos 3 and Cintiq 1st gen tablets on macOS 10.15 Catalina
 
-Wacom's drivers for Bamboo, Graphire 4, Intuos 3 and Cintiq 1st gen tablets have bugs in them that
+Wacom's drivers for Bamboo, Graphire 3 & 4, Intuos 3 and Cintiq 1st gen tablets have bugs in them that
 make them no longer work on macOS 10.15 Catalina, and Wacom is no longer updating these drivers. 
 Luckily I was able to fix the bugs and get the drivers working again!
 
@@ -20,9 +20,14 @@ My fixed Bamboo driver (v5.3.7-6) supports these tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+My fixed Graphire 3 driver (v5.2.6-5) supports these tablets:
+
+- CTE-430, CTE-630 - Graphire 3
+
 My fixed Graphire 4 driver (v5.3.0-3) supports these tablets:
 
 - CTE-440, CTE-640 - Graphire 4
+- CTE-630BT - Graphire 3 Wireless (untested, let me know if this works!)
 
 My fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 
@@ -39,6 +44,7 @@ My fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 
 First, download the correct driver for your tablet:
 
+- [Fixed driver v5.2.6-5 Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Fixed driver v5.3.0-3 for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
 - [Fixed driver v6.3.15-13 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)

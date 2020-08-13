@@ -1,6 +1,6 @@
-# Wacom Bamboo, Graphire 4, Intuos 3 and Cintiq 1st gen macOS driver fix
+# Wacom Bamboo, Graphire 3 & 4, Intuos 3 and Cintiq 1st gen macOS driver fix
 
-Wacom драйверы под macOS для планшетов Bamboo, Graphire 4, Intuos 3 и Cintiq 1st gen содержат в себе баги которые не дают им запускаться в macOS 10.15 Catalina (а так же возможно в последующих версиях macOS). Эта проблема не относится в драйверам для Windows, или к драйверам более свежих планшетов.
+Wacom драйверы под macOS для планшетов Bamboo, Graphire 3 & 4, Intuos 3 и Cintiq 1st gen содержат в себе баги которые не дают им запускаться в macOS 10.15 Catalina (а так же возможно в последующих версиях macOS). Эта проблема не относится в драйверам для Windows, или к драйверам более свежих планшетов.
 
 Если вы попытаетесь открыть панель настроек Wacom для планшета Bamboo, вы увидите сообщение об ошибке "Ожидание синхронизации"/"Waiting for synchronization", а затем - "Возникла проблема с вашим драйвером поланшета. Пожалуйста перезапустите систему. Если проблема повторится - переустановите или обновите драйвер."/"There is a problem with your tablet driver. Please reboot your system. If the problem persists reinstall or update the driver".
 Для планшетов серии Intuos 3 или Cintiq 1st gen, панель настроек открывается, но клик по любому элементу заканчивается ошибкой и сообщением "В панели настроек планшета Wacom произошла ошибка"/"There was an error in Wacom Tablet preferences."
@@ -21,9 +21,14 @@ Wacom драйверы под macOS для планшетов Bamboo, Graphire 4
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+Поврежденный драйвер Graphire 3 driver (v5.2.6-5) подходит для планшетов:
+
+- CTE-430, CTE-630 - Graphire 3
+
 Поврежденный драйвер Graphire 4 driver (v5.3.0-3) подходит для планшетов:
 
 - CTE-440, CTE-640 - Graphire 4
+- CTE-630BT - Graphire 3 Wireless
 
 Поврежденный драйвер Intuos and Cintiq driver (v6.3.15-3) подходит для планшетов:
 
@@ -43,9 +48,10 @@ Wacom драйверы под macOS для планшетов Bamboo, Graphire 4
 
 Скачайте подходящую версию установщика для вашего планшета и дважды кликните скачаный файл чтобы запустить его- это запустит установку пропатченой мною версии драйвера Wacom:
 
+- [Download patched v5.2.6-5 installer for Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Download patched v5.3.0-3 installer for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Download patched v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Download patched v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Если появится сообщение, что ваш Mac поддерживает только установку приложений из App Store, тогда кликните по скачаному файлу правой(!) кнопкой и выберите в контекстном меню строчку "Открыть".
 
@@ -70,7 +76,7 @@ Wacom драйверы под macOS для планшетов Bamboo, Graphire 4
 `WacomTabletDriver`, `TabletDriver`,  `ConsumerTouchDriver`, `WacomTabletSpringboard`, `WacomTouchDriver`), Выберите эти элементы и кликните по кнопке минус, чтобы удалить их из списка. Сделайте то же самое в разделе "Мониторинг ввода\""Input Monitoring".
 
 Теперь либо перезагрузите компьютер, либо выполните следующие команды в терминале, чтобы перезапустить драйвер планшета.
-Для планшетов Bamboo и Graphire 4:
+Для планшетов Bamboo и Graphire 3+4:
 
     launchctl unload /Library/LaunchAgents/com.wacom.pentablet.plist
 

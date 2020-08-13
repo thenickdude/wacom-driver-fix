@@ -32,7 +32,8 @@ PATCHED_DRIVERS=$(PATCHED_DRIVERS_5_2_6_5) $(PATCHED_DRIVERS_5_3_0_3) $(PATCHED_
 
 EXTRACTED_DRIVERS_5_2_6_5= \
 	src/5.2.6-5/postflight.original \
-	src/5.2.6-5/preflight.original
+	src/5.2.6-5/preflight.original \
+	src/5.2.6-5/PenTablet.prefpane.original
 
 EXTRACTED_DRIVERS_5_3_0_3= \
 	src/5.3.0-3/postflight.original \
@@ -291,8 +292,8 @@ Install\ Wacom\ Tablet-5.3.0-3-patched.pkg : Install\ Wacom\ Tablet-5.3.0-3-patc
 	productsign --sign "$(PACKAGE_SIGNING_IDENTITY)" Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg Install\ Wacom\ Tablet-5.3.0-3-patched.pkg
 endif
 
-# For Graphire3
-Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/5.2.6-5/preflight.patched src/5.2.6-5/postflight.patched src/5.3.7-6/renumtablets
+# For Graphire 3
+Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/5.2.6-5/preflight.patched src/5.2.6-5/postflight.patched src/5.3.7-6/renumtablets src/5.3.0-3/PenTablet.prefpane.patched
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -313,6 +314,7 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 	cp src/5.2.6-5/postflight.patched package/content.pkg/Scripts/postflight
 	# New agent unloader
 	cp src/5.2.6-5/preflight.patched  package/content.pkg/Scripts/preflight
+	cp src/5.2.6-5/{unloadagent,loadagent} package/content.pkg/Scripts/
 
 	# Add metadata files that weren't present in the old package style
 	cp src/5.2.6-5/PackageInfo package/content.pkg
@@ -334,9 +336,15 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 	mv package/content.pkg/Payload/tmp/WacomMultiTouch.framework package/content.pkg/Payload/Library/Frameworks
 	rm -r package/content.pkg/Payload/tmp
 
+	# Remove PowerPC-only plugin
+	rm -rf package/content.pkg/Payload/System/Library/Extensions/TabletDriverCFPlugin.bundle
+
 	# Don't install files into the /System partition (not allowed in Catalina)
 	mv package/content.pkg/Payload/System/Library/Extensions package/content.pkg/Payload/Library/
 	rm -r package/content.pkg/Payload/System
+
+	# Install fixed preference pane 
+	cp src/5.2.6-5/PenTablet.prefpane.patched package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefPane/Contents/MacOS/PenTablet
 
 	# Make duplicate copy of localisation strings to the location that the patched postflight script expects (documentation installation)
 	cp -a -L package/Resources package/content.pkg/Scripts/support
@@ -352,7 +360,15 @@ endif
 	mkbom package/content.pkg/Payload package/content.pkg/Bom
 
 	# Repack payload
-	( cd package/content.pkg/Payload && find . | cpio -o --format odc --owner 0:80 ) | gzip -c > package/content.pkg/Payload.gz
+	( cd package/content.pkg/Payload && find . ! -path "./Library/Extensions*" ! -path "./Library/Frameworks*" | cpio -o --format odc --owner 0:80 ) > .tmp-payload
+
+	# Have to remove the cpio trailer from the end of the first archive (to allow the second archive to be appended)
+	# - it'd be nice if macOS' cpio supported --append instead
+	( \
+		head -c $$(LC_CTYPE=C grep --byte-offset --only-matching --text -F '0707070000000000000000000000000000000000010000000000000000000001300000000000TRAILER!!!' .tmp-payload | cut -f1 -d: ) .tmp-payload ; \
+		( cd package/content.pkg/Payload && find ./Library/Extensions ./Library/Frameworks | cpio -o --format odc --owner 0:0 ) ; \
+	) | gzip -c > package/content.pkg/Payload.gz
+	rm .tmp-payload
 	rm -rf package/content.pkg/Payload
 	mv package/content.pkg/Payload.gz package/content.pkg/Payload
 
@@ -652,6 +668,7 @@ src/6.3.17-5/Install\ Wacom\ Tablet.pkg : src/6.3.17-5/pentablet_6.3.17-5.dmg
 $(EXTRACTED_DRIVERS_5_2_6_5) : src/5.2.6-5/Install\ Bamboo.pkg
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/postflight src/5.2.6-5/postflight.original
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/preflight  src/5.2.6-5/preflight.original
+	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet src/5.2.6-5/PenTablet.prefpane.original
 
 $(EXTRACTED_DRIVERS_5_3_0_3) : src/5.3.0-3/Install\ Bamboo.pkg
 	rm -rf src/5.3.0-3/Install\ Bamboo.pkg/Contents/Archive
