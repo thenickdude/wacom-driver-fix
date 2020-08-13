@@ -1,4 +1,4 @@
-# Corrigido o driver Wacom Bamboo, Graphire 3+4, Intuos 3 e Cintiq 1st gen para o macOS Catalina
+# Corrigido o driver Wacom Bamboo, Graphire, Intuos 3 e Cintiq 1st gen para o macOS Catalina
 
 Os drivers da Wacom para seus mesa digitalizadora mais antigos não funcionam no macOS Catalina.
 Eu criei uma versão fixa dos drivers para resolver o problema!
@@ -43,6 +43,7 @@ O driver Intuos e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 
 Faça o download o instalador correto:
 
+- [Driver v6.1.6-4 para Graphire 1 e 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
 - [Driver v5.2.6-5 para Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Driver v5.3.0-3 para Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Driver v5.3.7-6 para Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)

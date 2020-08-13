@@ -4,11 +4,11 @@ Make sure you already have the correct Wacom driver installed ([Wacom 5.3.7-6 fo
 or [Wacom 6.3.15-3 for Intuos 3 and Cintiq tablets](http://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.15-3.dmg)), 
 because the manual method only replaces a couple of the driver's files and doesn't install the complete driver itself.
 
-Now download my patch for your tablet here:
+Now download my patch for your tablet here:
 
 - [Manual patch 5.3.7-6 for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/wacom-5.3.7-6-macOS-patched.zip)
 - [Manual patch 6.3.15-3 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-5/wacom-6.3.15-3-macOS-patched.zip)
-- Manual installation is not available for Graphire 3 or 4 tablets, use the installer instead
+- Manual installation is not available for Graphire tablets, use the installer instead
 
 Unzip it by double clicking it, then follow the installation instructions that match your tablet:
 
