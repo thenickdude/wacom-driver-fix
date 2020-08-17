@@ -28,15 +28,13 @@ My fixed Bamboo driver (v5.3.7-6) supports these tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
-My fixed Graphire 1 & 2 and Intuos 1 & 2 driver (v6.1.6-4) supports these tablets:
+My fixed Graphire 1 & 2 and Intuos 1 driver (v6.1.6-4) supports these tablets:
 
 - ET-0405-U - Graphire / Graphire 1 (USB)
 - ET-0405-R - Graphire / Graphire 1 (Serial) - Untested, let me know if it works!
 - ET-0405A - Graphire 2
 - GD-0405-U, GD-0608-U, GD-0912-U, GD-1212-U, GD-1218-U - Intuos (USB) (1998)
 - GD-0405-R, GD-0608-R, GD-0912-R, GD-1212-R, GD-1218-R - Intuos (Serial) (1998) - Untested
-- XD-0405-U, XD-0608-U, XD-0912-U, XD-1212-U, XD-1218-U - Intuos 2 (USB)
-- XD-0405-R, XD-0608-R, XD-0912-R, XD-1212-R, XD-1218-R - Intuos 2 (Serial) - Untested
 
 My fixed Graphire 3 driver (v5.2.6-5) supports these tablets:
 
@@ -46,6 +44,11 @@ My fixed Graphire 4 driver (v5.3.0-3) supports these tablets:
 
 - CTE-440, CTE-640 - Graphire 4
 - CTE-630BT - Graphire 3 Wireless (untested, let me know if this works!)
+
+My fixed Intuos 2 driver (v6.2.0w4) supports these tablets:
+
+- XD-0405-U, XD-0608-U, XD-0912-U, XD-1212-U, XD-1218-U - Intuos 2 (USB)
+- XD-0405-R, XD-0608-R, XD-0912-R, XD-1212-R, XD-1218-R - Intuos 2 (Serial) - Untested
 
 And my fixed Intuos 3 and Cintiq driver (v6.3.15-3) supports these tablets:
 
@@ -63,11 +66,12 @@ And my fixed Intuos 3 and Cintiq driver (v6.3.15-3) supports these tablets:
 Download the correct installer for your tablet here and double click it to run it, this will install my fixed version of
 Wacom's driver:
 
-- [Fixed driver v6.1.6-4 installer for Graphire 1 & 2 and Intuos 1 & 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Fixed driver v6.1.6-4 installer for Graphire 1 & 2 and Intuos 1 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
 - [Fixed driver v5.2.6-5 installer for Graphire 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Fixed driver v5.3.0-3 installer for Graphire 4 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Fixed driver v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Fixed driver v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Fixed driver v6.2.0w4 installer for Intuos 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.2.0w4-patched.pkg)
+- [Fixed driver v6.3.15-13 installer for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.

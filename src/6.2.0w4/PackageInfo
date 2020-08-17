@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pkg-info overwrite-permissions="true" relocatable="false" identifier="com.wacom.installwacomtablet" postinstall-action="none" version="0" format-version="2" generator-version="InstallCmds-609 (16B2327e)" auth="root">
+    <payload numberOfFiles="900" installKBytes="50941"/>
+	<bundle CFBundleShortVersionString="Wacom Tablet 6.2.0w4" CFBundleVersion="6.2.0w4" id="com.wacom.Wacom_TabletDriver" path="Library/Application Support/Tablet/WacomTabletDriver.app"/>
+	<bundle CFBundleShortVersionString="Wacom Tablet 6.3.7-1" CFBundleVersion="6.3.7" id="com.wacom.kext.wacomtablet" path="Library/Extensions/Wacom Tablet.kext"/>
+	<bundle CFBundleShortVersionString="1.1.1-1" CFBundleVersion="1.1.1f1" id="com.wacom.tabletplugin" path="Library/Internet Plug-Ins/WacomNetscape.plugin"/>
+	<bundle CFBundleShortVersionString="WacomTabletPlugin 2.0.0.4" CFBundleVersion="2.0.0.4" id="com.WacomTabletPluginLib.WacomTabletPlugin" path="Library/Internet Plug-Ins/WacomTabletPlugin.plugin"/>
+	<bundle CFBundleShortVersionString="Wacom v6.2.0w4" CFBundleVersion="6.2.0w4" id="com.wacom.settingsPrefPane" path="Library/PreferencePanes/WacomTablet.prefpane"/>
+	<bundle CFBundleShortVersionString="1.0" CFBundleVersion="1" id="com.wacom.WacomMultiTouch" path="Library/Frameworks/WacomMultiTouch.framework"/>
+	<bundle CFBundleShortVersionString="v6.3.4-3" CFBundleVersion="6.3.4f3" id="com.wacom.RemoveWacomTablet" path="Applications/Wacom Tablet.localized/Wacom Tablet Utility.app"/>
+    <bundle-version/>
+    <upgrade-bundle>
+        <bundle id="com.wacom.kext.wacomtablet"/>
+        <bundle id="com.wacom.RemoveWacomTablet"/>
+        <bundle id="com.wacom.tabletplugin"/>
+        <bundle id="com.WacomTabletPluginLib.WacomTabletPlugin"/>
+        <bundle id="com.wacom.settingsPrefPane"/>
+        <bundle id="com.wacom.wacomtablet"/>
+    </upgrade-bundle>
+    <update-bundle/>
+    <atomic-update-bundle/>
+    <strict-identifier/>
+    <relocate/>
+    <scripts>
+        <preinstall file="./preflight"/>
+        <postinstall file="./postflight"/>
+    </scripts>
+</pkg-info>

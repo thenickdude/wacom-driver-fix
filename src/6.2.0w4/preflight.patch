@@ -1,0 +1,4 @@
+146a147,149
+> 	print "Unload LaunchAgent\n";
+> 	`./unloadagent`;
+> 

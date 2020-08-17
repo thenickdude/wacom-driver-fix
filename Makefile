@@ -41,6 +41,7 @@ include src/Makefile-bamboo.mk
 include src/Makefile-graphire2.mk
 include src/Makefile-graphire3.mk
 include src/Makefile-graphire4.mk
+include src/Makefile-intuos2.mk
 include src/Makefile-intuos3.mk
 
 # Additional Wacom drivers which are just used as sources for files:
