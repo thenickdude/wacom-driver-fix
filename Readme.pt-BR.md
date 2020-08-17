@@ -1,4 +1,4 @@
-# Corrigido o driver Wacom Bamboo, Graphire, Intuos 3 e Cintiq 1st gen para o macOS Catalina
+# Corrigido o driver Wacom Bamboo, Graphire, Intuos 1+2+3 e Cintiq 1st gen para o macOS Catalina
 
 Os drivers da Wacom para seus mesa digitalizadora mais antigos não funcionam no macOS Catalina.
 Eu criei uma versão fixa dos drivers para resolver o problema!
@@ -19,6 +19,16 @@ O driver Bamboo fixo (v5.3.7-6) suporta estes tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
+O driver Graphire 1+2 e Intuos 1+2 fixo (v6.1.6-4) suporta estes tablets:
+
+- ET-0405-U - Graphire / Graphire 1 (USB)
+- ET-0405-R - Graphire / Graphire 1 (Serial) 
+- ET-0405A - Graphire 2
+- GD-0405-U, GD-0608-U, GD-0912-U, GD-1212-U, GD-1218-U - Intuos (USB) (1998)
+- GD-0405-R, GD-0608-R, GD-0912-R, GD-1212-R, GD-1218-R - Intuos (Serial) (1998)
+- XD-0405-U, XD-0608-U, XD-0912-U, XD-1212-U, XD-1218-U - Intuos 2 (USB)
+- XD-0405-R, XD-0608-R, XD-0912-R, XD-1212-R, XD-1218-R - Intuos 2 (Serial)
+
 O driver Graphire 3 fixo (v5.2.6-5) suporta estes tablets:
 
 - CTE-430, CTE-630 - Graphire 3
@@ -28,7 +38,7 @@ O driver Graphire 4 fixo (v5.3.0-3) suporta estes tablets:
 - CTE-440, CTE-640 - Graphire 4
 - CTE-630BT - Graphire 3 Wireless (untested)
 
-O driver Intuos e Cintiq fixo (v6.3.15-3) suporta estes tablets:
+O driver Intuos 3 e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
 - DTZ-2100 - Cintiq 21UX 1st Gen.
@@ -43,7 +53,7 @@ O driver Intuos e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 
 Faça o download o instalador correto:
 
-- [Driver v6.1.6-4 para Graphire 1 e 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Driver v6.1.6-4 para Graphire 1+2 e Intuos 1+2+3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
 - [Driver v5.2.6-5 para Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Driver v5.3.0-3 para Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Driver v5.3.7-6 para Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)

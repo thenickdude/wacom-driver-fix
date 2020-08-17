@@ -35,7 +35,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
 	
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution $(PATCHED_DRIVERS_6_1_6_4) src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
+Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution $(PATCHED_DRIVERS_6_1_6_4) src/6.3.7.1/Wacom\ Tablet.kext src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -72,6 +72,11 @@ Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom
 
 	# Remove old PowerPC-only TabletDriverCFPlugin.bundle
 	rm -rf package/content.pkg/Payload/System/Library/Extensions/TabletDriverCFPlugin.bundle
+
+	# Replace Wacom Tablet.kext with one from 6.3.7-1 that is signed and that Catalina has a built-in hash exception for (allowing it to load without a timestamped notarisation)
+	# It's functionally identical anyway
+	rm -rf package/content.pkg/Payload/System/Library/Extensions/Wacom\ Tablet.kext
+	cp -a src/6.3.7-1/Wacom\ Tablet.kext package/content.pkg/Payload/System/Library/Extensions/
 
 	# Remove 32-bit Wacom Tablet Utility and replace it with the one from 6.3.4-3 (the new uninstaller is similar enough to be useful)
 	rm -rf package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Tablet\ Utility.app

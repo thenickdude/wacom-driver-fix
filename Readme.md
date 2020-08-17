@@ -1,14 +1,14 @@
-# Wacom Bamboo, Graphire, Intuos 3, and Cintiq 1st gen macOS driver fix
+# Wacom Bamboo, Graphire, Intuos 1, 2 & 3, and Cintiq 1st gen macOS driver fix
 
-Wacom's macOS drivers for Bamboo, Graphire, Intuos 3 and Cintiq 1st gen tablets have bugs in them that cause them to
-completely fail to start on macOS 10.15 Catalina (and likely other versions of macOS). This doesn't apply to the Windows 
-driver, or to the drivers for their newer tablets.
+Wacom's macOS drivers for Bamboo, Graphire, Intuos 1, 2 & 3 and Cintiq 1st gen tablets have bugs in them that cause them to
+completely fail to start on macOS 10.15 Catalina. This doesn't apply to the Windows driver, or to the drivers for their 
+newer tablets.
 
 When you try to open the Wacom preference pane with a Bamboo tablet, you'll get an error message saying
 "Waiting for synchronization", then finally "There is a problem with your tablet driver.
 Please reboot your system. If the problem persists reinstall or update the driver". For an Intuos 3 or Cintiq 1st gen tablet, 
 the preference pane will open, but clicking anything will cause it to crash with the message "There was an error in Wacom
-Tablet preferences." For Graphire tablets, the driver's installer couldn't even run on Catalina.
+Tablet preferences." For Graphire and Intuos 1 & 2 tablets, the driver's installer couldn't even run on Catalina.
 
 Thankfully I was able to track down the issues and I have patched the drivers to fix them!
 
@@ -28,10 +28,15 @@ My fixed Bamboo driver (v5.3.7-6) supports these tablets:
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
-My fixed Graphire 1 & 2 driver (v6.1.6-4) supports these tablets:
+My fixed Graphire 1 & 2 and Intuos 1 & 2 driver (v6.1.6-4) supports these tablets:
 
-- ET-0405-U/R - Graphire / Graphire 1
+- ET-0405-U - Graphire / Graphire 1 (USB)
+- ET-0405-R - Graphire / Graphire 1 (Serial) - Untested, let me know if it works!
 - ET-0405A - Graphire 2
+- GD-0405-U, GD-0608-U, GD-0912-U, GD-1212-U, GD-1218-U - Intuos (USB) (1998)
+- GD-0405-R, GD-0608-R, GD-0912-R, GD-1212-R, GD-1218-R - Intuos (Serial) (1998) - Untested
+- XD-0405-U, XD-0608-U, XD-0912-U, XD-1212-U, XD-1218-U - Intuos 2 (USB)
+- XD-0405-R, XD-0608-R, XD-0912-R, XD-1212-R, XD-1218-R - Intuos 2 (Serial) - Untested
 
 My fixed Graphire 3 driver (v5.2.6-5) supports these tablets:
 
@@ -42,7 +47,7 @@ My fixed Graphire 4 driver (v5.3.0-3) supports these tablets:
 - CTE-440, CTE-640 - Graphire 4
 - CTE-630BT - Graphire 3 Wireless (untested, let me know if this works!)
 
-And my fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
+And my fixed Intuos 3 and Cintiq driver (v6.3.15-3) supports these tablets:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
 - DTZ-2100 - Cintiq 21UX 1st Gen.
@@ -58,11 +63,11 @@ And my fixed Intuos and Cintiq driver (v6.3.15-3) supports these tablets:
 Download the correct installer for your tablet here and double click it to run it, this will install my fixed version of
 Wacom's driver:
 
-- [Download patched v6.1.6-4 installer for Graphire 1 & 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Download patched v5.2.6-5 installer for Graphire 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Download patched v5.3.0-3 installer for Graphire 4 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Download patched v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Download patched v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Fixed driver v6.1.6-4 installer for Graphire 1 & 2 and Intuos 1 & 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Fixed driver v5.2.6-5 installer for Graphire 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Fixed driver v5.3.0-3 installer for Graphire 4 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Fixed driver v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Fixed driver v6.3.15-13 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.
@@ -82,7 +87,7 @@ On the Accessibility page, click the padlock to unlock the page, then find and t
 If your tablet supports touch, touch the tablet with your finger, it should again prompt you to grant permissions. 
 On the Accessibility page, tick the `ConsumerTouchDriver` or `WacomTouchDriver` entry. 
 
-For Intuos 3 and Cintiq tablets, the driver might only appear on the Input Monitoring page, and you may need to reboot a second time
+With some tablets, the driver might only appear on the Input Monitoring page, and you may need to reboot a second time
 for it to appear on the Accessibility page too.
 
 **If your Wacom preference pane, pen support, or touch support is not yet working, or the entries never appeared in the
@@ -100,7 +105,7 @@ For Bamboo and Graphire 3 & 4 tablets:
 
     launchctl load -w /Library/LaunchAgents/com.wacom.pentablet.plist
     
-For Intuos 3 and Cintiq tablets:
+For Graphire 1 & 2, Intuos, and Cintiq tablets:
 
     launchctl unload /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
@@ -355,7 +360,7 @@ So now if the preferences are too new, `MigratePen()` won't attempt to upgrade t
 loading the preferences. This causes the preferences to remain at their defaults, and if the user edits the settings using 
 the preference pane, the settings should be cleanly overwritten.
 
-### Graphire drivers
+### Graphire 3 & 4 drivers
 
 The installers for the Graphire drivers are an old format that Catalina no longer supports, so I had to completely 
 rebuild them.
@@ -432,5 +437,7 @@ void OPopupOutlineView::reloadData(OPopupOutlineView *this) {
 }
 ```
 
-The drivers for Graphire 1 & 2 additionally have this problem in their ORadialSubMenuTableView::reloadData() method, and the
-fix is the same there.
+### Graphire 1 & 2 and Intuos 1 & 2 drivers
+
+These drivers have the same problems as the Graphire 3 & 4 drivers, plus the same `_dataSource` problem in their
+`ORadialSubMenuTableView::reloadData() method`, with the same fix.
