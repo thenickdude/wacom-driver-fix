@@ -37,16 +37,16 @@ endef
 all : really-all
 
 # Wacom drivers to build installers for:
-include Makefile-bamboo.mk
-include Makefile-graphire2.mk
-include Makefile-graphire3.mk
-include Makefile-graphire4.mk
-include Makefile-intuos3.mk
+include src/Makefile-bamboo.mk
+include src/Makefile-graphire2.mk
+include src/Makefile-graphire3.mk
+include src/Makefile-graphire4.mk
+include src/Makefile-intuos3.mk
 
 # Additional Wacom drivers which are just used as sources for files:
-include Makefile-6.3.4-3.mk
-include Makefile-6.3.7-1.mk
-include Makefile-6.3.17-5.mk
+include src/Makefile-6.3.4-3.mk
+include src/Makefile-6.3.7-1.mk
+include src/Makefile-6.3.17-5.mk
 
 # ... we can only reference the variables we need for the "all" target after first including the other makefiles
 really-all: \
