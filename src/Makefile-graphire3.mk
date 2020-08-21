@@ -5,7 +5,8 @@ EXTRACTED_DRIVERS_5_2_6_5= \
 
 PATCHED_DRIVERS_5_2_6_5= \
 	src/5.2.6-5/postflight.patched \
-	src/5.2.6-5/preflight.patched
+	src/5.2.6-5/preflight.patched \
+	src/5.2.6-5/PenTablet.prefpane.patched
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_5_2_6_5)
 
@@ -30,7 +31,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-5.2.6-5-patched.pkg
 
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/5.2.6-5/preflight.patched src/5.2.6-5/postflight.patched src/5.3.7-6/renumtablets src/5.3.0-3/PenTablet.prefpane.patched
+Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/5.2.6-5/preflight.patched src/5.2.6-5/postflight.patched src/5.3.7-6/renumtablets src/5.2.6-5/PenTablet.prefpane.patched
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -138,6 +139,9 @@ src/5.2.6-5/Install\ Bamboo.pkg : src/5.2.6-5/PenTablet_5.2.6-5.dmg
 # Extract original files from the Wacom installers as needed:
 
 $(EXTRACTED_DRIVERS_5_2_6_5) : src/5.2.6-5/Install\ Bamboo.pkg
+	rm -rf src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive
+	mkdir -p src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive
+	cd src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive && tar --no-same-owner -xf ../Archive.pax.gz
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/postflight src/5.2.6-5/postflight.original
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/preflight  src/5.2.6-5/preflight.original
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet src/5.2.6-5/PenTablet.prefpane.original

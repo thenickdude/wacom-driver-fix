@@ -78,7 +78,7 @@ $(CREATE_DIRECTORIES) :
 # Tools we need for the build:
 
 tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion : tools/fix_LC_VERSION_MIN_MACOSX/fix_LC_VERSION_MIN_MACOSX.c
-	gcc -o $@ $<
+	$(CC) -o $@ $<
 
 tools/fix_LC_VERSION_MIN_MACOSX/fix_LC_VERSION_MIN_MACOSX.c :
 	git submodule update --init

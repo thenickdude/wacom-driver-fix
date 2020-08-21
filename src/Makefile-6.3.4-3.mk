@@ -1,7 +1,7 @@
 # This is the first Pro series driver to have a 64-bit Wacom Utility
 
 EXTRACTED_DRIVERS_6_3_4_3= \
-	src/6.3.4.3/Wacom\ Tablet\ Utility.app
+	src/6.3.4-3/Wacom\ Tablet\ Utility.app
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_6_3_4_3)
 
