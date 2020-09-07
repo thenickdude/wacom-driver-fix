@@ -47,6 +47,7 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 [🇦🇺 Simplified English instructions](Readme.en-simple.md)   
 [🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)  
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
+[🇪🇸 Instrucciones en español](Readme.es.md)   
 
 ## 修正ドライバーインストール方法
 
@@ -56,7 +57,7 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 - [Graphire 3修正ドライバー (v5.2.6-5)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Graphire 4修正ドライバー (v5.3.0-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Bamboo修正ドライバー (v5.3.7-6)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Intuos 3/Cintiq修正ドライバー (v6.3.15-13)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Intuos 3/Cintiq修正ドライバー (v6.3.15-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 2) 古いドライバーの制限を消去してください。
 

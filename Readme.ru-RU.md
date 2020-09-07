@@ -59,6 +59,7 @@ with your tablet driver. Please reboot your system. If the problem persists rein
 [🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)  
 [🇯🇵 日本語で表示](Readme.ja-JP.md)   
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
+[🇪🇸 Instrucciones en español](Readme.es.md)   
 
 ## Установка исправления
 
@@ -68,7 +69,7 @@ with your tablet driver. Please reboot your system. If the problem persists rein
 - [Fixed driver v5.2.6-5 for Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
 - [Fixed driver v5.3.0-3 for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
 - [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Fixed driver v6.3.15-13 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Fixed driver v6.3.15-3 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-6/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Если появится сообщение, что ваш Mac поддерживает только установку приложений из App Store, тогда кликните по скачаному файлу правой(!) кнопкой и выберите в контекстном меню строчку "Открыть".
 
