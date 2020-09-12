@@ -92,6 +92,9 @@ Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg : src/5.3.0-3/Install\ Bambo
 	# Install fixed preference pane 
 	cp src/5.3.0-3/PenTablet.prefpane.patched package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefPane/Contents/MacOS/PenTablet
 
+	# Modify preference pane version number to avoid it getting marked as "incompatible software" by SystemMigration during system update
+	plutil -replace CFBundleShortVersionString -string "5.3.0-3" package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/Info.plist
+
 	# Make duplicate copy of localisation strings to the location that the patched postflight script expects (documentation installation)
 	cp -a -L package/Resources package/content.pkg/Scripts/support
 

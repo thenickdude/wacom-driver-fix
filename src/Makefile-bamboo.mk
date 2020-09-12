@@ -19,6 +19,7 @@ SIGN_ME_5_3_7_6= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app \
+	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane \
 	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework/Versions/A/WacomMultiTouch \
 	package/content.pkg/Payload/Library/PrivilegedHelperTools/com.wacom.TabletHelper.app/Contents/MacOS/com.wacom.TabletHelper \
 	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Library/LaunchServices/com.wacom.RemoveTabletHelper \
@@ -51,7 +52,15 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 	cp src/5.3.7-6/preinstall.patched package/content.pkg/Scripts/preinstall
 	cp src/5.3.7-6/postinstall.patched package/content.pkg/Scripts/postinstall
 	cp src/5.3.7-6/unloadagent src/5.3.7-6/loadagent package/content.pkg/Scripts/
-
+	
+	# Modify preference pane version number to avoid it getting marked as "incompatible software" by SystemMigration during system update
+	# Looks like the invalid version number string (starting with a word) caused it to always fail the compatibility check
+	#
+	# See /Library/Apple/Library/Bundles/IncompatibleAppsList.bundle/Contents/Resources/IncompatibleAppsList.plist
+	# or run /System/Library/PrivateFrameworks/SystemMigration.framework/Versions/A/Resources/compatchecker -d -f IncompatibleAppsList -r / -s
+	plutil -replace CFBundleShortVersionString -string "5.3.7-6" package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/Info.plist
+	sed -i "" -E 's/PenTablet v5.3.7-6/5.3.7-6/' package/Distribution package/content.pkg/PackageInfo
+	
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
 	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME_5_3_7_6)
