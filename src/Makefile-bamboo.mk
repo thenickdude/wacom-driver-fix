@@ -61,6 +61,12 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 	plutil -replace CFBundleShortVersionString -string "5.3.7-6" package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/Info.plist
 	sed -i "" -E 's/PenTablet v5.3.7-6/5.3.7-6/' package/Distribution package/content.pkg/PackageInfo
 	
+	# Remove SiLabs driver, since it doesn't seem used by Bamboo
+	rm -rf package/content.pkg/Payload/Library/Extensions/SiLabsUSBDriver64.kext
+
+	# Remove the codeless kext since it causes Big Sur's Security & Privacy panel to crash and isn't needed anyway
+	rm -rf package/content.pkg/Payload/Library/Extensions/Pen\ Tablet.kext
+
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
 	codesign -s "$(CODE_SIGNING_IDENTITY)" -f --options=runtime --timestamp $(SIGN_ME_5_3_7_6)
@@ -72,10 +78,15 @@ endif
 	mkbom package/content.pkg/Payload package/content.pkg/Bom
 
 	# Repack payload
+	( cd package/content.pkg/Payload && find . ! -path "./Library/Extensions*" ! -path "./Library/Frameworks*" | cpio -o --format odc --owner 0:80 ) > .tmp-payload
+
+	# Have to remove the cpio trailer from the end of the first archive (to allow the second archive to be appended)
+	# - it'd be nice if macOS' cpio supported --append instead
 	( \
-		( cd package/content.pkg/Payload && find . ! -path "./Library/Extensions*" | cpio -o --format odc --owner 0:80 ) ; \
-		( cd package/content.pkg/Payload && find ./Library/Extensions              | cpio -o --format odc --owner 0:0 ) ; \
+		head -c $$(LC_CTYPE=C grep --byte-offset --only-matching --text -F '0707070000000000000000000000000000000000010000000000000000000001300000000000TRAILER!!!' .tmp-payload | cut -f1 -d: ) .tmp-payload ; \
+		( cd package/content.pkg/Payload && find ./Library/Extensions ./Library/Frameworks | cpio -o --format odc --owner 0:0 ) ; \
 	) | gzip -c > package/content.pkg/Payload.gz
+	rm .tmp-payload
 	rm -rf package/content.pkg/Payload
 	mv package/content.pkg/Payload.gz package/content.pkg/Payload
 

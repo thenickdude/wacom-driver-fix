@@ -90,7 +90,7 @@ node_modules/.bin/marked : package.json
 # Utility commands:
 
 clean :
-	rm -rf src/6.3.17-5/Wacom\ Desktop\ Center.app src/5.3.0-3/Install\ Bamboo.pkg src/6.1.6-4/Install\ Wacom\ Tablet.pkg
+	rm -rf src/5.2.6-5/Install\ Bamboo.pkg src/6.3.17-5/Wacom\ Desktop\ Center.app src/5.3.0-3/Install\ Bamboo.pkg src/6.1.6-4/Install\ Wacom\ Tablet.pkg
 	rm -f \
 		$(MANUAL_INSTALLERS) $(UNSIGNED_INSTALLERS) $(SIGNED_INSTALLERS) \
 		build/* $(PATCHED_DRIVERS) $(EXTRACTED_DRIVERS)

@@ -35,7 +35,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
 	
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution $(PATCHED_DRIVERS_6_1_6_4) src/6.3.7.1/Wacom\ Tablet.kext src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
+Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution $(PATCHED_DRIVERS_6_1_6_4) src/6.3.7-1/Wacom\ Tablet.kext src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package

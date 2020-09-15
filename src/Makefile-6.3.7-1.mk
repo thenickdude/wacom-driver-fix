@@ -9,7 +9,7 @@
 # The other kext version that has such a blessing is 6.3.30
 
 EXTRACTED_DRIVERS_6_3_7_1= \
-	src/6.3.7.1/Wacom\ Tablet.kext
+	src/6.3.7-1/Wacom\ Tablet.kext
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_6_3_7_1)
 
