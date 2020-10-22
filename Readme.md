@@ -92,8 +92,8 @@ On the Accessibility page, tick the `ConsumerTouchDriver` or `WacomTouchDriver` 
 With some tablets, the driver might only appear on the Input Monitoring page, and you may need to reboot a second time
 for it to appear on the Accessibility page too.
 
-**If your Wacom preference pane, pen support, or touch support is not yet working, or the entries never appeared in the
-list for you,** you likely had permissions left over from the previous tablet driver, and these stale entries all need to 
+### If your Wacom preference pane, pen support, or touch support is not yet working
+You likely had permissions left over from the previous tablet driver, and these stale entries all need to 
 be removed like so:
 
 On the "Accessibility" page of Security & Privacy, Find anything related to Wacom in the list (e.g. `PenTabletDriver`, 
@@ -114,6 +114,33 @@ For Graphire 1 & 2, Intuos, and Cintiq tablets:
     launchctl load -w /Library/LaunchAgents/com.wacom.wacomtablet.plist
 
 This should restore the prompts to ask you to add permissions, so now begin the instructions in this section again.
+
+### If nothing ever appears in "Input Monitoring" for you
+
+For a handful of people, the Wacom driver never appears in the Input Monitoring list for them. To fix this, first open up
+the "Terminal" app and paste this line in and press enter to ensure that the Wacom service is enabled:
+
+For Bamboo and Graphire 3 & 4 tablets:
+
+    launchctl load -w /Library/LaunchAgents/com.wacom.pentablet.plist
+    
+For Graphire 1 & 2, Intuos, and Cintiq tablets:
+
+    launchctl load -w /Library/LaunchAgents/com.wacom.wacomtablet.plist
+
+If that doesn't trigger it to ask you to add Input Monitoring permissions when you try to use the tablet, you can add 
+it manually instead.
+
+In Finder, click Go -> Go to Folder, and paste this path in there and click OK:
+
+    /Library/Application Support/Tablet/
+
+In there you should see a "PenTabletDriver" file (Bamboo), "PenTabletSpringboard" (Graphire 3 & 4),
+or "WacomTabletSpringboard" (Graphire 1 & 2, Intuos, Cintiq). 
+
+Unlock the Input Monitoring page, then drag the PenTabletDriver / PenTabletSpringboard / WacomTabletSpringboard file onto it to 
+add it to the list, and make sure it's ticked. Now reboot your computer, and when you try to use the tablet it should 
+prompt you to tick it in the Accessibility page too, after which it should start working.
 
 ## Support me
 
