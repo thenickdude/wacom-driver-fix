@@ -60,6 +60,7 @@ with your tablet driver. Please reboot your system. If the problem persists rein
 [🇯🇵 日本語で表示](Readme.ja-JP.md)   
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
 [🇪🇸 Instrucciones en español](Readme.es.md)   
+[🇵🇱 Instrukcja po polsku](Readme.pl.md)   
 
 ## Установка исправления
 
@@ -113,5 +114,3 @@ with your tablet driver. Please reboot your system. If the problem persists rein
 Если вам понравилось, что ваш планшето снова в деле, вы можете прислать мне чаевых!
 
 [![На чай](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url) 
-
-Это поддержит меня в процессе дальнейшей разработки исправлений для драйверов.

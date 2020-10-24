@@ -50,6 +50,7 @@ Mi controlador corregido de Intuos 3 y Cintiq (v6.3.15-3) es compatible con esta
 [🇯🇵 日本語で表示](Readme.ja-JP.md)   
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)  
 [🇪🇸 Instrucciones en español](Readme.es.md)   
+[🇵🇱 Instrukcja po polsku](Readme.pl.md)   
 
 ## Instala el controlador corregido
 
