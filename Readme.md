@@ -59,7 +59,7 @@ And my fixed Intuos 3 and Cintiq driver (v6.3.15-3) supports these tablets:
 [🇯🇵 日本語で表示](Readme.ja-JP.md)   
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
 [🇪🇸 Instrucciones en español](Readme.es.md)   
-[🇵🇱 Instrukcja po polsu](Readme.pl.md)
+[🇵🇱 Instrukcja po polsku](Readme.pl.md)
 
 ## Install the fix
 
