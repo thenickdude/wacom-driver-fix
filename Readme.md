@@ -320,7 +320,8 @@ and that function is a `void` function (with no well-defined return value)!
 
 So `action:()` ends up calling `retain()` and `release()` on a garbage pointer, which causes a segfault.
 
-The patch here is easy - that useless pair of `retain()` and `release()` calls is deleted.
+The patch here is easy - that useless pair of `retain()` and `release()` calls is deleted. The same bug exists in 
+`ONumberTextField::textDidChange:`, with the same fix. 
 
 There's another problem with this driver. If, while trying to get your tablet to work, you accidentally install the 
 latest Wacom driver (that doesn't support Intuos 3), it writes a newer-format preference file that the old Intuos 3
