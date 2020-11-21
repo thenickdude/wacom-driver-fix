@@ -66,11 +66,11 @@ Zaktualizowane sterowniki tabletów Inutos 3 oraz Cintiq (v6.3.15-3) wspierają 
 
 Pobierz odpowiednią instalkę poniżej dla posiadanego tabletu i odpal klikając podwójnie:
 
-- [Instalka sterownika v6.1.6-4 dla Graphire 1 & 2 oraz Intuos 1 & 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Instalka sterownika v5.2.6-5 dla Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Instalka sterownika v5.3.0-3 dla Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Instalka sterownika v5.3.7-6 dla Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Instalka sterownika v6.3.15-3 dla Intuos 3 oraz Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Instalka sterownika v6.1.6-4 dla Graphire 1 & 2 oraz Intuos 1 & 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Instalka sterownika v5.2.6-5 dla Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Instalka sterownika v5.3.0-3 dla Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Instalka sterownika v5.3.7-6 dla Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Instalka sterownika v6.3.15-3 dla Intuos 3 oraz Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Jeżeli wyskoczy błąd z wiadomością, że Mac akceptuje tylko aplikacje pobrane z App Store, kliknij prawym przyciskiem 
 myszy na ikonę i wybierz opcję "Otwórz".

@@ -11,7 +11,12 @@
 > 			push @driverPIDs, $1;
 > 		}
 > 
-147c152,155
+124c129,130
+< 						"/Library/Internet Plug-Ins/WacomSafari.plugin"
+---
+> 						"/Library/Internet Plug-Ins/WacomSafari.plugin",
+> 						"/Library/Application Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app"
+147c153,156
 < 	
 ---
 > 

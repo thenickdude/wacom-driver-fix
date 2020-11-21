@@ -6,8 +6,8 @@ because the manual method only replaces a couple of the driver's files and doesn
 
 Now download my patch for your tablet here:
 
-- [Manual patch 5.3.7-6 for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/wacom-5.3.7-6-macOS-patched.zip)
-- [Manual patch 6.3.15-3 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/wacom-6.3.15-3-macOS-patched.zip)
+- [Manual patch 5.3.7-6 for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/wacom-5.3.7-6-macOS-patched.zip)
+- [Manual patch 6.3.15-3 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/wacom-6.3.15-3-macOS-patched.zip)
 - Manual installation is not available for Graphire or Intuos 1 & 2 tablets, use the installer instead
 
 Unzip it by double clicking it, then follow the installation instructions that match your tablet:
@@ -37,11 +37,24 @@ this path:
 Copy the ConsumerTouchDriver file from the zip you downloaded and paste it over the ConsumerTouchDriver file you see
 there, enter your password to confirm the replacement.
 
+If you're using macOS Big Sur, we need to move the touch driver into a new folder for it to work properly. In Finder go to:
+
+    /Library/Application Support/Tablet/PenTabletDriver.app/Contents/Resources
+
+Select the "ConsumerTouchDriver" file and click Edit -> Copy. Now go to this folder:
+
+    /Library/Application Support/Tablet
+    
+Click Edit, then hold down the option/alt key on your keyboard, and you should see the "Paste" menu item change into 
+"Move item here", click that one, and enter your password to confirm the move. 
+
 **We're done installing patches**, so back in the terminal, run:
 
     launchctl load -w /Library/LaunchAgents/com.wacom.pentablet.plist
 
-After installing, follow the "post-install instructions" section to set the permissions properly.
+After installing, follow the "post-install instructions" section to set the permissions properly. Especially note that
+for touch support on Big Sur, you'll definitely need to remove the old entry for ConsumerTouchDriver from the Accessibility
+section if it is already there.
 
 ### Intuos 3 and Cintiq 1st gen tablets
 

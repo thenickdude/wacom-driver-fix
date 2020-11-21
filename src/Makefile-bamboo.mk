@@ -3,13 +3,19 @@ EXTRACTED_DRIVERS_5_3_7_6= \
 	src/5.3.7-6/ConsumerTouchDriver.original \
 	src/5.3.7-6/preinstall.original \
 	src/5.3.7-6/postinstall.original \
-	src/5.3.7-6/renumtablets
+	src/5.3.7-6/renumtablets \
+	src/5.3.7-6/PackageInfo.original \
+	src/5.3.7-6/Distribution.original \
+	src/5.3.7-6/uninstall.pl.original 
 
 PATCHED_DRIVERS_5_3_7_6= \
 	src/5.3.7-6/PenTabletDriver.patched \
 	src/5.3.7-6/ConsumerTouchDriver.patched \
 	src/5.3.7-6/preinstall.patched \
-	src/5.3.7-6/postinstall.patched
+	src/5.3.7-6/postinstall.patched \
+	src/5.3.7-6/PackageInfo.patched \
+	src/5.3.7-6/Distribution.patched \
+	src/5.3.7-6/uninstall.pl.patched 
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_5_3_7_6)
 
@@ -17,7 +23,7 @@ PATCHED_DRIVERS+= $(PATCHED_DRIVERS_5_3_7_6)
 
 SIGN_ME_5_3_7_6= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
-	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/ConsumerTouchDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app \
 	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane \
 	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework/Versions/A/WacomMultiTouch \
@@ -44,7 +50,6 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 
 	# Add Welcome screen
 	find package/Resources -type d -depth 1 -exec cp src/5.3.7-6/Welcome.rtf {}/ \;
-	sed -i "" -E 's/(<\/installer-gui-script>)/    <welcome file="Welcome.rtf" mime-type="text\/richtext"\/>\1/' package/Distribution
 
 	# Add patched drivers
 	cp src/5.3.7-6/PenTabletDriver.patched package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver
@@ -52,6 +57,10 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 	cp src/5.3.7-6/preinstall.patched package/content.pkg/Scripts/preinstall
 	cp src/5.3.7-6/postinstall.patched package/content.pkg/Scripts/postinstall
 	cp src/5.3.7-6/unloadagent src/5.3.7-6/loadagent package/content.pkg/Scripts/
+
+	# Add updated package descriptors for the reshuffle of ConsumerTouchDriver and preference pane version number bump
+	cp src/5.3.7-6/Distribution.patched package/Distribution
+	cp src/5.3.7-6/PackageInfo.patched  package/content.pkg/PackageInfo
 	
 	# Modify preference pane version number to avoid it getting marked as "incompatible software" by SystemMigration during system update
 	# Looks like the invalid version number string (starting with a word) caused it to always fail the compatibility check
@@ -59,13 +68,18 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 	# See /Library/Apple/Library/Bundles/IncompatibleAppsList.bundle/Contents/Resources/IncompatibleAppsList.plist
 	# or run /System/Library/PrivateFrameworks/SystemMigration.framework/Versions/A/Resources/compatchecker -d -f IncompatibleAppsList -r / -s
 	plutil -replace CFBundleShortVersionString -string "5.3.7-6" package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/Info.plist
-	sed -i "" -E 's/PenTablet v5.3.7-6/5.3.7-6/' package/Distribution package/content.pkg/PackageInfo
 	
 	# Remove SiLabs driver, since it doesn't seem used by Bamboo
 	rm -rf package/content.pkg/Payload/Library/Extensions/SiLabsUSBDriver64.kext
 
 	# Remove the codeless kext since it causes Big Sur's Security & Privacy panel to crash and isn't needed anyway
 	rm -rf package/content.pkg/Payload/Library/Extensions/Pen\ Tablet.kext
+
+	# Move ConsumerTouchDriver to become a top-level app, since Big Sur won't grant kTCCServicePostEvent rights to it otherwise
+	mv package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app package/content.pkg/Payload/Library/Application\ Support/Tablet/
+
+	# Update the uninstaller to remove ConsumerTouchDriver from that new location
+	cp src/5.3.7-6/uninstall.pl.patched package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/uninstall.pl
 
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
@@ -119,6 +133,9 @@ $(EXTRACTED_DRIVERS_5_3_7_6) : src/5.3.7-6/Install\ Wacom\ Tablet.pkg
 	cp package/content.pkg/Scripts/preinstall   src/5.3.7-6/preinstall.original
 	cp package/content.pkg/Scripts/postinstall  src/5.3.7-6/postinstall.original
 	cp package/content.pkg/Scripts/renumtablets src/5.3.7-6/renumtablets
+	cp package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/uninstall.pl src/5.3.7-6/uninstall.pl.original
+	cp package/Distribution src/5.3.7-6/Distribution.original
+	cp package/content.pkg/PackageInfo src/5.3.7-6/PackageInfo.original
 
 # Utility commands:
 

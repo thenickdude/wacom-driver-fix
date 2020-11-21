@@ -1,0 +1,7 @@
+10c10,11
+<     <bundle path="./Library/PreferencePanes/PenTablet.prefpane" id="com.wacom.PenTabletSettingsPrefPane" CFBundleShortVersionString="PenTablet v5.3.7-6" CFBundleVersion="5.3.7f6"/>
+---
+>     <bundle path="./Library/PreferencePanes/PenTablet.prefpane" id="com.wacom.PenTabletSettingsPrefPane" CFBundleShortVersionString="5.3.7-6" CFBundleVersion="5.3.7f6"/>
+>     <bundle path="./Library/Application Support/Tablet/ConsumerTouchDriver.app" id="com.wacom.ConsumerTouchDriver" CFBundleShortVersionString="Wacom Touch 5.3.7-6" CFBundleVersion="5.3.7f6"/>
+12a14
+>         <bundle id="com.wacom.ConsumerTouchDriver"/>

@@ -54,11 +54,11 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 
 1) お持ちのタブレットに適用する修正ドライバーを下記からダウンロードし、インストールしてください。
 
-- [Graphire 1+2/Intuos 1+2修正ドライバー (v6.1.6-4)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Graphire 3修正ドライバー (v5.2.6-5)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Graphire 4修正ドライバー (v5.3.0-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Bamboo修正ドライバー (v5.3.7-6)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Intuos 3/Cintiq修正ドライバー (v6.3.15-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Graphire 1+2/Intuos 1+2修正ドライバー (v6.1.6-4)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Graphire 3修正ドライバー (v5.2.6-5)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Graphire 4修正ドライバー (v5.3.0-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Bamboo修正ドライバー (v5.3.7-6)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Intuos 3/Cintiq修正ドライバー (v6.3.15-3)](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 2) 古いドライバーの制限を消去してください。
 

@@ -55,11 +55,11 @@ My fixed **Intuos 3** and **Cintiq** driver (v6.3.15-3) supports these tablets:
 
 First, download the correct driver for your tablet:
 
-- [Fixed driver v6.1.6-4 for Graphire 1 & 2 and Intuos 1 & 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Fixed driver v5.2.6-5 for Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Fixed driver v5.3.0-3 for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Fixed driver v6.3.15-3 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-7/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Fixed driver v6.1.6-4 for Graphire 1 & 2 and Intuos 1 & 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Fixed driver v5.2.6-5 for Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Fixed driver v5.3.0-3 for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Fixed driver v6.3.15-3 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Run the installer to install the driver.
 

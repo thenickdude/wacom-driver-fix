@@ -1,0 +1,8 @@
+16c16
+<             <bundle CFBundleShortVersionString="PenTablet v5.3.7-6" CFBundleVersion="5.3.7f6" id="com.wacom.PenTabletSettingsPrefPane" path="Library/PreferencePanes/PenTablet.prefpane"/>
+---
+>             <bundle CFBundleShortVersionString="5.3.7-6" CFBundleVersion="5.3.7f6" id="com.wacom.PenTabletSettingsPrefPane" path="Library/PreferencePanes/PenTablet.prefpane"/>
+20a21
+>             <bundle CFBundleShortVersionString="Wacom Touch 5.3.7-6" CFBundleVersion="5.3.7f6" id="com.wacom.ConsumerTouchDriver" path="Library/Application Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app"/>
+29a31
+>     <welcome file="Welcome.rtf" mime-type="text/richtext"/>

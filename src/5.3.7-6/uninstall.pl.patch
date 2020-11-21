@@ -1,0 +1,2 @@
+558a559
+> 	rmtree("$gDriverAppPath/ConsumerTouchDriver.app");
