@@ -1,4 +1,4 @@
-# Aktualizacja sterowników MacOS dla tabletów Wacom Bamboo, Graphire, Intuos 1,  2 i 3 oraz Cintiqa 1-szej generacji
+# Aktualizacja sterowników MacOS dla tabletów Wacom Bamboo, Graphire, Intuos 1, 2 i 3 oraz Cintiqa 1-szej generacji
 
 Sterowniki Wacoma na systemie MacOS mają w sobie wiele bugów, co uniemożliwia używanie ich na systemie Catalina. Nie 
 dzieje się tak jednak na systemach Windowsa, czy też dla nowszych tabletów.
@@ -30,7 +30,7 @@ Zaktualizowane sterowniki tabletów serii Bamboo (v5.3.7-6) wspierają następuj
 - CTT-460 - Bamboo Touch
 - MTE-450 - Bamboo
 
-Zaktualizowane sterowniki tabletów Graphire 1 & 2 oraz Intuos 1 & 2 (v6.1.6-4) wspierają nastepujące tablety:
+Zaktualizowane sterowniki tabletów Graphire 1 & 2 oraz Intuos 1 & 2 (v6.1.6-4) wspierają następujące tablety:
 
 - ET-0405-U - Graphire / Graphire 1 (USB)
 - ET-0405-R - Graphire / Graphire 1 (Serial) - Nietestowane!
@@ -40,17 +40,17 @@ Zaktualizowane sterowniki tabletów Graphire 1 & 2 oraz Intuos 1 & 2 (v6.1.6-4) 
 - XD-0405-U, XD-0608-U, XD-0912-U, XD-1212-U, XD-1218-U - Intuos 2 (USB)
 - XD-0405-R, XD-0608-R, XD-0912-R, XD-1212-R, XD-1218-R - Intuos 2 (Serial) - Nietestowane!
 
-Zaktualizowane sterowniki tabletów Graphire 3 (v5.2.6-5) wspierają nastepujące tablety:
+Zaktualizowane sterowniki tabletów Graphire 3 (v5.2.6-5) wspierają następujące tablety:
 
 - CTE-430, CTE-630 - Graphire 3
 - CTE-630BT - Graphire 3 Wireless
 
-Zaktualizowane sterowniki tabletów Graphire 4 (v5.3.0-3) wspierają nastepujące tablety:
+Zaktualizowane sterowniki tabletów Graphire 4 (v5.3.0-3) wspierają następujące tablety:
 
 - CTE-440, CTE-640 - Graphire 4
 - CTE-630BT - Graphire 3 Wireless (możliwe że nie działa - w przypadku kłopotów, użyj wersji 5.2.6-5)
 
-Zaktualizowane sterowniki tabletów Inutos 3 oraz Cintiq (v6.3.15-3) wspierają nastepujące tablety:
+Zaktualizowane sterowniki tabletów Inutos 3 oraz Cintiq (v6.3.15-3) wspierają następujące tablety:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
 - DTZ-2100 - Cintiq 21UX 1st Gen.
