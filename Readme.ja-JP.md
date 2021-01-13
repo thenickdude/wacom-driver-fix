@@ -32,6 +32,7 @@ Graphire 1+2/Intuos 1+2修正ドライバー (v6.1.6-4) 対応デバイス：
 Graphire 3修正ドライバー (v5.2.6-5) 対応デバイス：
 
 - CTE-430, CTE-630 - Graphire 3
+- CTE-630BT - Graphire 3 Wireless
 
 Graphire 4修正ドライバー (v5.3.0-3) 対応デバイス：
 

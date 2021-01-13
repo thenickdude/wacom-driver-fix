@@ -32,11 +32,11 @@ O driver Graphire 1+2 e Intuos 1+2 fixo (v6.1.6-4) suporta estes tablets:
 O driver Graphire 3 fixo (v5.2.6-5) suporta estes tablets:
 
 - CTE-430, CTE-630 - Graphire 3
+- CTE-630BT - Graphire 3 Wireless
 
 O driver Graphire 4 fixo (v5.3.0-3) suporta estes tablets:
 
 - CTE-440, CTE-640 - Graphire 4
-- CTE-630BT - Graphire 3 Wireless (untested)
 
 O driver Intuos 3 e Cintiq fixo (v6.3.15-3) suporta estes tablets:
 

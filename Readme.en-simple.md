@@ -33,11 +33,11 @@ My fixed **Graphire 1 & 2** and **Intuos 1 & 2** driver (v6.1.6-4) supports thes
 My fixed **Graphire 3** driver (v5.2.6-5) supports these tablets:
 
 - CTE-430, CTE-630 - Graphire 3
+- CTE-630BT - Graphire 3 Wireless
 
 My fixed **Graphire 4** driver (v5.3.0-3) supports these tablets:
 
 - CTE-440, CTE-640 - Graphire 4
-- CTE-630BT - Graphire 3 Wireless
 
 My fixed **Intuos 3** and **Cintiq** driver (v6.3.15-3) supports these tablets:
 

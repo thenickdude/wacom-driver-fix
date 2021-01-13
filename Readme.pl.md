@@ -48,7 +48,6 @@ Zaktualizowane sterowniki tabletów Graphire 3 (v5.2.6-5) wspierają następują
 Zaktualizowane sterowniki tabletów Graphire 4 (v5.3.0-3) wspierają następujące tablety:
 
 - CTE-440, CTE-640 - Graphire 4
-- CTE-630BT - Graphire 3 Wireless (możliwe że nie działa - w przypadku kłopotów, użyj wersji 5.2.6-5)
 
 Zaktualizowane sterowniki tabletów Inutos 3 oraz Cintiq (v6.3.15-3) wspierają następujące tablety:
 

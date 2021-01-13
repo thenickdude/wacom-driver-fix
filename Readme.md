@@ -46,7 +46,6 @@ My fixed **Graphire 3** driver (v5.2.6-5) supports these tablets:
 My fixed **Graphire 4** driver (v5.3.0-3) supports these tablets:
 
 - CTE-440, CTE-640 - Graphire 4
-- CTE-630BT - Graphire 3 Wireless (maybe doesn't work? If you have trouble use 5.2.6-5 instead)
 
 And my fixed **Intuos 3** and **Cintiq** driver (v6.3.15-3) supports these tablets:
 

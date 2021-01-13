@@ -40,11 +40,11 @@ with your tablet driver. Please reboot your system. If the problem persists rein
 Поврежденный драйвер Graphire 3 driver (v5.2.6-5) подходит для планшетов:
 
 - CTE-430, CTE-630 - Graphire 3
+- CTE-630BT - Graphire 3 Wireless
 
 Поврежденный драйвер Graphire 4 driver (v5.3.0-3) подходит для планшетов:
 
 - CTE-440, CTE-640 - Graphire 4
-- CTE-630BT - Graphire 3 Wireless
 
 Поврежденный драйвер Intuos and Cintiq driver (v6.3.15-3) подходит для планшетов:
 
