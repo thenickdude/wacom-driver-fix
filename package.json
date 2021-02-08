@@ -6,7 +6,7 @@
   "author": "Nicholas Sherlock",
   "license": "WTFPL",
   "dependencies": {
-    "marked": "^1.1.1"
+    "marked": "^2.0.0"
   },
   "repository": {
     "type": "git",
