@@ -66,11 +66,11 @@ with your tablet driver. Please reboot your system. If the problem persists rein
 
 Скачайте подходящую версию установщика для вашего планшета и дважды кликните скачаный файл чтобы запустить его- это запустит установку пропатченой мною версии драйвера Wacom:
 
-- [Fixed driver v6.1.6-4 for Graphire 1 & 2 and Intuos 1 & 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Fixed driver v5.2.6-5 for Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Fixed driver v5.3.0-3 for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Fixed driver v6.3.15-3 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Fixed driver v6.1.6-4 for Graphire 1 & 2 and Intuos 1 & 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Fixed driver v5.2.6-5 for Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Fixed driver v5.3.0-3 for Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Fixed driver v5.3.7-6 for Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Fixed driver v6.3.15-3 for Intuos 3 and Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Если появится сообщение, что ваш Mac поддерживает только установку приложений из App Store, тогда кликните по скачаному файлу правой(!) кнопкой и выберите в контекстном меню строчку "Открыть".
 

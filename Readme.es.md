@@ -56,11 +56,11 @@ Mi controlador corregido de Intuos 3 y Cintiq (v6.3.15-3) es compatible con esta
 
 Primero, descargue el controlador correcto para su tableta:
 
-- [Controlador corregido v6.1.6-4 para tabletas Graphire 1 y 2 e Intuos 1 y 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Controlador corregido v5.2.6-5 para Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Controlador corregido v5.3.0-3 para Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Controlador corregido v5.3.7-6 para Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Controlador corregido v6.3.15-3 para Intuos 3 y Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Controlador corregido v6.1.6-4 para tabletas Graphire 1 y 2 e Intuos 1 y 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Controlador corregido v5.2.6-5 para Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Controlador corregido v5.3.0-3 para Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Controlador corregido v5.3.7-6 para Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Controlador corregido v6.3.15-3 para Intuos 3 y Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Ejecute el instalador para instalar el controlador.
 

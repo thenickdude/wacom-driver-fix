@@ -65,11 +65,11 @@ And my fixed **Intuos 3** and **Cintiq** driver (v6.3.15-3) supports these table
 Download the correct installer for your tablet here and double click it to run it, this will install my fixed version of
 Wacom's driver:
 
-- [Fixed driver v6.1.6-4 installer for Graphire 1 & 2 and Intuos 1 & 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Fixed driver v5.2.6-5 installer for Graphire 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Fixed driver v5.3.0-3 installer for Graphire 4 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Fixed driver v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Fixed driver v6.3.15-3 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-8/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Fixed driver v6.1.6-4 installer for Graphire 1 & 2 and Intuos 1 & 2 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Fixed driver v5.2.6-5 installer for Graphire 3 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Fixed driver v5.3.0-3 installer for Graphire 4 tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Fixed driver v5.3.7-6 installer for Bamboo tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Fixed driver v6.3.15-3 for Intuos 3 and Cintiq tablets](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.
@@ -185,8 +185,10 @@ This kills the driver.
 The fix is a single-byte change which replaces the call to `_objc_release()` in `PathFromURL` to a call to `_objc_retain()`.
 This prevents the path from being freed before it is used, which cures the segfault.
 
-The ConsumerTouchDriver also contains this same bug, and the patch is the same there. However the touch driver also needs
-some fixes to stop it from crashing when a multi-touch gesture is performed.
+The ConsumerTouchDriver also contains this same bug, and the patch is the same there. 
+
+Both the pen driver and the touch driver need fixes to stop them from crashing when a multi-touch gesture is performed,
+or the scroll ring is used to zoom.
 
 When a gesture is performed, the function `CMacHIDGestureEventOSX1010::PostGesture` is responsible for sending that gesture
 to the operating system: 
