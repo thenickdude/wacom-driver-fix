@@ -59,6 +59,7 @@ And my fixed **Intuos 3** and **Cintiq** driver (v6.3.15-3) supports these table
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)  
 [🇪🇸 Instrucciones en español](Readme.es.md)  
 [🇵🇱 Instrukcja po polsku](Readme.pl.md)   
+[🇫🇷 Instructions en français](Readme.fr-FR.md)   
 
 ## Install the fix
 

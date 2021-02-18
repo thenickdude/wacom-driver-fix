@@ -50,6 +50,7 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
 [🇪🇸 Instrucciones en español](Readme.es.md)   
 [🇵🇱 Instrukcja po polsku](Readme.pl.md)   
+[🇫🇷 Instructions en français](Readme.fr-FR.md)   
 
 ## 修正ドライバーインストール方法
 

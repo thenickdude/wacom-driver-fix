@@ -60,6 +60,7 @@ Zaktualizowane sterowniki tabletów Inutos 3 oraz Cintiq (v6.3.15-3) wspierają 
 [🇯🇵 日本語で表示](Readme.ja-JP.md)   
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)  
 [🇪🇸 Instrucciones en español](Readme.es.md)   
+[🇫🇷 Instructions en français](Readme.fr-FR.md)   
 
 ## Instalacja
 

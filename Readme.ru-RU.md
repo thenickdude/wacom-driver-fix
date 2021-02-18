@@ -61,6 +61,7 @@ with your tablet driver. Please reboot your system. If the problem persists rein
 [🇷🇺 Инструкция на русском языке](Readme.ru-RU.md)   
 [🇪🇸 Instrucciones en español](Readme.es.md)   
 [🇵🇱 Instrukcja po polsku](Readme.pl.md)   
+[🇫🇷 Instructions en français](Readme.fr-FR.md)   
 
 ## Установка исправления
 
