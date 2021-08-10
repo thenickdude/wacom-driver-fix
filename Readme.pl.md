@@ -17,7 +17,7 @@ instalator sterowników nawet się nie uruchamia.
 Zaktualizowane sterowniki tabletów serii Bamboo (v5.3.7-6) wspierają następujące tablety:
 
 - CTE-450, CTE-650 - Bamboo Fun / Bamboo Art Master (2007)
-- CTE-460 - Bamboo One Pen
+- CTE-460, CTE-660 - Bamboo One Pen
 - CTF-430 - Bamboo One
 - CTH-300, CTH300, CTH301K - Bamboo Pad
 - CTH-460, CTH-660 - Bamboo Pen and Touch
