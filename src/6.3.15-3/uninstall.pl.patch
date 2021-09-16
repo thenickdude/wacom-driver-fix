@@ -1,0 +1,4 @@
+63c63
+< my $gDriverSpringboard				= "WacomTabletSpringboard";
+---
+> my $gDriverSpringboard				= "WacomTabletSpringboard.app";

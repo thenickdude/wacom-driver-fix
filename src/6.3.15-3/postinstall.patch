@@ -1,2 +1,7 @@
 1023d1022
 < 	installMultiTouchAPI();
+1072,1073c1071
+< 	print "Opening TabletDriver\n";
+< 	`/usr/bin/open -a "$gTablet_driver"`;
+---
+> 	`./loadagent`;

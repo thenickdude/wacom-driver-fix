@@ -1,0 +1,9 @@
+140c140,141
+< 						"/Library/Internet Plug-Ins/WacomSafari.plugin"
+---
+> 						"/Library/Internet Plug-Ins/WacomSafari.plugin",
+> 						"/Library/Application Support/Tablet/WacomTabletSpringboard"
+170a172,174
+> 	print "Unload LaunchAgent\n";
+> 	`./unloadagent`;
+> 

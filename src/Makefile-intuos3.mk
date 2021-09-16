@@ -1,12 +1,20 @@
 EXTRACTED_DRIVERS_6_3_15_3= \
 	src/6.3.15-3/WacomTablet.original \
+	src/6.3.15-3/preinstall.original \
 	src/6.3.15-3/postinstall.original \
-	src/6.3.15-3/WacomTabletDriver.original
+	src/6.3.15-3/WacomTabletDriver.original \
+	src/6.3.15-3/Distribution.original \
+	src/6.3.15-3/uninstall.pl.original \
+	src/6.3.15-3/com.wacom.wacomtablet.plist.original
 
 PATCHED_DRIVERS_6_3_15_3= \
 	src/6.3.15-3/WacomTablet.patched \
+	src/6.3.15-3/preinstall.patched \
 	src/6.3.15-3/postinstall.patched \
-	src/6.3.15-3/WacomTabletDriver.patched
+	src/6.3.15-3/WacomTabletDriver.patched \
+	src/6.3.15-3/Distribution.patched \
+	src/6.3.15-3/uninstall.pl.patched \
+	src/6.3.15-3/com.wacom.wacomtablet.plist.patched
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_6_3_15_3)
 
@@ -14,7 +22,7 @@ PATCHED_DRIVERS+= $(PATCHED_DRIVERS_6_3_15_3)
 
 SIGN_ME_6_3_15_3= \
 	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane \
-	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/TabletDriver.app/Contents/MacOS/TabletDriver \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/WacomTouchDriver.app/Contents/MacOS/WacomTouchDriver \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app \
@@ -41,12 +49,17 @@ wacom-6.3.15-3-macOS-patched.zip : $(PATCHED_DRIVERS_6_3_15_3) build/ build/Read
 
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wacom\ Tablet.pkg $(PATCHED_DRIVERS_6_3_15_3) src/6.3.15-3/Welcome.rtf src/6.3.15-3/postinstall.patched src/6.3.17-5/Wacom\ Desktop\ Center.app
+Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wacom\ Tablet.pkg $(PATCHED_DRIVERS_6_3_15_3) src/6.3.15-3/Welcome.rtf src/TCCReset6.pkg src/6.3.15-3/WacomTabletSpringboard.Info.plist src/6.3.17-5/Wacom\ Desktop\ Center.app
 	$(call unpack_package,"src/6.3.15-3/Install Wacom Tablet.pkg")
 
 	# Add Welcome screen
 	find package/Resources -type d -depth 1 -exec cp src/6.3.15-3/Welcome.rtf {}/ \;
-	sed -i "" -E 's/(<\/installer-gui-script>)/    <welcome file="Welcome.rtf" mime-type="text\/richtext"\/>\1/' package/Distribution
+	
+	# Add new distribution metadata for welcome screen and TCC
+	cp src/6.3.15-3/Distribution.patched package/Distribution
+	
+	# Add payload-less package for optionally resetting TCC permissions during install
+	cp -a src/TCCReset6.pkg package/
 
 	# Add patched preference pane
 	cp src/6.3.15-3/WacomTablet.patched package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet
@@ -87,6 +100,21 @@ Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wac
 	#
 	# Looks like this was leftover from some older installer structure. Remove that stuff.
 	cp src/6.3.15-3/postinstall.patched package/content.pkg/Scripts/postinstall
+	
+	# Wrap the WacomTabletSpringboard executable up into an app bundle, so we can refer to it by bundle ID in tccutil
+	mkdir -p package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app/Contents/MacOS
+	mv package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app/Contents/MacOS/
+	cp src/6.3.15-3/WacomTabletSpringboard.Info.plist package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app/Contents/Info.plist
+
+	# Update the LaunchAgent to refer to the new location for WacomTabletSpringboard
+	cp src/6.3.15-3/com.wacom.wacomtablet.plist.patched package/content.pkg/Payload/Library/LaunchAgents/com.wacom.wacomtablet.plist
+
+	# Add un/loadagent support
+	cp src/6.3.15-3/preinstall.patched package/content.pkg/Scripts/preinstall
+	cp src/6.3.15-3/unloadagent src/6.3.15-3/loadagent package/content.pkg/Scripts/
+
+	# Patch the uninstaller to remove the new location of WacomTabletSpringboard
+	cp src/6.3.15-3/uninstall.pl.patched package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Tablet\ Utility.app/Contents/Resources/uninstall.pl
 
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
@@ -99,7 +127,6 @@ endif
 	mkbom package/content.pkg/Payload package/content.pkg/Bom
 
 	# Repack payload
-
 	( cd package/content.pkg/Payload && find . ! -path "./Library/Extensions*" ! -path "./Library/Frameworks*" | cpio -o --format odc --owner 0:80 ) > .tmp-payload
 
 	# Have to remove the cpio trailer from the end of the first archive (to allow the second archive to be appended)
@@ -136,9 +163,13 @@ src/6.3.15-3/Install\ Wacom\ Tablet.pkg : src/6.3.15-3/pentablet_6.3.15-3.dmg
 $(EXTRACTED_DRIVERS_6_3_15_3) : src/6.3.15-3/Install\ Wacom\ Tablet.pkg
 	$(call unpack_package,"$<")
 
+	cp package/content.pkg/Scripts/preinstall src/6.3.15-3/preinstall.original
 	cp package/content.pkg/Scripts/postinstall src/6.3.15-3/postinstall.original
 	cp package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet src/6.3.15-3/WacomTablet.original
 	cp package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/MacOS/WacomTabletDriver src/6.3.15-3/WacomTabletDriver.original
+	cp package/Distribution src/6.3.15-3/Distribution.original
+	cp package/content.pkg/Payload/Library/LaunchAgents/com.wacom.wacomtablet.plist src/6.3.15-3/com.wacom.wacomtablet.plist.original
+	cp package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Tablet\ Utility.app/Contents/Resources/uninstall.pl src/6.3.15-3/uninstall.pl.original
 
 # Utility commands:
 

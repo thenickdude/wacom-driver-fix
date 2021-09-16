@@ -45,7 +45,7 @@ wacom-5.3.7-6-macOS-patched.zip : $(PATCHED_DRIVERS_5_3_7_6) build/ build/Readme
 
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom\ Tablet.pkg $(PATCHED_DRIVERS_5_3_7_6) src/5.3.7-6/Welcome.rtf
+Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom\ Tablet.pkg $(PATCHED_DRIVERS_5_3_7_6) src/5.3.7-6/Welcome.rtf src/TCCReset5.pkg
 	$(call unpack_package,"src/5.3.7-6/Install Wacom Tablet.pkg")
 
 	# Add Welcome screen
@@ -61,6 +61,9 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 	# Add updated package descriptors for the reshuffle of ConsumerTouchDriver and preference pane version number bump
 	cp src/5.3.7-6/Distribution.patched package/Distribution
 	cp src/5.3.7-6/PackageInfo.patched  package/content.pkg/PackageInfo
+	
+	# Add payload-less package for optionally resetting TCC permissions during install
+	cp -a src/TCCReset5.pkg package/
 	
 	# Modify preference pane version number to avoid it getting marked as "incompatible software" by SystemMigration during system update
 	# Looks like the invalid version number string (starting with a word) caused it to always fail the compatibility check

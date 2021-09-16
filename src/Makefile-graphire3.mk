@@ -1,12 +1,14 @@
 EXTRACTED_DRIVERS_5_2_6_5= \
 	src/5.2.6-5/postflight.original \
 	src/5.2.6-5/preflight.original \
-	src/5.2.6-5/PenTablet.prefpane.original
+	src/5.2.6-5/PenTablet.prefpane.original \
+	src/5.2.6-5/com.wacom.pentablet.plist.original
 
 PATCHED_DRIVERS_5_2_6_5= \
 	src/5.2.6-5/postflight.patched \
 	src/5.2.6-5/preflight.patched \
-	src/5.2.6-5/PenTablet.prefpane.patched
+	src/5.2.6-5/PenTablet.prefpane.patched \
+	src/5.2.6-5/com.wacom.pentablet.plist.patched
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_5_2_6_5)
 
@@ -16,7 +18,7 @@ SIGN_ME_5_2_6_5= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app \
-	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/Xtras/WacomDataXtra.xtra \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/Xtras/WacomXtra.xtra \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomNetscape.plugin \
@@ -31,7 +33,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-5.2.6-5-patched.pkg
 
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/5.2.6-5/preflight.patched src/5.2.6-5/postflight.patched src/5.3.7-6/renumtablets src/5.2.6-5/PenTablet.prefpane.patched
+Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/TCCReset5.pkg $(PATCHED_DRIVERS_5_2_6_5) src/5.3.7-6/renumtablets src/5.3.0-3/uninstall.pl.patched src/5.3.0-3/Pen\ Tablet\ Utility.app
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -57,6 +59,9 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 	# Add metadata files that weren't present in the old package style
 	cp src/5.2.6-5/PackageInfo package/content.pkg
 	cp src/5.2.6-5/Distribution package/
+
+	# Add payload-less packages for optionally resetting TCC permissions during install
+	cp -a src/TCCReset5.pkg package/
 
 	# Add Welcome screen
 	find package/Resources -type d -depth 1 -exec cp src/5.2.6-5/Welcome.rtf {}/ \;
@@ -89,6 +94,21 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 
 	# Make duplicate copy of localisation strings to the location that the patched postflight script expects (documentation installation)
 	cp -a -L package/Resources package/content.pkg/Scripts/support
+	
+	# Wrap the PenTabletSpringboard executable up into an app bundle, so we can refer to it by bundle ID in tccutil
+	mkdir -p package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app/Contents/MacOS
+	mv package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app/Contents/MacOS/
+	cp src/5.2.6-5/PenTabletSpringboard.Info.plist package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app/Contents/Info.plist
+
+	# Update the LaunchAgent to refer to the new location for PenTabletSpringboard
+	cp src/5.2.6-5/com.wacom.pentablet.plist.patched package/content.pkg/Payload/Library/LaunchAgents/com.wacom.pentablet.plist
+
+	# Replace the 32-bit Bamboo Utility with the one from the Graphire 4 (they have identical uninstall.pl so this seems reasonable)
+	rm -rf package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app
+	cp -a src/5.3.0-3/Pen\ Tablet\ Utility.app package/content.pkg/Payload/Applications/Pen\ Tablet.localized/
+
+	# Patch the uninstaller to remove the new location of PenTabletSpringboard
+	cp src/5.3.0-3/uninstall.pl.patched package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/uninstall.pl
 
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements
@@ -148,6 +168,8 @@ $(EXTRACTED_DRIVERS_5_2_6_5) : src/5.2.6-5/Install\ Bamboo.pkg
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/postflight src/5.2.6-5/postflight.original
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Resources/preflight  src/5.2.6-5/preflight.original
 	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet src/5.2.6-5/PenTablet.prefpane.original
+	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive/Library/LaunchAgents/com.wacom.pentablet.plist src/5.2.6-5/com.wacom.pentablet.plist.original
+	cp src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/uninstall.pl src/5.2.6-5/uninstall.pl.original
 
 # Utility commands:
 

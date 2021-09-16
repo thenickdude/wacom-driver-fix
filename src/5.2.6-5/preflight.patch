@@ -1,9 +1,14 @@
-147c147,150
+124c124,125
+< 						"/Library/Internet Plug-Ins/WacomSafari.plugin"
+---
+> 						"/Library/Internet Plug-Ins/WacomSafari.plugin",
+> 						"/Library/Application Support/Tablet/PenTabletSpringboard"
+147c148,151
 < 	
 ---
 > 
 > 	print "Unload LaunchAgent\n";
 > 	`./unloadagent`;
 > 
-158d160
+158d161
 < 	`"$preflight_location/SystemLoginItemTool" -d "$old_tablet_driver" -p`;

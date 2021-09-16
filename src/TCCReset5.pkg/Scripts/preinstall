@@ -1,0 +1,9 @@
+#!/bin/bash
+
+tccutil reset All com.wacom.Pen_TabletDriver
+tccutil reset All com.wacom.PenTabletDriver
+tccutil reset All com.wacom.Consumer_TouchDriver
+tccutil reset All com.wacom.ConsumerTouchDriver
+tccutil reset All com.wacom.PenTabletSpringboard
+
+exit 0

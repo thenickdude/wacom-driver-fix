@@ -19,22 +19,25 @@
             <bundle CFBundleShortVersionString="1.0" CFBundleVersion="1" id="com.wacom.WacomMultiTouch" path="Library/Frameworks/WacomMultiTouch.framework"/>
         </bundle-version>
     </pkg-ref>
-    <options customize="never" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
+    <options customize="allow" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
     <volume-check>
         <allowed-os-versions>
             <os-version min="10.9.0"/>
         </allowed-os-versions>
     </volume-check>
     <license file="License" mime-type="text/richtext"/>
+    <welcome file="Welcome.rtf" mime-type="text/richtext"/>
     <choices-outline>
-        <line choice="default">
-            <line choice="com.wacom.PenTabletInstaller"/>
-        </line>
+		<line choice="com.wacom.PenTabletInstaller"/>
+		<line choice="clear-perms" />
     </choices-outline>
-    <choice id="default"/>
-    <choice id="com.wacom.PenTabletInstaller" visible="false">
+	<choice id="clear-perms" title="Clean up old tablet permissions" description="Remove old Input Monitoring and Accessibility permissions from your previous driver for you before install.">
+		<pkg-ref id="com.wacom.TCCReset5"/>
+	</choice>
+    <choice id="com.wacom.PenTabletInstaller" title="Install tablet driver" enabled="false" selected="true">
         <pkg-ref id="com.wacom.PenTabletInstaller"/>
     </choice>
     <pkg-ref id="com.wacom.PenTabletInstaller" version="0" onConclusion="none" installKBytes="50941">#content.pkg</pkg-ref>
-    <welcome file="Welcome.rtf" mime-type="text/richtext"/>
+	<pkg-ref id="com.wacom.TCCReset5">#TCCReset5.pkg</pkg-ref>
+	<domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true" />
 </installer-gui-script>

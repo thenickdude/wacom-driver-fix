@@ -19,22 +19,25 @@
 			<bundle CFBundleShortVersionString="1.1.1-1" CFBundleVersion="1.1.1f1" id="com.wacom.tabletplugin" path="Library/Internet Plug-Ins/WacomNetscape.plugin"/>
         </bundle-version>
     </pkg-ref>
-    <options customize="never" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
+    <options customize="allow" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
     <volume-check>
         <allowed-os-versions>
             <os-version min="10.9.0"/>
         </allowed-os-versions>
     </volume-check>
     <license file="License" mime-type="text/richtext"/>
+    <welcome file="Welcome.rtf" mime-type="text/richtext"/>
     <choices-outline>
-        <line choice="default">
-            <line choice="com.wacom.installwacomtablet"/>
-        </line>
+		<line choice="com.wacom.installwacomtablet"/>
+		<line choice="clear-perms" />
     </choices-outline>
-    <choice id="default"/>
-    <choice id="com.wacom.installwacomtablet" visible="false">
+	<choice id="clear-perms" title="Clean up old tablet permissions" description="Remove old Input Monitoring and Accessibility permissions from your previous driver for you before install.">
+		<pkg-ref id="com.wacom.TCCReset6"/>
+	</choice>
+    <choice id="com.wacom.installwacomtablet" title="Install tablet driver" enabled="false" selected="true">
         <pkg-ref id="com.wacom.installwacomtablet"/>
     </choice>
     <pkg-ref id="com.wacom.installwacomtablet" version="0" onConclusion="none" installKBytes="50941">#content.pkg</pkg-ref>
-    <welcome file="Welcome.rtf" mime-type="text/richtext"/>
+	<pkg-ref id="com.wacom.TCCReset6">#TCCReset6.pkg</pkg-ref>
+	<domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true" />
 </installer-gui-script>

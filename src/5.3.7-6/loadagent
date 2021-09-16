@@ -6,5 +6,8 @@ for pid_uid in $(/bin/ps -axo pid,uid,args | /usr/bin/grep -i "[l]oginwindow.app
 	pid=$(echo $pid_uid | /usr/bin/cut -d, -f1)
 	uid=$(echo $pid_uid | /usr/bin/cut -d, -f2)
 
+  # Re-enable the service if it had previously been marked Disabled (e.g. by CleanMyMac or "launchctl unload -w")
+	/bin/launchctl enable gui/$uid/com.wacom.pentablet
+	
 	/bin/launchctl bootstrap gui/$uid /Library/LaunchAgents/com.wacom.pentablet.plist
 done

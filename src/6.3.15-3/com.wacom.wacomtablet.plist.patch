@@ -1,0 +1,4 @@
+23c23
+< 	<string>/Library/Application Support/Tablet/WacomTabletSpringboard</string>
+---
+> 	<string>/Library/Application Support/Tablet/WacomTabletSpringboard.app/Contents/MacOS/WacomTabletSpringboard</string>

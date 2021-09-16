@@ -1,12 +1,16 @@
 EXTRACTED_DRIVERS_6_1_6_4= \
 	src/6.1.6-4/postflight.original \
 	src/6.1.6-4/preflight.original \
-	src/6.1.6-4/WacomTablet.prefpane.original
+	src/6.1.6-4/uninstall.pl.original \
+	src/6.1.6-4/WacomTablet.prefpane.original \
+	src/6.1.6-4/com.wacom.wacomtablet.plist.original
 
 PATCHED_DRIVERS_6_1_6_4= \
 	src/6.1.6-4/postflight.patched \
 	src/6.1.6-4/preflight.patched \
-	src/6.1.6-4/WacomTablet.prefpane.patched
+	src/6.1.6-4/uninstall.pl.patched \
+	src/6.1.6-4/WacomTablet.prefpane.patched \
+	src/6.1.6-4/com.wacom.wacomtablet.plist.patched
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_6_1_6_4)
 
@@ -18,7 +22,7 @@ SIGN_ME_6_1_6_4= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app \
 	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane \
-	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/MacOS/WacomTabletDriver \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomNetscape.plugin \
@@ -35,7 +39,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
 	
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution $(PATCHED_DRIVERS_6_1_6_4) src/6.3.7-1/Wacom\ Tablet.kext src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
+Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution src/TCCReset6.pkg $(PATCHED_DRIVERS_6_1_6_4) src/6.3.7-1/Wacom\ Tablet.kext src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -60,6 +64,9 @@ Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom
 	# Add metadata files that weren't present in the old package style
 	cp src/6.1.6-4/PackageInfo package/content.pkg
 	cp src/6.1.6-4/Distribution package/
+
+	# Add payload-less package for optionally resetting TCC permissions during install
+	cp -a src/TCCReset6.pkg package/
 
 	# Add Welcome screen
 	find package/Resources -type d -depth 1 -exec cp src/6.1.6-4/Welcome.rtf {}/ \;
@@ -91,6 +98,17 @@ Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom
 
 	# Make duplicate copy of localisation strings to the location that the patched postflight script expects (documentation installation)
 	cp -a -L package/Resources package/content.pkg/Scripts/support
+
+	# Wrap the WacomTabletSpringboard executable up into an app bundle, so we can refer to it by bundle ID in tccutil
+	mkdir -p package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app/Contents/MacOS
+	mv package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app/Contents/MacOS/
+	cp src/6.1.6-4/WacomTabletSpringboard.Info.plist package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app/Contents/Info.plist
+
+	# Update the LaunchAgent to refer to the new location for WacomTabletSpringboard
+	cp src/6.1.6-4/com.wacom.wacomtablet.plist.patched package/content.pkg/Payload/Library/LaunchAgents/com.wacom.wacomtablet.plist
+
+	# Patch the uninstaller to remove the new location of WacomTabletSpringboard
+	cp src/6.1.6-4/uninstall.pl.patched package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Tablet\ Utility.app/Contents/Resources/uninstall.pl
 
 	# Update minimum SDK versions to 10.9 to meet notarization requirements
 	tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion $(FIX_SDK_6_1_6_4)
@@ -151,6 +169,8 @@ $(EXTRACTED_DRIVERS_6_1_6_4) : src/6.1.6-4/Install\ Wacom\ Tablet.pkg
 	cp src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Resources/postflight src/6.1.6-4/postflight.original
 	cp src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Resources/preflight  src/6.1.6-4/preflight.original
 	cp src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Archive/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet src/6.1.6-4/WacomTablet.prefpane.original
+	cp src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Archive/Library/LaunchAgents/com.wacom.wacomtablet.plist src/6.1.6-4/com.wacom.wacomtablet.plist.original
+	cp src/6.1.6-4/Install\ Wacom\ Tablet.pkg/Contents/Archive/Applications/Wacom\ Tablet.localized/Wacom\ Tablet\ Utility.app/Contents/Resources/uninstall.pl src/6.1.6-4/uninstall.pl.original
 
 # Utility commands:
 

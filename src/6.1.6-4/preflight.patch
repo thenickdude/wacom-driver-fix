@@ -1,4 +1,9 @@
-146a147,149
+123c123,124
+< 						"/System/Library/Extensions/WacomTablet.kext"
+---
+> 						"/System/Library/Extensions/WacomTablet.kext",
+> 						"/Library/Application Support/Tablet/WacomTabletSpringboard"
+146a148,150
 > 	print "Unload LaunchAgent\n";
 > 	`./unloadagent`;
 > 

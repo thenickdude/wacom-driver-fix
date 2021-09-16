@@ -1,0 +1,4 @@
+23c23
+< 	<string>/Library/Application Support/Tablet/PenTabletSpringboard</string>
+---
+> 	<string>/Library/Application Support/Tablet/PenTabletSpringboard.app/Contents/MacOS/PenTabletSpringboard</string>
