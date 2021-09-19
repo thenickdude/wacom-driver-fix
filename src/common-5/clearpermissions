@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# In order to reset permissions, macOS needs to be able to find the app we're asking about by its bundle ID
+#
+# The ConsumerTouchDriver is too deeply buried to appear in that list of bundles before it is executed, 
+# so manually index it now:
+/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f /Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app
+
+# Bamboo 5.3.7-6:
+/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f /Library/Application\ Support/Tablet/ConsumerTouchDriver.app
+
+/usr/bin/tccutil reset All com.wacom.Pen_TabletDriver
+/usr/bin/tccutil reset All com.wacom.PenTabletDriver
+/usr/bin/tccutil reset All com.wacom.pentablet
+/usr/bin/tccutil reset All com.wacom.Consumer_TouchDriver
+/usr/bin/tccutil reset All com.wacom.ConsumerTouchDriver
+/usr/bin/tccutil reset All com.wacom.PenTabletSpringboard
+
+exit 0

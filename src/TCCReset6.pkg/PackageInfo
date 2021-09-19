@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<pkg-info identifier="com.wacom.TCCReset6" postinstall-action="none" version="0" format-version="2" auth="none">
-    <payload numberOfFiles="0" installKBytes="0"/>
-    <scripts>
-        <preinstall file="./preinstall"/>
-    </scripts>
-</pkg-info>

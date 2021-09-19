@@ -1,6 +1,10 @@
 1023d1022
 < 	installMultiTouchAPI();
-1072,1073c1071
+1070a1070,1072
+> 	print "Clearing permissions\n";
+> 	`./clearpermissions`;
+> 	
+1072,1073c1074
 < 	print "Opening TabletDriver\n";
 < 	`/usr/bin/open -a "$gTablet_driver"`;
 ---

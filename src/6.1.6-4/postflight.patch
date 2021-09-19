@@ -39,14 +39,16 @@
 > 
 > 	$dict = bless $dict->initWithContentsOfFile_($dictPath), "NSDictionary";
 > 
-678,683d694
+678,682c695,696
 < 	# prepare to launch the driver
 < 	setupDriverToAutoLaunch($gTablet_driver);
 < 	
 < 	# before we launch the driver, we need try and replug the tablet
 < 	reenumerateTablets();
-< 	
-686,687c697,698
+---
+> 	print "Clearing permissions\n";
+> 	`./clearpermissions`;
+686,687c700,701
 < 	`/usr/bin/open -a "$gTablet_driver"`;
 < 	
 ---

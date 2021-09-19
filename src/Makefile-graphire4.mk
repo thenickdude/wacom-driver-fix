@@ -51,7 +51,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-5.3.0-3-patched.pkg
 
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg : src/5.3.0-3/Install\ Bamboo.pkg src/5.3.0-3/Welcome.rtf src/5.3.0-3/PackageInfo src/5.3.0-3/Distribution src/TCCReset5.pkg $(PATCHED_DRIVERS_5_3_0_3) tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
+Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg : src/5.3.0-3/Install\ Bamboo.pkg src/5.3.0-3/Welcome.rtf src/5.3.0-3/PackageInfo src/5.3.0-3/Distribution src/common-5/clearpermissions $(PATCHED_DRIVERS_5_3_0_3) tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -69,16 +69,16 @@ Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg : src/5.3.0-3/Install\ Bambo
 
 	# Install patched postinstall script: Don't call old multitouch install method, use new language manifest loader code from 5.3.7-6, new agent loader
 	cp src/5.3.0-3/postflight.patched package/content.pkg/Scripts/postflight
+	# Tool for clearing leftover permissions from previous driver:
+	cp src/common-5/clearpermissions package/content.pkg/Scripts/
+
 	# New agent unloader
 	cp src/5.3.0-3/preflight.patched  package/content.pkg/Scripts/preflight
-	cp src/5.3.0-3/{unloadagent,loadagent} package/content.pkg/Scripts/
+	cp src/common-5/{unloadagent,loadagent} package/content.pkg/Scripts/
 
 	# Add metadata files that weren't present in the old package style
 	cp src/5.3.0-3/PackageInfo package/content.pkg/
 	cp src/5.3.0-3/Distribution package/
-
-	# Add payload-less package for optionally resetting TCC permissions during install
-	cp -a src/TCCReset5.pkg package/
 
 	# Add Welcome screen
 	find package/Resources -type d -depth 1 -exec cp src/5.3.0-3/Welcome.rtf {}/ \;
@@ -106,9 +106,6 @@ Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg : src/5.3.0-3/Install\ Bambo
 	# Make duplicate copy of localisation strings to the location that the patched postflight script expects (documentation installation)
 	cp -a -L package/Resources package/content.pkg/Scripts/support
 
-	# Update minimum SDK versions to 10.9 to meet notarization requirements
-	tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion $(FIX_SDK_5_3_0_3)
-
 	# Wrap the PenTabletSpringboard executable up into an app bundle, so we can refer to it by bundle ID in tccutil
 	mkdir -p package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app/Contents/MacOS
 	mv package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app/Contents/MacOS/
@@ -119,6 +116,9 @@ Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg : src/5.3.0-3/Install\ Bambo
 
 	# Patch the uninstaller to remove the new location of PenTabletSpringboard
 	cp src/5.3.0-3/uninstall.pl.patched package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/uninstall.pl
+
+	# Update minimum SDK versions to 10.9 to meet notarization requirements
+	tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion $(FIX_SDK_5_3_0_3)
 
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements

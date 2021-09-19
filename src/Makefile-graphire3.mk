@@ -33,7 +33,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-5.2.6-5-patched.pkg
 
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/TCCReset5.pkg $(PATCHED_DRIVERS_5_2_6_5) src/5.3.7-6/renumtablets src/5.3.0-3/uninstall.pl.patched src/5.3.0-3/Pen\ Tablet\ Utility.app
+Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/common-5/clearpermissions $(PATCHED_DRIVERS_5_2_6_5) src/5.3.7-6/renumtablets src/5.3.0-3/uninstall.pl.patched src/5.3.0-3/Pen\ Tablet\ Utility.app
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -52,16 +52,15 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 
 	# Install patched postinstall script: Don't call old multitouch install method, use new language manifest loader code from 5.3.7-6, new agent loader
 	cp src/5.2.6-5/postflight.patched package/content.pkg/Scripts/postflight
+	# Tool for clearing leftover permissions from previous driver:
+	cp src/common-5/clearpermissions package/content.pkg/Scripts/
 	# New agent unloader
 	cp src/5.2.6-5/preflight.patched  package/content.pkg/Scripts/preflight
-	cp src/5.2.6-5/{unloadagent,loadagent} package/content.pkg/Scripts/
+	cp src/common-5/{unloadagent,loadagent} package/content.pkg/Scripts/
 
 	# Add metadata files that weren't present in the old package style
 	cp src/5.2.6-5/PackageInfo package/content.pkg
 	cp src/5.2.6-5/Distribution package/
-
-	# Add payload-less packages for optionally resetting TCC permissions during install
-	cp -a src/TCCReset5.pkg package/
 
 	# Add Welcome screen
 	find package/Resources -type d -depth 1 -exec cp src/5.2.6-5/Welcome.rtf {}/ \;

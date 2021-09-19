@@ -1,5 +1,0 @@
-#!/bin/bash
-
-tccutil reset All com.wacom.WacomTabletSpringboard
-
-exit 0

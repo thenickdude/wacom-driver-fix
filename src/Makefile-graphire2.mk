@@ -39,7 +39,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
 	
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution src/TCCReset6.pkg $(PATCHED_DRIVERS_6_1_6_4) src/6.3.7-1/Wacom\ Tablet.kext src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
+Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom\ Tablet.pkg src/6.1.6-4/Welcome.rtf src/6.1.6-4/PackageInfo src/6.1.6-4/Distribution src/common-6/clearpermissions $(PATCHED_DRIVERS_6_1_6_4) src/6.3.7-1/Wacom\ Tablet.kext src/6.3.4-3/Wacom\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -57,16 +57,15 @@ Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg : src/6.1.6-4/Install\ Wacom
 
 	# Install patched postinstall script: Use new language manifest loader code from 5.3.7-6, new agent loader
 	cp src/6.1.6-4/postflight.patched package/content.pkg/Scripts/postflight
+	# Tool for clearing leftover permissions from previous driver:
+	cp src/common-6/clearpermissions package/content.pkg/Scripts/
 	# New agent unloader
 	cp src/6.1.6-4/preflight.patched  package/content.pkg/Scripts/preflight
-	cp src/6.1.6-4/{unloadagent,loadagent} package/content.pkg/Scripts/
+	cp src/common-6/{unloadagent,loadagent} package/content.pkg/Scripts/
 
 	# Add metadata files that weren't present in the old package style
 	cp src/6.1.6-4/PackageInfo package/content.pkg
 	cp src/6.1.6-4/Distribution package/
-
-	# Add payload-less package for optionally resetting TCC permissions during install
-	cp -a src/TCCReset6.pkg package/
 
 	# Add Welcome screen
 	find package/Resources -type d -depth 1 -exec cp src/6.1.6-4/Welcome.rtf {}/ \;

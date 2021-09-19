@@ -1,4 +1,8 @@
-1344,1345c1344,1345
+1341a1342,1344
+> 	print "Clearing permissions\n";
+> 	`./clearpermissions`;
+> 	
+1344,1345c1347,1348
 < 	`/usr/bin/open -a "$gTablet_driver"`;
 < 	
 ---

@@ -1,24 +1,8 @@
-27c27
-<     <options customize="never" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
----
->     <options customize="allow" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
 33a34
 >     <welcome file="Welcome.rtf" mime-type="text/richtext"/>
-35,37c36,37
-<         <line choice="default">
+36c37
 <             <line choice="com.wacom.TabletInstaller"/>
-<         </line>
 ---
 > 		<line choice="com.wacom.TabletInstaller"/>
-> 		<line choice="clear-perms" />
-39,40c39,42
-<     <choice id="default"/>
-<     <choice id="com.wacom.TabletInstaller" visible="false">
----
->     <choice id="clear-perms" title="Clean up old tablet permissions" description="Remove old Input Monitoring and Accessibility permissions from your previous driver for you before install.">
->         <pkg-ref id="com.wacom.TCCReset6"/>
->     </choice>
->     <choice id="com.wacom.TabletInstaller" enabled="false" selected="true">
-43a46,47
-> 	<pkg-ref id="com.wacom.TCCReset6">#TCCReset6.pkg</pkg-ref>
+43a45
 > 	<domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true" />

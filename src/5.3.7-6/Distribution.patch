@@ -3,28 +3,12 @@
 ---
 >             <bundle CFBundleShortVersionString="5.3.7-6" CFBundleVersion="5.3.7f6" id="com.wacom.PenTabletSettingsPrefPane" path="Library/PreferencePanes/PenTablet.prefpane"/>
 20a21
->             <bundle CFBundleShortVersionString="Wacom Touch 5.3.7-6" CFBundleVersion="5.3.7f6" id="com.wacom.ConsumerTouchDriver" path="Library/Application Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app"/>
-23c24
-<     <options customize="never" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
----
->     <options customize="allow" require-scripts="false" hostArchitecture="x86_64" rootVolumeOnly="true"/>
+>             <bundle CFBundleShortVersionString="Wacom Touch 5.3.7-6" CFBundleVersion="5.3.7f6" id="com.wacom.ConsumerTouchDriver" path="Library/Application Support/Tablet/ConsumerTouchDriver.app"/>
 29a31
 >     <welcome file="Welcome.rtf" mime-type="text/richtext"/>
-31,33c33,34
-<         <line choice="default">
+32c34
 <             <line choice="com.wacom.PenTabletInstaller"/>
-<         </line>
 ---
 > 		<line choice="com.wacom.PenTabletInstaller" />
-> 		<line choice="clear-perms" />
-35,36c36,39
-<     <choice id="default"/>
-<     <choice id="com.wacom.PenTabletInstaller" visible="false">
----
->     <choice id="clear-perms" title="Clean up old tablet permissions" description="Remove old Input Monitoring and Accessibility permissions from your previous driver for you before install.">
-> 		<pkg-ref id="com.wacom.TCCReset5"/>
->     </choice>
->     <choice id="com.wacom.PenTabletInstaller" title="Install tablet driver" enabled="false" selected="true">
-39a43,44
-> 	<pkg-ref id="com.wacom.TCCReset5">#TCCReset5.pkg</pkg-ref>
+39a42
 >     <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true" />
