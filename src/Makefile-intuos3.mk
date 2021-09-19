@@ -37,15 +37,8 @@ SIGN_ME_6_3_15_3= \
 	package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/Wacom\ Desktop\ Center.app \
 	package/content.pkg/Scripts/renumtablets
 
-MANUAL_INSTALLERS+= wacom-6.3.15-3-macOS-patched.zip
 UNSIGNED_INSTALLERS+= Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg
 SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-6.3.15-3-patched.pkg
-
-wacom-6.3.15-3-macOS-patched.zip : $(PATCHED_DRIVERS_6_3_15_3) build/ build/Readme.html
-	rm -f $@
-	cp src/6.3.15-3/WacomTablet.patched build/WacomTablet
-	cp src/6.3.15-3/WacomTabletDriver.patched build/WacomTabletDriver
-	cd build && zip --must-match ../$@ WacomTablet WacomTabletDriver Readme.html
 
 # Create the installer package by modifying Wacom's original:
 

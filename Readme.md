@@ -75,8 +75,6 @@ Wacom's driver:
 If you get an error message that your Mac only allows apps to be installed from the App Store, right-click on it and click
 "Open" instead.
 
-(If you'd prefer to install the fixed files yourself manually, you can use the [manual installation instructions](Readme-manual-installation.md) instead.)
-
 After installing, follow the instructions in the next section to fix up the tablet's permissions.
 
 ## Fix up the tablet permissions

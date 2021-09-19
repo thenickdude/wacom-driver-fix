@@ -9,11 +9,10 @@ NOTARIZATION_USERNAME=n.sherlock@gmail.com
 PATCHED_DRIVERS=
 EXTRACTED_DRIVERS=
 
-MANUAL_INSTALLERS=
 UNSIGNED_INSTALLERS=
 SIGNED_INSTALLERS=
 
-CREATE_DIRECTORIES= build/
+CREATE_DIRECTORIES=
 
 define unpack_package
 	rm -rf package
@@ -51,22 +50,11 @@ include src/Makefile-6.3.17-5.mk
 # ... we can only reference the variables we need for the "all" target after first including the other makefiles
 really-all: \
 	$(CREATE_DIRECTORIES) \
-	$(MANUAL_INSTALLERS) \
 	$(UNSIGNED_INSTALLERS)
-	
+
 release : \
 	$(CREATE_DIRECTORIES) \
-	$(MANUAL_INSTALLERS) \
 	$(SIGNED_INSTALLERS)
-	
-build/Readme.html : Readme-manual-installation.md build/ src/readme-prologue.html src/readme-epilogue.html node_modules/.bin/marked
-	# Rendering documentation markdown using marked: https://www.npmjs.com/package/marked
-	# Removes the section which tells the user to unpack the zip, since they've done that already
-	( \
-		cat src/readme-prologue.html; \
-		perl -0777 -pe 's/Make sure you already.*then follow the/To install the fix for your Wacom driver, follow the/igs' $< | marked --gfm; \
- 		cat src/readme-epilogue.html \
-	) > $@
 
 $(CREATE_DIRECTORIES) :
 	mkdir $@
@@ -83,15 +71,11 @@ tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion : tools/fix_LC_VERSION_MIN_MACOSX/
 tools/fix_LC_VERSION_MIN_MACOSX/fix_LC_VERSION_MIN_MACOSX.c :
 	git submodule update --init
 
-node_modules/.bin/marked : package.json
-	npm install
-	touch node_modules/.bin/marked
-
 # Utility commands:
 
 clean :
 	rm -rf src/5.2.6-5/Install\ Bamboo.pkg src/6.3.17-5/Wacom\ Desktop\ Center.app src/5.3.0-3/Install\ Bamboo.pkg src/6.1.6-4/Install\ Wacom\ Tablet.pkg
 	rm -rf \
-		$(MANUAL_INSTALLERS) $(UNSIGNED_INSTALLERS) $(SIGNED_INSTALLERS) \
-		build/* $(PATCHED_DRIVERS) $(EXTRACTED_DRIVERS)
+		$(UNSIGNED_INSTALLERS) $(SIGNED_INSTALLERS) \
+		$(PATCHED_DRIVERS) $(EXTRACTED_DRIVERS)
 	rm -rf package

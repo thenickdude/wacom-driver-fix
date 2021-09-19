@@ -33,15 +33,8 @@ SIGN_ME_5_3_7_6= \
 	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app \
 	package/content.pkg/Scripts/renumtablets
 
-MANUAL_INSTALLERS+= wacom-5.3.7-6-macOS-patched.zip
 UNSIGNED_INSTALLERS+= Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg
 SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-5.3.7-6-patched.pkg
-
-wacom-5.3.7-6-macOS-patched.zip : $(PATCHED_DRIVERS_5_3_7_6) build/ build/Readme.html
-	rm -f $@
-	cp src/5.3.7-6/PenTabletDriver.patched build/PenTabletDriver
-	cp src/5.3.7-6/ConsumerTouchDriver.patched build/ConsumerTouchDriver
-	cd build && zip --must-match ../$@ PenTabletDriver ConsumerTouchDriver Readme.html
 
 # Create the installer package by modifying Wacom's original:
 
