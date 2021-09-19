@@ -1,8 +1,8 @@
-# Fixed drivers for Wacom Bamboo, Graphire, Intuos 1, 2, 3, and Cintiq 1st gen tablets on macOS Catalina / Big Sur
+# Fixed drivers for Wacom Bamboo, Graphire, Intuos 1, 2, 3, and Cintiq 1st gen tablets on macOS Catalina / Big Sur / Monterey
 
 Wacom's macOS drivers for Bamboo, Graphire, Intuos 1, 2 & 3 and Cintiq 1st gen tablets have bugs in them that cause them to
-completely fail to start on macOS 10.15 Catalina and macOS 11 Big Sur. This doesn't apply to the Windows driver, or to 
-the drivers for their newer tablets.
+completely fail to start on macOS 10.15 Catalina and later versions (including 11 Big Sur and 12 Monterey). This doesn't 
+apply to the Windows driver, or to the drivers for their newer tablets.
 
 When you try to open the Wacom preference pane with a Bamboo tablet, you'll get an error message saying
 "Waiting for synchronization", then finally "There is a problem with your tablet driver.
@@ -52,6 +52,8 @@ And my fixed **Intuos 3** and **Cintiq** driver (v6.3.15-3) supports these table
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
 - DTZ-2100 - Cintiq 21UX 1st Gen.
 - DTZ-2000 - Cintiq 20WSX
+
+For **Intuos 4** my fix is not needed. You can use [Wacom's official driver v6.3.41-2](https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.41-2.dmg) instead.
 
 [🇦🇺 Simplified English instructions](Readme.en-simple.md)  
 [🇧🇷 / 🇵🇹 Instruções em português](Readme.pt-BR.md)  
