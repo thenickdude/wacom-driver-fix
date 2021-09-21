@@ -14,6 +14,9 @@ EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_5_2_6_5)
 
 PATCHED_DRIVERS+= $(PATCHED_DRIVERS_5_2_6_5) 
 
+FIX_SDK_5_2_6_5= \
+	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/MacOS/Pen\ Tablet\ Utility
+
 SIGN_ME_5_2_6_5= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app \
@@ -33,7 +36,7 @@ SIGNED_INSTALLERS+= Install\ Wacom\ Tablet-5.2.6-5-patched.pkg
 
 # Create the installer package by modifying Wacom's original:
 
-Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/common-5/clearpermissions $(PATCHED_DRIVERS_5_2_6_5) src/5.3.7-6/renumtablets src/5.3.0-3/uninstall.pl.patched src/5.3.0-3/Pen\ Tablet\ Utility.app
+Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bamboo.pkg src/5.2.6-5/Welcome.rtf src/5.2.6-5/PackageInfo src/5.2.6-5/Distribution src/common-5/clearpermissions $(PATCHED_DRIVERS_5_2_6_5) src/5.3.7-6/renumtablets src/5.3.0-3/uninstall.pl.patched src/5.3.0-3/Pen\ Tablet\ Utility.app tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion
 	# Have to do a bunch of work here to upgrade the old-style directory package into a modern flat-file .pkg
 	rm -rf package
 	mkdir package
@@ -67,9 +70,6 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 
 	# Unpack payload
 	cd package/content.pkg/Payload && tar --no-same-owner -xf ../../../src/5.2.6-5/Install\ Bamboo.pkg/Contents/Archive.pax.gz
-
-	# Remove unused + unsignable old binary (not needed since 10.5)
-	rm package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/SystemLoginItemTool
 
 	# Remove extended attribute files that didn't unpack properly (prevents codesigning if left there)
 	find package/content.pkg/Payload -type f -name "._*" -delete
@@ -106,8 +106,14 @@ Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg : src/5.2.6-5/Install\ Bambo
 	rm -rf package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app
 	cp -a src/5.3.0-3/Pen\ Tablet\ Utility.app package/content.pkg/Payload/Applications/Pen\ Tablet.localized/
 
+	# Remove unused + unsignable old binary (not needed since 10.5)
+	rm package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/SystemLoginItemTool
+
 	# Patch the uninstaller to remove the new location of PenTabletSpringboard
 	cp src/5.3.0-3/uninstall.pl.patched package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/uninstall.pl
+
+	# Update minimum SDK versions to 10.9 to meet notarization requirements
+	tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion $(FIX_SDK_5_2_6_5)
 
 ifdef CODE_SIGNING_IDENTITY
 	# Resign drivers and enable Hardened Runtime to meet notarization requirements

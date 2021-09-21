@@ -21,7 +21,7 @@ FIX_SDK_5_3_0_3= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app/Contents/MacOS/TabletDriver \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app/Contents/MacOS/ConsumerTouchDriver \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver \
-	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard \
+	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app/Contents/MacOS/PenTabletSpringboard \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomNetscape.plugin/Contents/MacOS/WacomNetscape \
 	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefPane/Contents/MacOS/PenTablet \
 	package/content.pkg/Payload/Library/Extensions/TabletDriverCFPlugin.bundle/Contents/MacOS/TabletDriverCFPlugin \
