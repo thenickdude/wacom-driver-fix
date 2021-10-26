@@ -55,11 +55,11 @@ Mon pilote corrigé **Intuos 3** et **Cintiq** (v6.3.15-3) prend en charge ces t
 
 Tout d'abord, téléchargez le pilote adapté à votre tablette:
 
-- [Pilote fixe v6.1.6-4 pour Graphire 1 & 2 et Intuos 1 & 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
-- [Pilote fixe v5.2.6-5 pour Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
-- [Pilote fixe v5.3.0-3 pour Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
-- [Pilote fixe v5.3.7-6 pour Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
-- [Pilote fixe v6.3.15-3 pour Intuos 3 et Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-9/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
+- [Pilote fixe v6.1.6-4 pour Graphire 1 & 2 et Intuos 1 & 2](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-10/Install-Wacom-Tablet-6.1.6-4-patched.pkg)
+- [Pilote fixe v5.2.6-5 pour Graphire 3](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-10/Install-Wacom-Tablet-5.2.6-5-patched.pkg)
+- [Pilote fixe v5.3.0-3 pour Graphire 4](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-10/Install-Wacom-Tablet-5.3.0-3-patched.pkg)
+- [Pilote fixe v5.3.7-6 pour Bamboo](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-10/Install-Wacom-Tablet-5.3.7-6-patched.pkg)
+- [Pilote fixe v6.3.15-3 pour Intuos 3 et Cintiq](https://github.com/thenickdude/wacom-driver-fix/releases/download/patch-10/Install-Wacom-Tablet-6.3.15-3-patched.pkg)
 
 Exécutez le programme d'installation pour installer le pilote.
 
