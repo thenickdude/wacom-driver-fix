@@ -143,6 +143,16 @@ Unlock the Input Monitoring page, then drag the PenTabletDriver / PenTabletSprin
 add it to the list, and make sure it's ticked. Now reboot your computer, and when you try to use the tablet it should 
 prompt you to tick it in the Accessibility page too, after which it should start working.
 
+### If it still doesn't work
+
+Make sure you don't still have Wacom's very latest driver installed. Use "Wacom Utility"/
+"Tablet Utility" to fully uninstall all of Wacom's drivers (rather than just dragging them
+to the trash), then install my driver again.
+
+Corrupt preferences can prevent things from working, especially if you installed a bunch of
+different driver versions while trying to get things to work. Use Wacom Utility to reset your
+preferences, reboot, and try using the tablet again.
+
 ## Support me
 
 If you enjoyed having your tablet back in action, please consider sending me a tip!
