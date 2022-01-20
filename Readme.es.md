@@ -35,7 +35,7 @@ Mi controlador corregido Graphire 3 (v5.2.6-5) es compatible con estas tabletas:
 - CTE-430, CTE-630 - Graphire 3
 - CTE-630BT - Graphire 3 Wireless
 
-Mi controlador corregido Graphire 4 (v5.3.0-3) es compatible con estas tabletas:
+Mi controlador corregido Graphire 4 (v5.3.0-3) es compatible con esta tableta:
 
 - CTE-440, CTE-640 - Graphire 4
 
