@@ -173,14 +173,14 @@ $(EXTRACTED_DRIVERS_6_1_6_4) : src/6.1.6-4/Install\ Wacom\ Tablet.pkg
 
 # Utility commands:
 
+ifdef NOTARIZATION_KEYCHAIN_PROFILE
 notarize-graphire2: Install\ Wacom\ Tablet-6.1.6-4-patched.pkg
-	xcrun altool \
-		 --notarize-app \
-		 --primary-bundle-id "com.wacom.wacomtablet" \
-		 --username "$(NOTARIZATION_USERNAME)" \
-		 --password "@keychain:AC_PASSWORD" \
-		 --file "$<"
+	xcrun notarytool \
+		submit \
+		--keychain-profile $(NOTARIZATION_KEYCHAIN_PROFILE) \
+		"$<"
 	cp "$<" "Install Wacom Tablet-6.1.6-4-patched-notarized.pkg"
+endif
 
 staple-graphire2:
 	xcrun stapler staple "Install Wacom Tablet-6.1.6-4-patched.pkg"

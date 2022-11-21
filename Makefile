@@ -3,7 +3,7 @@ CODE_SIGNING_IDENTITY=Developer ID Application: Nicholas Sherlock (8J3T27D935)
 PACKAGE_SIGNING_IDENTITY=Developer ID Installer: Nicholas Sherlock (8J3T27D935)
 
 # This is only used when you explicitly call the notarize-* targets, which you won't need to do
-NOTARIZATION_USERNAME=n.sherlock@gmail.com
+NOTARIZATION_KEYCHAIN_PROFILE=n.sherlock
 
 # The included driver makefiles append to these variables:
 PATCHED_DRIVERS=

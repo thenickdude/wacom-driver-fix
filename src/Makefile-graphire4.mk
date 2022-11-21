@@ -189,14 +189,14 @@ $(EXTRACTED_DRIVERS_5_3_0_3) : src/5.3.0-3/Install\ Bamboo.pkg
 
 # Utility commands:
 
+ifdef NOTARIZATION_KEYCHAIN_PROFILE
 notarize-graphire4: Install\ Wacom\ Tablet-5.3.0-3-patched.pkg
-	xcrun altool \
-		 --notarize-app \
-		 --primary-bundle-id "com.wacom.pentablet" \
-		 --username "$(NOTARIZATION_USERNAME)" \
-		 --password "@keychain:AC_PASSWORD" \
-		 --file "$<"
+	xcrun notarytool \
+		submit \
+		--keychain-profile $(NOTARIZATION_KEYCHAIN_PROFILE) \
+		"$<"
 	cp "$<" "Install Wacom Tablet-5.3.0-3-patched-notarized.pkg"
+endif
 
 staple-graphire4:
 	xcrun stapler staple "Install Wacom Tablet-5.3.0-3-patched.pkg"

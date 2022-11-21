@@ -165,14 +165,14 @@ $(EXTRACTED_DRIVERS_6_3_15_3) : src/6.3.15-3/Install\ Wacom\ Tablet.pkg
 
 # Utility commands:
 
+ifdef NOTARIZATION_KEYCHAIN_PROFILE
 notarize-intuos3: Install\ Wacom\ Tablet-6.3.15-3-patched.pkg
-	xcrun altool \
-		 --notarize-app \
-		 --primary-bundle-id "com.wacom.pentablet" \
-		 --username "$(NOTARIZATION_USERNAME)" \
-		 --password "@keychain:AC_PASSWORD" \
-		 --file "$<"
+	xcrun notarytool \
+		submit \
+		--keychain-profile $(NOTARIZATION_KEYCHAIN_PROFILE) \
+		"$<"
 	cp "$<" "Install Wacom Tablet-6.3.15-3-patched-notarized.pkg"
+endif
 
 staple-intuos3:
 	xcrun stapler staple "Install Wacom Tablet-6.3.15-3-patched.pkg"
