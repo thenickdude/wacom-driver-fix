@@ -63,6 +63,9 @@ $(CREATE_DIRECTORIES) :
 	cp $*.original $*.patched
 	patch $*.patched < $*.patch
 
+%.bin : %.asm
+	yasm -f bin -o $@ $<
+
 # Tools we need for the build:
 
 tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion : tools/fix_LC_VERSION_MIN_MACOSX/fix_LC_VERSION_MIN_MACOSX.c
@@ -70,6 +73,10 @@ tools/fix_LC_VERSION_MIN_MACOSX/fixSDKVersion : tools/fix_LC_VERSION_MIN_MACOSX/
 
 tools/fix_LC_VERSION_MIN_MACOSX/fix_LC_VERSION_MIN_MACOSX.c :
 	git submodule update --init
+
+.venv/ :
+	python3 -m venv .venv
+	./.venv/bin/pip3 install -q -r tools/extend-mach-o/requirements.txt
 
 # Utility commands:
 

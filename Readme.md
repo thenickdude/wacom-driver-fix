@@ -291,6 +291,20 @@ _CGEventSetIntegerValueField(eventStructure, 115 /* kCGEventGestureSwipeValue */
 _CGEventSetIntegerValueField(eventStructure, 132 /* kCGEventGesturePhase */,      this->eventPhase);
 ```
 
+In Wacom's Preference Pane, Wacom falls victim to [Apple Bug 8746551](https://feedbackassistant.apple.com/feedback/8746551).
+Since macOS Catalina, the Preference Pane effectively breaks the operation of `NSApp->mainWindow` by allowing *any* window 
+type to become the active window, even Sheets, which was impossible in previous versions of macOS and in standalone apps
+(in previous versions only the actual main Preferences window would become the `mainWindow`).
+
+When a modal sheet is open, and the user wants to open a new sheet, the original sheet needs to be closed first. But 
+Apple's bug causes Wacom's check to see if there is currently a sheet open to fail, since when it checks to see if a 
+sheet is attached to the `mainWindow`, it instead ends up checking for a sheet attached to the current sheet, which has 
+inexplicably become the `mainWindow`. This triggers a crash (e.g. in the Pen Mapping settings).
+
+I patched the accesses to `mainWindow` so that the first value that is read is cached afterwards, so as long as the
+initial value is sensible, it doesn't get broken after the `mainWindow` is updated to point to the first-opened sheet 
+(see `PenTablet.prefpane.newcode.asm`).  
+
 ### Intuos 3 and Cintiq driver
 
 The Intuos 3 and Cintiq driver has a bug in its preference pane that causes it to crash as soon as an item is clicked on.

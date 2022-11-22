@@ -1,30 +1,31 @@
 EXTRACTED_DRIVERS_6_3_15_3= \
-	src/6.3.15-3/WacomTablet.original \
 	src/6.3.15-3/preinstall.original \
 	src/6.3.15-3/postinstall.original \
 	src/6.3.15-3/WacomTabletDriver.original \
 	src/6.3.15-3/Distribution.original \
 	src/6.3.15-3/uninstall.pl.original \
-	src/6.3.15-3/com.wacom.wacomtablet.plist.original
+	src/6.3.15-3/com.wacom.wacomtablet.plist.original \
+	src/6.3.15-3/WacomTablet.prefpane.original
 
 PATCHED_DRIVERS_6_3_15_3= \
-	src/6.3.15-3/WacomTablet.patched \
 	src/6.3.15-3/preinstall.patched \
 	src/6.3.15-3/postinstall.patched \
 	src/6.3.15-3/WacomTabletDriver.patched \
 	src/6.3.15-3/Distribution.patched \
 	src/6.3.15-3/uninstall.pl.patched \
-	src/6.3.15-3/com.wacom.wacomtablet.plist.patched
+	src/6.3.15-3/com.wacom.wacomtablet.plist.patched \
+	src/6.3.15-3/WacomTablet.prefpane.patched
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_6_3_15_3)
 
 PATCHED_DRIVERS+= $(PATCHED_DRIVERS_6_3_15_3)
 
 SIGN_ME_6_3_15_3= \
-	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/TabletDriver.app/Contents/MacOS/TabletDriver \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/WacomTouchDriver.app/Contents/MacOS/WacomTouchDriver \
+	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet \
+	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomTabletPlugin.plugin/Contents/MacOS/WacomTabletPlugin \
 	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework \
@@ -52,7 +53,7 @@ Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg : src/6.3.15-3/Install\ Wac
 	cp src/6.3.15-3/Distribution.patched package/Distribution
 	
 	# Add patched preference pane
-	cp src/6.3.15-3/WacomTablet.patched package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet
+	cp src/6.3.15-3/WacomTablet.prefpane.patched package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet
 
 	# Remove Android File Transfer app since it's thoroughly obsolete and difficult to sign (why is this even being redistributed?)
 	rm package/content.pkg/Payload/Applications/Wacom\ Tablet.localized/aft.tar
@@ -134,6 +135,17 @@ endif
 	# Repack installer
 	pkgutil --flatten package "$@"
 
+src/6.3.15-3/WacomTablet.prefpane.patched : src/6.3.15-3/WacomTablet.prefpane.patch src/6.3.15-3/WacomTablet.prefpane.original src/6.3.15-3/WacomTablet.prefpane.newcode.bin src/6.3.15-3/WacomTablet.prefpane.newdata.bin src/6.3.15-3/WacomTablet.prefpane.beginDialog.bin src/6.3.15-3/WacomTablet.prefpane.getCurrentController.bin .venv/
+	# Apply diff patches:
+	cp src/6.3.15-3/WacomTablet.prefpane.original $@
+	patch $@ < src/6.3.15-3/WacomTablet.prefpane.patch
+	# Dump me with 'objdump -b binary -m i386:x86-64:intel -D --adjust-vma=0x00339000 WacomTablet.prefpane.newcode.bin'
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@ $@.1 __MONKEYCODE __monkeycode src/6.3.15-3/WacomTablet.prefpane.newcode.bin 5
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@.1 $@ __MONKEYDATA __monkeydata src/6.3.15-3/WacomTablet.prefpane.newdata.bin 3
+	# Patch calls to NSApp::mainWindow:
+	dd if=src/6.3.15-3/WacomTablet.prefpane.beginDialog.bin          of=$@ bs=1 seek=$$((0x000428db)) conv=notrunc
+	dd if=src/6.3.15-3/WacomTablet.prefpane.getCurrentController.bin of=$@ bs=1 seek=$$((0x00042d3a)) conv=notrunc
+
 ifdef PACKAGE_SIGNING_IDENTITY
 Install\ Wacom\ Tablet-6.3.15-3-patched.pkg : Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg
 	productsign --sign "$(PACKAGE_SIGNING_IDENTITY)" Install\ Wacom\ Tablet-6.3.15-3-patched-unsigned.pkg Install\ Wacom\ Tablet-6.3.15-3-patched.pkg
@@ -157,7 +169,7 @@ $(EXTRACTED_DRIVERS_6_3_15_3) : src/6.3.15-3/Install\ Wacom\ Tablet.pkg
 
 	cp package/content.pkg/Scripts/preinstall src/6.3.15-3/preinstall.original
 	cp package/content.pkg/Scripts/postinstall src/6.3.15-3/postinstall.original
-	cp package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet src/6.3.15-3/WacomTablet.original
+	cp package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet src/6.3.15-3/WacomTablet.prefpane.original
 	cp package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/MacOS/WacomTabletDriver src/6.3.15-3/WacomTabletDriver.original
 	cp package/Distribution src/6.3.15-3/Distribution.original
 	cp package/content.pkg/Payload/Library/LaunchAgents/com.wacom.wacomtablet.plist src/6.3.15-3/com.wacom.wacomtablet.plist.original

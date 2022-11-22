@@ -6,7 +6,8 @@ EXTRACTED_DRIVERS_5_3_7_6= \
 	src/5.3.7-6/renumtablets \
 	src/5.3.7-6/PackageInfo.original \
 	src/5.3.7-6/Distribution.original \
-	src/5.3.7-6/uninstall.pl.original 
+	src/5.3.7-6/uninstall.pl.original \
+	src/5.3.7-6/PenTablet.prefpane.original
 
 PATCHED_DRIVERS_5_3_7_6= \
 	src/5.3.7-6/PenTabletDriver.patched \
@@ -15,7 +16,8 @@ PATCHED_DRIVERS_5_3_7_6= \
 	src/5.3.7-6/postinstall.patched \
 	src/5.3.7-6/PackageInfo.patched \
 	src/5.3.7-6/Distribution.patched \
-	src/5.3.7-6/uninstall.pl.patched 
+	src/5.3.7-6/uninstall.pl.patched \
+	src/5.3.7-6/PenTablet.prefpane.patched
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_5_3_7_6)
 
@@ -25,6 +27,7 @@ SIGN_ME_5_3_7_6= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/ConsumerTouchDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app \
+	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet \
 	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane \
 	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework/Versions/A/WacomMultiTouch \
 	package/content.pkg/Payload/Library/PrivilegedHelperTools/com.wacom.TabletHelper.app/Contents/MacOS/com.wacom.TabletHelper \
@@ -47,6 +50,9 @@ Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg : src/5.3.7-6/Install\ Wacom
 	# Add patched drivers
 	cp src/5.3.7-6/PenTabletDriver.patched package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver
 	cp src/5.3.7-6/ConsumerTouchDriver.patched package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/Resources/ConsumerTouchDriver.app/Contents/MacOS/ConsumerTouchDriver
+
+	# Add patched prefpane
+	cp src/5.3.7-6/PenTablet.prefpane.patched package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet
 
 	# Tool for clearing leftover permissions from previous driver:
 	cp src/5.3.7-6/postinstall.patched package/content.pkg/Scripts/postinstall
@@ -105,6 +111,20 @@ endif
 	# Repack installer
 	pkgutil --flatten package "$@"
 
+src/5.3.7-6/PenTablet.prefpane.patched : src/5.3.7-6/PenTablet.prefpane.original \
+		src/5.3.7-6/PenTablet.prefpane.newcode.bin src/5.3.7-6/PenTablet.prefpane.newdata.bin \
+		src/5.3.7-6/PenTablet.prefpane.beginDialog.bin src/5.3.7-6/PenTablet.prefpane.getCurrentController.bin \
+		src/5.3.7-6/PenTablet.prefpane.didSelect.bin \
+		.venv/
+	# Dump me with 'objdump -b binary -m i386:x86-64:intel -D --adjust-vma=0x00339000 PenTablet.prefpane.newcode.bin'
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py src/5.3.7-6/PenTablet.prefpane.original $@.1 __MONKEYCODE __monkeycode src/5.3.7-6/PenTablet.prefpane.newcode.bin 5
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@.1 $@ __MONKEYDATA __monkeydata src/5.3.7-6/PenTablet.prefpane.newdata.bin 3
+	# Patch calls to NSApp::mainWindow:
+	dd if=src/5.3.7-6/PenTablet.prefpane.beginDialog.bin          of=$@ bs=1 seek=$$((0x0004ef56)) conv=notrunc
+	dd if=src/5.3.7-6/PenTablet.prefpane.getCurrentController.bin of=$@ bs=1 seek=$$((0x0004f44c)) conv=notrunc
+    # Patch the end of NSPreferencePane::didSelect to save the mainWindow
+	# dd if=src/5.3.7-6/PenTablet.prefpane.didSelect.bin of=$@ bs=1 seek=$$((0x0008265f)) conv=notrunc
+
 ifdef PACKAGE_SIGNING_IDENTITY
 Install\ Wacom\ Tablet-5.3.7-6-patched.pkg : Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg
 	productsign --sign "$(PACKAGE_SIGNING_IDENTITY)" Install\ Wacom\ Tablet-5.3.7-6-patched-unsigned.pkg Install\ Wacom\ Tablet-5.3.7-6-patched.pkg
@@ -132,6 +152,7 @@ $(EXTRACTED_DRIVERS_5_3_7_6) : src/5.3.7-6/Install\ Wacom\ Tablet.pkg
 	cp package/content.pkg/Scripts/postinstall  src/5.3.7-6/postinstall.original
 	cp package/content.pkg/Scripts/renumtablets src/5.3.7-6/renumtablets
 	cp package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/Resources/uninstall.pl src/5.3.7-6/uninstall.pl.original
+	cp package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet src/5.3.7-6/PenTablet.prefpane.original
 	cp package/Distribution src/5.3.7-6/Distribution.original
 	cp package/content.pkg/PackageInfo src/5.3.7-6/PackageInfo.original
 

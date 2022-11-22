@@ -23,7 +23,7 @@ FIX_SDK_5_3_0_3= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletDriver.app/Contents/MacOS/PenTabletDriver \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app/Contents/MacOS/PenTabletSpringboard \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomNetscape.plugin/Contents/MacOS/WacomNetscape \
-	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefPane/Contents/MacOS/PenTablet \
+	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet \
 	package/content.pkg/Payload/Library/Extensions/TabletDriverCFPlugin.bundle/Contents/MacOS/TabletDriverCFPlugin \
 	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework/Versions/A/WacomMultiTouch \
 	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app/Contents/MacOS/Pen\ Tablet\ Utility \
@@ -38,6 +38,7 @@ SIGN_ME_5_3_0_3= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/PenTabletSpringboard.app \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomNetscape.plugin \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomTabletPlugin.plugin \
+	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet \
 	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefPane \
 	package/content.pkg/Payload/Library/Extensions/TabletDriverCFPlugin.bundle \
 	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework/Versions/A/WacomMultiTouch \
@@ -148,6 +149,19 @@ endif
 	# We set preserve-xattr="true" in PackageInfo so that ._* extended attributes in PenTablet.prefpane resources are preserved
 	# These are setting file encoding to UTF-16 by the look of it
 	pkgutil --flatten package "$@"
+
+src/5.3.0-3/PenTablet.prefpane.patched : src/5.3.0-3/PenTablet.prefpane.patch src/5.3.0-3/PenTablet.prefpane.original src/5.3.0-3/PenTablet.prefpane.newcode.bin src/5.3.0-3/PenTablet.prefpane.newdata.bin src/5.3.0-3/PenTablet.prefpane.beginDialog.bin src/5.3.0-3/PenTablet.prefpane.getCurrentController.bin .venv/
+	# Apply diff patches:
+	cp src/5.3.0-3/PenTablet.prefpane.original $@
+	patch $@ < src/5.3.0-3/PenTablet.prefpane.patch
+	# Strip fat binary: (don't need 32-bit or PPC variants)
+	lipo -thin x86_64 $@ -output $@.1
+	mv $@.1 $@
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@ $@.1 __MONKEYCODE __monkeycode src/5.3.0-3/PenTablet.prefpane.newcode.bin 5
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@.1 $@ __MONKEYDATA __monkeydata src/5.3.0-3/PenTablet.prefpane.newdata.bin 3
+	# Patch calls to NSApp::mainWindow:
+	dd if=src/5.3.0-3/PenTablet.prefpane.beginDialog.bin          of=$@ bs=1 seek=$$((0x00029218)) conv=notrunc
+	dd if=src/5.3.0-3/PenTablet.prefpane.getCurrentController.bin of=$@ bs=1 seek=$$((0x000293bc)) conv=notrunc
 
 ifdef PACKAGE_SIGNING_IDENTITY
 Install\ Wacom\ Tablet-5.3.0-3-patched.pkg : Install\ Wacom\ Tablet-5.3.0-3-patched-unsigned.pkg

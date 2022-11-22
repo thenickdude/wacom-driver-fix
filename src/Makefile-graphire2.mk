@@ -2,15 +2,15 @@ EXTRACTED_DRIVERS_6_1_6_4= \
 	src/6.1.6-4/postflight.original \
 	src/6.1.6-4/preflight.original \
 	src/6.1.6-4/uninstall.pl.original \
-	src/6.1.6-4/WacomTablet.prefpane.original \
-	src/6.1.6-4/com.wacom.wacomtablet.plist.original
+	src/6.1.6-4/com.wacom.wacomtablet.plist.original \
+	src/6.1.6-4/WacomTablet.prefpane.original
 
 PATCHED_DRIVERS_6_1_6_4= \
 	src/6.1.6-4/postflight.patched \
 	src/6.1.6-4/preflight.patched \
 	src/6.1.6-4/uninstall.pl.patched \
-	src/6.1.6-4/WacomTablet.prefpane.patched \
-	src/6.1.6-4/com.wacom.wacomtablet.plist.patched
+	src/6.1.6-4/com.wacom.wacomtablet.plist.patched \
+	src/6.1.6-4/WacomTablet.prefpane.patched
 
 EXTRACTED_DRIVERS+= $(EXTRACTED_DRIVERS_6_1_6_4)
 
@@ -21,6 +21,7 @@ CREATE_DIRECTORIES+= src/6.1.6-4/
 SIGN_ME_6_1_6_4= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/Resources/TabletDriver.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app \
+	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane/Contents/MacOS/WacomTablet \
 	package/content.pkg/Payload/Library/PreferencePanes/WacomTablet.prefpane \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletSpringboard.app \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/WacomTabletDriver.app/Contents/MacOS/WacomTabletDriver \
@@ -135,6 +136,19 @@ endif
 
 	# Repack installer
 	pkgutil --flatten package "$@"
+
+src/6.1.6-4/WacomTablet.prefpane.patched : src/6.1.6-4/WacomTablet.prefpane.patch src/6.1.6-4/WacomTablet.prefpane.original src/6.1.6-4/WacomTablet.prefpane.newcode.bin src/6.1.6-4/WacomTablet.prefpane.newdata.bin src/6.1.6-4/WacomTablet.prefpane.beginDialog.bin src/6.1.6-4/WacomTablet.prefpane.getCurrentController.bin .venv/
+	# Apply diff patches:
+	cp src/6.1.6-4/WacomTablet.prefpane.original $@
+	patch $@ < src/6.1.6-4/WacomTablet.prefpane.patch
+	# Strip fat binary: (don't need 32-bit or PPC variants)
+	lipo -thin x86_64 $@ -output $@.1
+	mv $@.1 $@
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@ $@.1 __MONKEYCODE __monkeycode src/6.1.6-4/WacomTablet.prefpane.newcode.bin 5
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@.1 $@ __MONKEYDATA __monkeydata src/6.1.6-4/WacomTablet.prefpane.newdata.bin 3
+	# Patch calls to NSApp::mainWindow:
+	dd if=src/6.1.6-4/WacomTablet.prefpane.beginDialog.bin          of=$@ bs=1 seek=$$((0x000224c5)) conv=notrunc
+	dd if=src/6.1.6-4/WacomTablet.prefpane.getCurrentController.bin of=$@ bs=1 seek=$$((0x000223f3)) conv=notrunc
 
 ifdef PACKAGE_SIGNING_IDENTITY
 Install\ Wacom\ Tablet-6.1.6-4-patched.pkg : Install\ Wacom\ Tablet-6.1.6-4-patched-unsigned.pkg

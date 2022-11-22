@@ -26,6 +26,7 @@ SIGN_ME_5_2_6_5= \
 	package/content.pkg/Payload/Library/Application\ Support/Tablet/Xtras/WacomXtra.xtra \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomNetscape.plugin \
 	package/content.pkg/Payload/Library/Internet\ Plug-Ins/WacomTabletPlugin.plugin \
+	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefpane/Contents/MacOS/PenTablet \
 	package/content.pkg/Payload/Library/PreferencePanes/PenTablet.prefPane \
 	package/content.pkg/Payload/Library/Frameworks/WacomMultiTouch.framework/Versions/A/WacomMultiTouch \
 	package/content.pkg/Payload/Applications/Pen\ Tablet.localized/Pen\ Tablet\ Utility.app \
@@ -140,6 +141,19 @@ endif
 
 	# Repack installer
 	pkgutil --flatten package "$@"
+
+src/5.2.6-5/PenTablet.prefpane.patched : src/5.2.6-5/PenTablet.prefpane.patch src/5.2.6-5/PenTablet.prefpane.original src/5.2.6-5/PenTablet.prefpane.newcode.bin src/5.2.6-5/PenTablet.prefpane.newdata.bin src/5.2.6-5/PenTablet.prefpane.beginDialog.bin src/5.2.6-5/PenTablet.prefpane.getCurrentController.bin .venv/
+	# Apply diff patches:
+	cp src/5.2.6-5/PenTablet.prefpane.original $@
+	patch $@ < src/5.2.6-5/PenTablet.prefpane.patch
+	# Strip fat binary: (don't need 32-bit or PPC variants)
+	lipo -thin x86_64 $@ -output $@.1
+	mv $@.1 $@
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@ $@.1 __MONKEYCODE __monkeycode src/5.2.6-5/PenTablet.prefpane.newcode.bin 5
+	./.venv/bin/python3 tools/extend-mach-o/append-section.py $@.1 $@ __MONKEYDATA __monkeydata src/5.2.6-5/PenTablet.prefpane.newdata.bin 3
+	# Patch calls to NSApp::mainWindow:
+	dd if=src/5.2.6-5/PenTablet.prefpane.beginDialog.bin          of=$@ bs=1 seek=$$((0x0002ceb1)) conv=notrunc
+	dd if=src/5.2.6-5/PenTablet.prefpane.getCurrentController.bin of=$@ bs=1 seek=$$((0x0002cddf)) conv=notrunc
 
 ifdef PACKAGE_SIGNING_IDENTITY
 Install\ Wacom\ Tablet-5.2.6-5-patched.pkg : Install\ Wacom\ Tablet-5.2.6-5-patched-unsigned.pkg
