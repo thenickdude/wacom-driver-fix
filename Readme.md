@@ -157,7 +157,7 @@ preferences, reboot, and try using the tablet again.
 
 If you enjoyed having your tablet back in action, please consider sending me a tip!
 
-[![Donate button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url) 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H5BAT7Z) 
 
 This will help fund me and further development of these fixed drivers.
 

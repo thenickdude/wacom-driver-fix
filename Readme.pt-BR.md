@@ -90,6 +90,6 @@ O mesa digitalizadora deve estar funcionando corretamente agora!
 
 Se você gostou do seu mesa digitalizadora de volta à ação, considere me enviar uma dica!
 
-[![Donate button](https://www.paypalobjects.com/pt_BR/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url) 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H5BAT7Z)
 
 Sua doação ajudará a apoiar o desenvolvimento.

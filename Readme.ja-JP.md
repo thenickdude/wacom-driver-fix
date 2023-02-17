@@ -92,6 +92,6 @@ Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 
 再びタブレットを使用する事ができましたら、是非寄付金を送って頂ければ幸いです。
 
-[![寄付ボタン](https://www.paypalobjects.com/ja_JP/JP/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url) 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H5BAT7Z)
 
 あなたの寄付が今後のドライバーのさらなる発展に役立ちます。

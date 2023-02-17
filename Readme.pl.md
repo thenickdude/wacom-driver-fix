@@ -148,6 +148,6 @@ działać.
 Jeżeli dzięki tej aktualizacji sterowników, możesz powrócić do regularnego korzystania ze swojego tabletu, rozważ 
 wsparcie autora! 
 
-[![Donate button](https://www.paypalobjects.com/pl_PL/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url) 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H5BAT7Z)
 
 Pieniądze te przeznaczy na dalszy rozwój oraz kolejne aktualizacje tych sterowników.

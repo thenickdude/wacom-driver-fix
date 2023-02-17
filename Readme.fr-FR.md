@@ -89,6 +89,6 @@ Votre tablette devrait maintenant fonctionner! Vous devrez peut-être redémarre
 
 Si vous avez apprécié que votre tablette fonctionne à nouveau, pensez à m'envoyer un don!
 
-[![Bouton Faire un don](https://www.paypalobjects.com/fr_FR/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H5BAT7Z)
 
 Cela m'aidera à me financer et à continuer à corriger ces pilotes.

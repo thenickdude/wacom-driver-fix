@@ -91,6 +91,6 @@ Ahora podemos agregar permisos para el nuevo controlador corregido:
 
 Si ha disfrutado de que su tableta vuelva a funcionar, ¡considere enviarme una donación!
 
-[![Botón Donar](https://www.paypalobjects.com/es_ES/ES/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CDPRHRDZUDZW4&source=url)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H5BAT7Z)
 
 Esto me ayudará a financiarme para desarrollar aún más estos controladores de dispositivos.
