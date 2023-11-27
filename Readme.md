@@ -50,7 +50,7 @@ My fixed **Graphire 4** driver (v5.3.0-3) supports these tablets:
 And my fixed **Intuos 3** and **Cintiq** driver (v6.3.15-3) supports these tablets:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
-- DTZ-2100 - Cintiq 21UX 1st Gen.
+- DTZ-2100, DTK-2100 - Cintiq 21UX 1st Gen.
 - DTZ-2000 - Cintiq 20WSX
 
 For **Intuos 4** my fix is not needed. You can use [Wacom's official driver v6.3.41-2](https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_6.3.41-2.dmg) instead.
