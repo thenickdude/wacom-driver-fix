@@ -41,7 +41,7 @@ Graphire 4修正ドライバー (v5.3.0-3) 対応デバイス：
 Intuos/Cintiq修正ドライバー (v6.3.15-3) 対応デバイス：
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
-- DTZ-2100 - Cintiq 21UX 1st Gen.
+- DTZ-2100, DTK-2100 - Cintiq 21UX 1st Gen.
 - DTZ-2000 - Cintiq 20WSX
 
 [🇳🇿 English instructions](Readme.md)   

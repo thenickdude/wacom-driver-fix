@@ -42,7 +42,7 @@ Mi controlador corregido Graphire 4 (v5.3.0-3) es compatible con estas tabletas:
 Mi controlador corregido de Intuos 3 y Cintiq (v6.3.15-3) es compatible con estas tabletas:
 
 - PTZ-430, PTZ-630, PTZ-630SE, PTZ-631W, PTZ-930, PTZ-1230, PTZ-1231W - Intuos 3
-- DTZ-2100 - Cintiq 21UX 1.ª generación
+- DTZ-2100, DTK-2100 - Cintiq 21UX 1.ª generación
 - DTZ-2000 - Cintiq 20WSX
 
 [🇳🇿 English instructions](Readme.md)   
